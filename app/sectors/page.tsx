@@ -38,35 +38,32 @@ export default function SectorsPage() {
 
   const sectors = data?.sectors;
 
-  const format = (v?: number) =>
-    typeof v === "number" ? v.toFixed(2) : "--";
+  const sectorCards: [string, Sector | undefined][] = [
+    ["Materials", sectors?.materials],
+    ["Energy", sectors?.energy],
+    ["Financials", sectors?.financials],
+    ["Industrials", sectors?.industrials],
+    ["Technology", sectors?.technology],
+    ["Consumer Staples", sectors?.consumerStaples],
+    ["Utilities", sectors?.utilities],
+    ["Health Care", sectors?.healthcare],
+    ["Consumer Discretionary", sectors?.consumerDiscretionary],
+    ["Communication Services", sectors?.communicationServices],
+    ["Real Estate", sectors?.realEstate],
+  ];
 
   return (
     <main className="min-h-screen bg-black text-white p-6 md:p-8">
       <div className="max-w-7xl mx-auto">
-
         <div className="flex items-center justify-between mb-6">
-  <h1 className="text-3xl font-semibold">Sectors</h1>
-  <a href="/" className="text-sm text-zinc-400 hover:text-zinc-100">
-    ← Dashboard
-  </a>
-</div>
+          <h1 className="text-3xl font-semibold">Sectors</h1>
+          <a href="/" className="text-sm text-zinc-400 hover:text-zinc-100">
+            ← Dashboard
+          </a>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-          {[
-            ["Materials", sectors?.materials],
-            ["Energy", sectors?.energy],
-            ["Financials", sectors?.financials],
-            ["Industrials", sectors?.industrials],
-            ["Technology", sectors?.technology],
-            ["Consumer Staples", sectors?.consumerStaples],
-            ["Utilities", sectors?.utilities],
-            ["Health Care", sectors?.healthcare],
-            ["Consumer Discretionary", sectors?.consumerDiscretionary],
-            ["Communication Services", sectors?.communicationServices],
-            ["Real Estate", sectors?.realEstate],
-          ].map(([name, s]) => {
+          {sectorCards.map(([name, s]) => {
             const directionColor =
               s?.direction === "Up"
                 ? "text-emerald-400"
@@ -79,35 +76,28 @@ export default function SectorsPage() {
                 key={name}
                 className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 hover:border-zinc-600 transition"
               >
-                {/* Header */}
                 <div className="flex justify-between items-center mb-2">
                   <p className="text-sm text-zinc-400">{name}</p>
                   <p className="text-xs text-zinc-500">{s?.type || "--"}</p>
                 </div>
 
-                {/* Primary */}
                 <p className="text-3xl font-bold tracking-tight">
                   {typeof s?.live === "number" ? s.live.toFixed(2) : "--"}
                 </p>
 
-                {/* Secondary */}
                 <div className="flex justify-between text-sm mt-2">
                   <span className="text-zinc-400">
                     Last: {typeof s?.last === "number" ? s.last.toFixed(2) : "--"}
                   </span>
-                  <span className={directionColor}>
-                    {s?.direction || "--"}
-                  </span>
+                  <span className={directionColor}>{s?.direction || "--"}</span>
                 </div>
 
-                {/* Alignment */}
                 <div className="mt-3 text-xs text-zinc-500">
                   Alignment: {s?.aligned || "--"}
                 </div>
               </div>
             );
           })}
-
         </div>
       </div>
     </main>
