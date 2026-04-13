@@ -106,7 +106,7 @@ export default function Home() {
         <header className="mb-6 border-b border-zinc-800 pb-4">
           <div className="relative h-32 w-full mb-3 overflow-hidden rounded-lg">
             <img
-              src="/header.png"
+              src="/header-final.png"
               alt="Atra Vigil Header"
               className="absolute inset-0 h-full w-full object-cover opacity-70"
             />
