@@ -88,29 +88,23 @@ export default function NightVectorPage() {
       </div>
 
       {/* FACTORS */}
-      <div className="rounded-2xl border border-zinc-800 bg-black p-6 space-y-4">
+<div className="rounded-2xl border border-zinc-800 bg-black p-6">
+  <div className="grid grid-cols-2 gap-y-4 text-sm">
 
-        <div className="flex justify-between">
-          <span className="text-zinc-500">Macro</span>
-          <span className="text-zinc-200">{data.macro.label}</span>
-        </div>
+    <div className="text-zinc-500">Macro</div>
+    <div className="text-zinc-200">{data.macro.label}</div>
 
-        <div className="flex justify-between">
-          <span className="text-zinc-500">Volatility</span>
-          <span className="text-zinc-200">{data.volatility.label}</span>
-        </div>
+    <div className="text-zinc-500">Volatility</div>
+    <div className="text-zinc-200">{data.volatility.label}</div>
 
-        <div className="flex justify-between">
-          <span className="text-zinc-500">Price</span>
-          <span className="text-zinc-200">{data.price.label}</span>
-        </div>
+    <div className="text-zinc-500">Price</div>
+    <div className="text-zinc-200">{data.price.label}</div>
 
-        <div className="flex justify-between">
-          <span className="text-zinc-500">Durability</span>
-          <span className="text-zinc-200">{data.durability.label}</span>
-        </div>
+    <div className="text-zinc-500">Durability</div>
+    <div className="text-zinc-200">{data.durability.label}</div>
 
-      </div>
+  </div>
+</div>
 
       {/* INTERPRETATION */}
       <div className="rounded-2xl border border-zinc-800 bg-black p-6">
