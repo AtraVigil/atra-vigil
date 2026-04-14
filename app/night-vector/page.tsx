@@ -63,12 +63,12 @@ export default function NightVectorPage() {
           <img
             src="/Vector.png"
             alt="Night Vector"
-            className="h-12 w-12 object-contain"
+            className="h-16 w-16 object-contain"
           />
 
           <div>
-            <div className="text-xs text-white tracking-widest">
-              NIGHT_VECTOR
+            <div className="text-sm text-white tracking-widest">
+              NIGHT VECTOR
             </div>
 
             <div className={`text-2xl font-semibold ${getStateColor(data.state)}`}>
@@ -77,10 +77,6 @@ export default function NightVectorPage() {
 
             <div className={`text-sm ${getCharacterColor(data.character)}`}>
               {data.character}
-            </div>
-
-            <div className="text-xs text-white mt-1">
-              SCORE {Number(data.score).toFixed(2)}
             </div>
           </div>
         </div>
@@ -115,6 +111,13 @@ export default function NightVectorPage() {
             <span className="text-white">DURABILITY</span>
             <span className={getValueColor(data.durability.label)}>
               {data.durability.label}
+            </span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-white">NIGHT VECTOR SCORE</span>
+            <span className="text-white">
+              {Number(data.score).toFixed(2)}
             </span>
           </div>
         </div>
