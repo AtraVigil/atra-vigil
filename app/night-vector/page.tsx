@@ -40,12 +40,7 @@ export default function NightVectorPage() {
   return (
     <div className="p-6 space-y-6 bg-black text-zinc-100">
    {/* Header Image */}
-<div className="relative h-32 w-full overflow-hidden rounded-lg">
-  <img
-    src="/Vector.png"
-    alt="Night Vector Header"
-    className="absolute inset-0 h-full w-full object-cover opacity-70"
-  />
+
   <div className="absolute inset-0 bg-black/30" />
 </div>   
       {/* Header */}
@@ -55,10 +50,10 @@ export default function NightVectorPage() {
           <h1 className="text-lg">Night Vector</h1>
 
           <img
-            src="/night-vector/NVlogo.png"
-            alt="Night Vector Logo"
-            className="h-16 w-auto"
-          />
+  src="/Vector.png"
+  alt="Night Vector Header"
+  className="h-16 w-auto object-contain"
+/>
         </div>
 
         <div className={`text-3xl font-semibold ${getStateColor(data.state)}`}>
