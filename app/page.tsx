@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 type RiskItem = {
   live?: number;
@@ -115,15 +116,11 @@ export default function Home() {
 
           <div className="flex justify-end">
             <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
-              
-<div className="flex justify-end">
-            <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
-              
+
               <Link href="/night-vector" className="text-yellow-200/85 transition-colors hover:text-yellow-100">
                 Night Vector
               </Link>
 
-              </span>
               <span className="cursor-default text-sky-200/85 transition-colors hover:text-sky-100">
                 Night Signal
               </span>
@@ -136,6 +133,8 @@ export default function Home() {
             </nav>
           </div>
         </header>
+
+        {/* rest of your file unchanged */}
 
         {/* STATUS */}
         <section className="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
