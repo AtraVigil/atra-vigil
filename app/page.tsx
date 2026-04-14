@@ -100,7 +100,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white p-6 md:p-8">
+    <main className="min-h-screen bg-black text-white p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
         <header className="mb-6 border-b border-zinc-800 pb-4">
@@ -114,7 +114,7 @@ export default function Home() {
           </div>
 
           <div className="flex justify-end">
-            <nav className="flex items-center gap-8 text-base uppercase tracking-[0.16em]">
+            <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
               <span className="cursor-default text-yellow-200/85 transition-colors hover:text-yellow-100">
                 Night Vector
               </span>
@@ -125,8 +125,8 @@ export default function Home() {
                 Night Stalker
               </span>
               <a href="/sectors" className="text-zinc-300/85 transition-colors hover:text-zinc-100">
-  Sectors
-</a>
+                Sectors
+              </a>
             </nav>
           </div>
         </header>
@@ -146,21 +146,23 @@ export default function Home() {
 
           <div className="rounded-lg border border-zinc-800 p-4 md:p-5">
             <p className="text-sm font-medium text-zinc-400">LAST REFRESH</p>
-            <p className="mt-1 text-xl font-medium">{formatValue(data?.lastRefresh)}</p>
+            <p className="mt-1 text-xl font-medium">
+              {data?.lastRefresh ? new Date(data.lastRefresh).toLocaleString() : "--"}
+            </p>
           </div>
         </section>
 
         {/* MARKET STRUCTURE */}
         <section className="mb-6">
           <div className="rounded-lg border border-zinc-800 p-5">
-            <h2 className="mb-4 text-2xl font-semibold text-zinc-100 tracking-wide">
+            <h2 className="mb-4 text-xl md:text-2xl font-semibold text-zinc-100 tracking-wide">
               Market Structure
             </h2>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">SPY</p>
-                <p className="mt-1 text-2xl font-bold">
+                <p className="mt-1 text-xl md:text-2xl font-bold">
                   {formatRiskLive(data?.structure?.spy?.live)}
                 </p>
                 <p className={getColor(data?.structure?.spy?.change)}>
@@ -168,9 +170,9 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">RSP</p>
-                <p className="mt-1 text-2xl font-bold">
+                <p className="mt-1 text-xl md:text-2xl font-bold">
                   {formatRiskLive(data?.structure?.rsp?.live)}
                 </p>
                 <p className={getColor(data?.structure?.rsp?.change)}>
@@ -178,9 +180,9 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">Breadth</p>
-                <p className="mt-1 text-2xl font-bold">
+                <p className="mt-1 text-xl md:text-2xl font-bold">
                   {formatPct(data?.structure?.breadth?.live)}
                 </p>
                 <p className="mt-1 text-sm font-semibold text-zinc-300">
@@ -188,16 +190,16 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">Alignment State</p>
-                <p className="mt-1 text-2xl font-bold text-zinc-100">
+                <p className="mt-1 text-xl md:text-2xl font-bold text-zinc-100">
                   {formatValue(data?.structure?.alignmentState)}
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">Leadership State</p>
-                <p className="mt-1 text-2xl font-bold text-zinc-100">
+                <p className="mt-1 text-xl md:text-2xl font-bold text-zinc-100">
                   {formatValue(data?.structure?.leadershipState)}
                 </p>
               </div>
@@ -208,7 +210,7 @@ export default function Home() {
         {/* MARKET + RISK */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
           <div className="rounded-lg border border-zinc-800 p-5">
-            <h2 className="mb-4 text-3xl font-semibold text-zinc-100 tracking-wide">
+            <h2 className="mb-4 text-2xl md:text-3xl font-semibold text-zinc-100 tracking-wide">
               Market Snapshot
             </h2>
 
@@ -217,7 +219,7 @@ export default function Home() {
                 <p className="mb-2 text-base font-medium text-zinc-300">
                   🇺🇸 United States
                 </p>
-                <div className="space-y-1">
+                <div className="space-y-1 text-sm">
                   <p>
                     Dow: {formatValue(data?.market?.dow)}{" "}
                     <span className={getColor(data?.market?.dowChange)}>
@@ -249,7 +251,7 @@ export default function Home() {
                 <p className="mb-2 text-base font-medium text-zinc-300">
                   Global
                 </p>
-                <div className="space-y-1">
+                <div className="space-y-1 text-sm">
                   <p>
                     🇯🇵 Nikkei: {formatValue(data?.market?.nikkei)}{" "}
                     <span className={getColor(data?.market?.nikkeiChange)}>
@@ -280,55 +282,55 @@ export default function Home() {
           </div>
 
           <div className="rounded-lg border border-zinc-800 p-5">
-            <h2 className="mb-5 text-4xl font-semibold text-zinc-100 tracking-wide">
+            <h2 className="mb-5 text-2xl md:text-4xl font-semibold text-zinc-100 tracking-wide">
               Risk Snapshot
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4">
+              <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">VIX</p>
-                <p className="mt-1 text-3xl font-bold">{formatRiskLive(data?.risk?.vix?.live)}</p>
+                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.vix?.live)}</p>
                 <p className={getColor(data?.risk?.vix?.change)}>{formatPct(data?.risk?.vix?.change)}</p>
                 <p className="mt-1 text-sm font-semibold text-zinc-300">
                   {formatRiskScore(data?.risk?.vix?.score)}
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">VVIX</p>
-                <p className="mt-1 text-3xl font-bold">{formatRiskLive(data?.risk?.vvix?.live)}</p>
+                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.vvix?.live)}</p>
                 <p className={getColor(data?.risk?.vvix?.change)}>{formatPct(data?.risk?.vvix?.change)}</p>
                 <p className="mt-1 text-sm font-semibold text-zinc-300">
                   {formatRiskScore(data?.risk?.vvix?.score)}
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">HYG</p>
-                <p className="mt-1 text-3xl font-bold">{formatRiskLive(data?.risk?.hyg?.live)}</p>
+                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.hyg?.live)}</p>
                 <p className={getColor(data?.risk?.hyg?.change)}>{formatPct(data?.risk?.hyg?.change)}</p>
                 <p className="mt-1 text-sm font-semibold text-zinc-300">
                   {formatRiskScore(data?.risk?.hyg?.score)}
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">TLT</p>
-                <p className="mt-1 text-3xl font-bold">{formatRiskLive(data?.risk?.tlt?.live)}</p>
+                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.tlt?.live)}</p>
                 <p className={getColor(data?.risk?.tlt?.change)}>{formatPct(data?.risk?.tlt?.change)}</p>
                 <p className="mt-1 text-sm font-semibold text-zinc-300">
                   {formatRiskScore(data?.risk?.tlt?.score)}
                 </p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">Breadth</p>
-                <p className="mt-1 text-3xl font-bold">{formatPct(data?.risk?.breadth?.live)}</p>
+                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatPct(data?.risk?.breadth?.live)}</p>
               </div>
 
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4">
+              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
                 <p className="text-sm font-medium text-zinc-400">USDJPY</p>
-                <p className="mt-1 text-3xl font-bold">{formatRiskLive(data?.risk?.usdjpy?.live)}</p>
+                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.usdjpy?.live)}</p>
                 <p className={getColor(data?.risk?.usdjpy?.change)}>{formatPct(data?.risk?.usdjpy?.change)}</p>
                 <p className="mt-1 text-sm font-semibold text-zinc-300">
                   {formatRiskScore(data?.risk?.usdjpy?.score)}
