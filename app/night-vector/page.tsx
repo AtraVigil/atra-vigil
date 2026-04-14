@@ -20,7 +20,7 @@ export default function NightVectorPage() {
   }, []);
 
   if (!data) {
-    return <div className="min-h-screen bg-black p-6 text-zinc-400">Loading Night Vector...</div>;
+    return <div className="min-h-screen bg-black p-6 text-zinc-500">Loading...</div>;
   }
 
   const getStateColor = (state: string) => {
@@ -38,66 +38,72 @@ export default function NightVectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 px-6 py-10">
-      <div className="mx-auto max-w-3xl space-y-8">
+    <div className="min-h-screen bg-black text-zinc-200 font-mono px-6 py-8">
+      <div className="max-w-3xl mx-auto space-y-6">
 
         {/* HEADER */}
-        <div className="rounded-2xl border border-zinc-800 bg-black p-6">
-          <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4">
+          <img
+            src="/Vector.png"
+            alt="Night Vector"
+            className="h-12 w-12 object-contain"
+          />
 
-            <img
-              src="/Vector.png"
-              alt="Night Vector"
-              className="h-20 w-20 object-contain"
-            />
-
-            <div>
-              <div className="text-xs uppercase tracking-[0.18em] text-zinc-400">
-                Night Vector
-              </div>
-
-              <div className={`mt-2 text-4xl font-semibold ${getStateColor(data.state)}`}>
-                {data.state}
-              </div>
-
-              <div className={`mt-1 text-lg ${getCharacterColor(data.character)}`}>
-                {data.character}
-              </div>
-
-              <div className="mt-2 text-sm text-zinc-400">
-                Score: {Number(data.score).toFixed(2)}
-              </div>
+          <div>
+            <div className="text-xs text-zinc-500 tracking-widest">
+              NIGHT_VECTOR
             </div>
 
+            <div className={`text-2xl font-semibold ${getStateColor(data.state)}`}>
+              {data.state}
+            </div>
+
+            <div className={`text-sm ${getCharacterColor(data.character)}`}>
+              {data.character}
+            </div>
+
+            <div className="text-xs text-zinc-500 mt-1">
+              SCORE {Number(data.score).toFixed(2)}
+            </div>
           </div>
         </div>
+
+        {/* DIVIDER */}
+        <div className="border-t border-zinc-800"></div>
 
         {/* FACTORS */}
-        <div className="rounded-2xl border border-zinc-800 bg-black p-6">
-          <div className="grid grid-cols-2 gap-y-4 text-sm">
+        <div className="space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span className="text-zinc-500">MACRO</span>
+            <span>{data.macro.label}</span>
+          </div>
 
-            <div className="text-zinc-300">Macro</div>
-            <div className="text-zinc-100">{data.macro.label}</div>
+          <div className="flex justify-between">
+            <span className="text-zinc-500">VOLATILITY</span>
+            <span>{data.volatility.label}</span>
+          </div>
 
-            <div className="text-zinc-300">Volatility</div>
-            <div className="text-zinc-100">{data.volatility.label}</div>
+          <div className="flex justify-between">
+            <span className="text-zinc-500">PRICE</span>
+            <span>{data.price.label}</span>
+          </div>
 
-            <div className="text-zinc-300">Price</div>
-            <div className="text-zinc-100">{data.price.label}</div>
-
-            <div className="text-zinc-300">Durability</div>
-            <div className="text-zinc-100">{data.durability.label}</div>
-
+          <div className="flex justify-between">
+            <span className="text-zinc-500">DURABILITY</span>
+            <span>{data.durability.label}</span>
           </div>
         </div>
 
+        {/* DIVIDER */}
+        <div className="border-t border-zinc-800"></div>
+
         {/* INTERPRETATION */}
-        <div className="rounded-2xl border border-zinc-800 bg-black p-6">
-          <div className="text-xs uppercase tracking-[0.16em] text-zinc-400">
-            Interpretation
+        <div className="text-sm leading-relaxed">
+          <div className="text-zinc-500 mb-1 tracking-widest">
+            INTERPRETATION
           </div>
 
-          <div className="mt-3 text-base text-zinc-300 leading-relaxed">
+          <div>
             {data.state === "Mild Bullish" && data.character === "Extended" &&
               "Uptrend intact, but extended with mixed underlying support."}
 
