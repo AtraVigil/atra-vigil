@@ -52,7 +52,7 @@ export default function NightVectorPage() {
             />
 
             <div>
-              <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+              <div className="text-xs uppercase tracking-[0.18em] text-zinc-400">
                 Night Vector
               </div>
 
@@ -76,24 +76,24 @@ export default function NightVectorPage() {
         <div className="rounded-2xl border border-zinc-800 bg-black p-6">
           <div className="grid grid-cols-2 gap-y-4 text-sm">
 
-            <div className="text-zinc-500">Macro</div>
-            <div className="text-zinc-200">{data.macro.label}</div>
+            <div className="text-zinc-300">Macro</div>
+            <div className="text-zinc-100">{data.macro.label}</div>
 
-            <div className="text-zinc-500">Volatility</div>
-            <div className="text-zinc-200">{data.volatility.label}</div>
+            <div className="text-zinc-300">Volatility</div>
+            <div className="text-zinc-100">{data.volatility.label}</div>
 
-            <div className="text-zinc-500">Price</div>
-            <div className="text-zinc-200">{data.price.label}</div>
+            <div className="text-zinc-300">Price</div>
+            <div className="text-zinc-100">{data.price.label}</div>
 
-            <div className="text-zinc-500">Durability</div>
-            <div className="text-zinc-200">{data.durability.label}</div>
+            <div className="text-zinc-300">Durability</div>
+            <div className="text-zinc-100">{data.durability.label}</div>
 
           </div>
         </div>
 
         {/* INTERPRETATION */}
         <div className="rounded-2xl border border-zinc-800 bg-black p-6">
-          <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">
+          <div className="text-xs uppercase tracking-[0.16em] text-zinc-400">
             Interpretation
           </div>
 
