@@ -42,8 +42,23 @@ export default function NightVectorPage() {
     <div className="mx-auto max-w-3xl space-y-8">
 
       {/* HEADER */}
-      <div className="rounded-2xl border border-zinc-800 bg-black p-8">
-        <div className="flex items-center gap-6">
+      <div className="rounded-2xl border border-zinc-800 bg-black p-6">
+  <div className="grid grid-cols-2 gap-y-4 text-sm">
+
+    <div className="text-zinc-500">Macro</div>
+    <div className="text-zinc-200 text-left">{data.macro.label}</div>
+
+    <div className="text-zinc-500">Volatility</div>
+    <div className="text-zinc-200 text-left">{data.volatility.label}</div>
+
+    <div className="text-zinc-500">Price</div>
+    <div className="text-zinc-200 text-left">{data.price.label}</div>
+
+    <div className="text-zinc-500">Durability</div>
+    <div className="text-zinc-200 text-left">{data.durability.label}</div>
+
+  </div>
+</div>
           
           <img
             src="/Vector.png"
