@@ -37,6 +37,23 @@ export default function NightVectorPage() {
     return "text-zinc-400";
   };
 
+  const getValueColor = (val: string) => {
+    if (!val) return "text-white";
+
+    const v = val.toLowerCase();
+
+    if (["supportive", "confirmed", "stable"].some(x => v.includes(x)))
+      return "text-emerald-400";
+
+    if (["mixed", "neutral"].some(x => v.includes(x)))
+      return "text-amber-400";
+
+    if (["weak", "stretched", "hostile"].some(x => v.includes(x)))
+      return "text-red-400";
+
+    return "text-white";
+  };
+
   return (
     <div className="min-h-screen bg-black text-zinc-200 font-mono px-6 py-8">
       <div className="max-w-3xl mx-auto space-y-6">
@@ -50,7 +67,7 @@ export default function NightVectorPage() {
           />
 
           <div>
-            <div className="text-xs text-zinc-500 tracking-widest">
+            <div className="text-xs text-white tracking-widest">
               NIGHT_VECTOR
             </div>
 
@@ -62,7 +79,7 @@ export default function NightVectorPage() {
               {data.character}
             </div>
 
-            <div className="text-xs text-zinc-500 mt-1">
+            <div className="text-xs text-white mt-1">
               SCORE {Number(data.score).toFixed(2)}
             </div>
           </div>
@@ -74,23 +91,31 @@ export default function NightVectorPage() {
         {/* FACTORS */}
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-zinc-500">MACRO</span>
-            <span>{data.macro.label}</span>
+            <span className="text-white">MACRO</span>
+            <span className={getValueColor(data.macro.label)}>
+              {data.macro.label}
+            </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-zinc-500">VOLATILITY</span>
-            <span>{data.volatility.label}</span>
+            <span className="text-white">VOLATILITY</span>
+            <span className={getValueColor(data.volatility.label)}>
+              {data.volatility.label}
+            </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-zinc-500">PRICE</span>
-            <span>{data.price.label}</span>
+            <span className="text-white">PRICE</span>
+            <span className={getValueColor(data.price.label)}>
+              {data.price.label}
+            </span>
           </div>
 
           <div className="flex justify-between">
-            <span className="text-zinc-500">DURABILITY</span>
-            <span>{data.durability.label}</span>
+            <span className="text-white">DURABILITY</span>
+            <span className={getValueColor(data.durability.label)}>
+              {data.durability.label}
+            </span>
           </div>
         </div>
 
@@ -99,7 +124,7 @@ export default function NightVectorPage() {
 
         {/* INTERPRETATION */}
         <div className="text-sm leading-relaxed">
-          <div className="text-zinc-500 mb-1 tracking-widest">
+          <div className="text-white mb-1 tracking-widest">
             INTERPRETATION
           </div>
 
