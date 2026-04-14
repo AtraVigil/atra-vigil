@@ -39,7 +39,15 @@ export default function NightVectorPage() {
 
   return (
     <div className="p-6 space-y-6 bg-black text-zinc-100">
-      
+   {/* Header Image */}
+<div className="relative h-32 w-full overflow-hidden rounded-lg">
+  <img
+    src="/Vector.png"
+    alt="Night Vector Header"
+    className="absolute inset-0 h-full w-full object-cover opacity-70"
+  />
+  <div className="absolute inset-0 bg-black/30" />
+</div>   
       {/* Header */}
       <div className="border border-zinc-800 rounded-lg p-6">
         
