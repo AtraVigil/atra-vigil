@@ -115,7 +115,9 @@ export default function Home() {
 
           <div className="flex justify-end">
             <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
-              <span className="cursor-default text-yellow-200/85 transition-colors hover:text-yellow-100">
+              <a href="/night-vector" className="text-yellow-200/85 transition-colors hover:text-yellow-100">
+  Night Vector
+</a>
                 Night Vector
               </span>
               <span className="cursor-default text-sky-200/85 transition-colors hover:text-sky-100">
