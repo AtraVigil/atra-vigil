@@ -37,76 +37,88 @@ export default function NightVectorPage() {
     return "text-zinc-400";
   };
 
-  return (
-    <div className="min-h-screen bg-black text-zinc-100 px-6 py-8">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <div className="rounded-2xl border border-zinc-800 bg-black p-8">
-          <div className="flex items-start gap-6">
-            <img
-              src="/Vector.png"
-              alt="Night Vector Header"
-              className="h-28 w-28 flex-shrink-0 rounded-md object-contain"
-            />
+ return (
+  <div className="min-h-screen bg-black text-zinc-100 px-6 py-10">
+    <div className="mx-auto max-w-3xl space-y-8">
 
-            <div className="min-w-0 flex-1">
-              <div className="text-sm tracking-[0.18em] text-zinc-400 uppercase">
-                Night Vector
-              </div>
+      {/* HEADER */}
+      <div className="rounded-2xl border border-zinc-800 bg-black p-8">
+        <div className="flex items-center gap-6">
+          
+          <img
+            src="/Vector.png"
+            alt="Night Vector"
+            className="h-20 w-20 object-contain"
+          />
 
-              <div className={`mt-4 text-5xl font-semibold leading-none ${getStateColor(data.state)}`}>
-                {data.state}
-              </div>
+          <div>
+            <div className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+              Night Vector
+            </div>
 
-              <div className={`mt-3 text-2xl font-medium ${getCharacterColor(data.character)}`}>
-                {data.character}
-              </div>
+            <div className={`mt-2 text-4xl font-semibold ${getStateColor(data.state)}`}>
+              {data.state}
+            </div>
 
-              <div className="mt-4 text-sm text-zinc-400">
-                Score: <span className="text-zinc-200">{Number(data.score).toFixed(2)}</span>
-              </div>
+            <div className={`mt-1 text-lg ${getCharacterColor(data.character)}`}>
+              {data.character}
+            </div>
+
+            <div className="mt-2 text-sm text-zinc-400">
+              Score: {Number(data.score).toFixed(2)}
             </div>
           </div>
-        </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
-            <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">Macro</div>
-            <div className="mt-3 text-2xl font-semibold text-zinc-100">{data.macro.label}</div>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
-            <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">Volatility</div>
-            <div className="mt-3 text-2xl font-semibold text-zinc-100">{data.volatility.label}</div>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
-            <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">Price</div>
-            <div className="mt-3 text-2xl font-semibold text-zinc-100">{data.price.label}</div>
-          </div>
-
-          <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-5">
-            <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">Durability</div>
-            <div className="mt-3 text-2xl font-semibold text-zinc-100">{data.durability.label}</div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6">
-          <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">Interpretation</div>
-          <div className="mt-3 text-lg leading-relaxed text-zinc-200">
-            {data.state === "Mild Bullish" && data.character === "Extended" &&
-              "Uptrend intact, but extended with mixed underlying support."}
-
-            {data.state === "Bullish Vector" && data.character === "Expansion" &&
-              "Broad expansion with strong underlying support."}
-
-            {data.state === "Neutral" &&
-              "No clear directional bias."}
-
-            {data.state.includes("Bearish") &&
-              "Downside pressure with weakening conditions."}
-          </div>
         </div>
       </div>
+
+      {/* FACTORS */}
+      <div className="rounded-2xl border border-zinc-800 bg-black p-6 space-y-4">
+
+        <div className="flex justify-between">
+          <span className="text-zinc-500">Macro</span>
+          <span className="text-zinc-200">{data.macro.label}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="text-zinc-500">Volatility</span>
+          <span className="text-zinc-200">{data.volatility.label}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="text-zinc-500">Price</span>
+          <span className="text-zinc-200">{data.price.label}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="text-zinc-500">Durability</span>
+          <span className="text-zinc-200">{data.durability.label}</span>
+        </div>
+
+      </div>
+
+      {/* INTERPRETATION */}
+      <div className="rounded-2xl border border-zinc-800 bg-black p-6">
+        <div className="text-xs uppercase tracking-[0.16em] text-zinc-500">
+          Interpretation
+        </div>
+
+        <div className="mt-3 text-base text-zinc-300 leading-relaxed">
+          {data.state === "Mild Bullish" && data.character === "Extended" &&
+            "Uptrend intact, but extended with mixed underlying support."}
+
+          {data.state === "Bullish Vector" && data.character === "Expansion" &&
+            "Broad expansion with strong underlying support."}
+
+          {data.state === "Neutral" &&
+            "No clear directional bias."}
+
+          {data.state.includes("Bearish") &&
+            "Downside pressure with weakening conditions."}
+        </div>
+      </div>
+
     </div>
-  );
+  </div>
+);
 }
