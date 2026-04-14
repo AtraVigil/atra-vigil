@@ -38,11 +38,20 @@ export default function NightVectorPage() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 bg-black text-zinc-100">
       
       {/* Header */}
       <div className="border border-zinc-800 rounded-lg p-6">
-        <h1 className="text-lg mb-4">Night Vector</h1>
+        
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-lg">Night Vector</h1>
+
+          <img
+            src="/night-vector/NVlogo.png"
+            alt="Night Vector Logo"
+            className="h-16 w-auto"
+          />
+        </div>
 
         <div className={`text-3xl font-semibold ${getStateColor(data.state)}`}>
           {data.state}
@@ -52,7 +61,7 @@ export default function NightVectorPage() {
           {data.character}
         </div>
 
-        <div className="text-xs text-zinc-500 mt-2">
+        <div className="text-xs text-zinc-400 mt-2">
           Score: {data.score}
         </div>
       </div>
@@ -60,22 +69,22 @@ export default function NightVectorPage() {
       {/* Core Factors */}
       <div className="border border-zinc-800 rounded-lg p-6 grid grid-cols-2 gap-4 text-sm">
         <div>
-          <div className="text-zinc-500">Macro</div>
+          <div className="text-zinc-400">Macro</div>
           <div>{data.macro.label}</div>
         </div>
 
         <div>
-          <div className="text-zinc-500">Volatility</div>
+          <div className="text-zinc-400">Volatility</div>
           <div>{data.volatility.label}</div>
         </div>
 
         <div>
-          <div className="text-zinc-500">Price</div>
+          <div className="text-zinc-400">Price</div>
           <div>{data.price.label}</div>
         </div>
 
         <div>
-          <div className="text-zinc-500">Durability</div>
+          <div className="text-zinc-400">Durability</div>
           <div>{data.durability.label}</div>
         </div>
       </div>
