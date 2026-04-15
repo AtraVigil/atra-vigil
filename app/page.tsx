@@ -4,197 +4,210 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 type RiskItem = {
-  live?: number;
-  change?: number;
-  score?: string;
+live?: number;
+change?: number;
+score?: string;
 };
 
 type AtraData = {
-  status: string;
-  lastRefresh: string;
-  market: {
-    dow?: number;
-    nasdaq?: number;
-    sp500?: number;
-    russell?: number;
-    nikkei?: number;
-    hangSeng?: number;
-    ftse?: number;
-    dax?: number;
+status: string;
+lastRefresh: string;
+market: {
+dow?: number;
+nasdaq?: number;
+sp500?: number;
+russell?: number;
+nikkei?: number;
+hangSeng?: number;
+ftse?: number;
+dax?: number;
 
-    dowChange?: number;
-    nasdaqChange?: number;
-    sp500Change?: number;
-    russellChange?: number;
-    nikkeiChange?: number;
-    hangSengChange?: number;
-    ftseChange?: number;
-    daxChange?: number;
-  };
-  risk: {
-    vix?: RiskItem;
-    vvix?: RiskItem;
-    hyg?: RiskItem;
-    tlt?: RiskItem;
-    breadth?: {
-      live?: number;
-    };
-    usdjpy?: RiskItem;
-  };
-  structure: {
-    spy?: {
-      live?: number;
-      change?: number;
-    };
-    rsp?: {
-      live?: number;
-      change?: number;
-    };
-    breadth?: {
-      live?: number;
-      score?: string;
-    };
-    alignmentState?: string;
-    leadershipState?: string;
-  };
+```
+dowChange?: number;
+nasdaqChange?: number;
+sp500Change?: number;
+russellChange?: number;
+nikkeiChange?: number;
+hangSengChange?: number;
+ftseChange?: number;
+daxChange?: number;
+```
+
+};
+risk: {
+vix?: RiskItem;
+vvix?: RiskItem;
+hyg?: RiskItem;
+tlt?: RiskItem;
+breadth?: {
+live?: number;
+};
+usdjpy?: RiskItem;
+};
+structure: {
+spy?: {
+live?: number;
+change?: number;
+};
+rsp?: {
+live?: number;
+change?: number;
+};
+breadth?: {
+live?: number;
+score?: string;
+};
+alignmentState?: string;
+leadershipState?: string;
+};
 };
 
 export default function Home() {
-  const [data, setData] = useState<AtraData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+const [data, setData] = useState<AtraData | null>(null);
+const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
+useEffect(() => {
+setIsLoading(true);
 
-    fetch("https://script.google.com/macros/s/AKfycbzK8wLNQT92AXsnRmnnytWHA3pi6gmujinQoL_gTZg7MUZS8b8_enlK0zszufKHiaDw/exec")
-      .then((res) => res.json())
-      .then((json) => setData(json))
-      .catch((err) => console.error("Fetch error:", err))
-      .finally(() => setIsLoading(false));
-  }, []);
+```
+fetch("https://script.google.com/macros/s/AKfycbzK8wLNQT92AXsnRmnnytWHA3pi6gmujinQoL_gTZg7MUZS8b8_enlK0zszufKHiaDw/exec")
+  .then((res) => res.json())
+  .then((json) => setData(json))
+  .catch((err) => console.error("Fetch error:", err))
+  .finally(() => setIsLoading(false));
+```
 
-  const getStateColor = (val?: string) => {
-  if (!val) return "text-zinc-400";
+}, []);
 
-  const v = val.toLowerCase();
-
-  if (
-    v.includes("bullish") ||
-    v.includes("positive") ||
-    v.includes("confirmed") ||
-    v.includes("supportive") ||
-    v.includes("strong")
-  ) {
-    return "text-emerald-400";
-  }
-
-  if (
-    v.includes("mixed") ||
-    v.includes("neutral") ||
-    v.includes("extended")
-  ) {
-    return "text-yellow-300";
-  }
-
-  if (
-    v.includes("weak") ||
-    v.includes("stretched") ||
-    v.includes("risk") ||
-    v.includes("reactive")
-  ) {
-    return "text-red-400";
-  }
-
-  return "text-zinc-400";
+const getColor = (val?: number) => {
+if (typeof val !== "number") return "text-zinc-400";
+if (val > 0) return "text-emerald-400";
+if (val < 0) return "text-red-400";
+return "text-zinc-400";
 };
-  const formatPct = (val?: number) => {
-    if (typeof val !== "number") return "--";
-    return `${val > 0 ? "+" : ""}${(val * 100).toFixed(2)}%`;
-  };
 
-  const formatValue = (val?: string | number) => {
-    if (val === null || val === undefined || val === "") return "--";
-    return val;
-  };
+const getStateColor = (val?: string) => {
+if (!val) return "text-zinc-400";
 
-  const formatRiskLive = (val?: number) => {
-    if (typeof val !== "number") return "--";
-    return val;
-  };
+```
+const v = val.toLowerCase();
 
-  const formatRiskScore = (val?: string) => {
-    if (!val) return "--";
-    return val;
-  };
+if (
+  v.includes("bullish") ||
+  v.includes("positive") ||
+  v.includes("confirmed") ||
+  v.includes("supportive") ||
+  v.includes("strong")
+) {
+  return "text-emerald-400";
+}
 
-  return (
-    <main className="min-h-screen bg-black text-white p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* HEADER */}
-        <header className="mb-6 border-b border-zinc-800 pb-4">
-          <div className="relative h-32 w-full mb-3 overflow-hidden rounded-lg">
-            <img
-              src="/header-final.png"
-              alt="Atra Vigil Header"
-              className="absolute inset-0 h-full w-full object-cover opacity-70"
-            />
-            <div className="absolute inset-0 bg-black/30" />
+if (
+  v.includes("mixed") ||
+  v.includes("neutral") ||
+  v.includes("extended")
+) {
+  return "text-yellow-300";
+}
+
+if (
+  v.includes("weak") ||
+  v.includes("stretched") ||
+  v.includes("risk") ||
+  v.includes("reactive")
+) {
+  return "text-red-400";
+}
+
+return "text-zinc-400";
+```
+
+};
+
+const formatPct = (val?: number) => {
+if (typeof val !== "number") return "--";
+return `${val > 0 ? "+" : ""}${(val * 100).toFixed(2)}%`;
+};
+
+const formatValue = (val?: string | number) => {
+if (val === null || val === undefined || val === "") return "--";
+return val;
+};
+
+const formatRiskLive = (val?: number) => {
+if (typeof val !== "number") return "--";
+return val;
+};
+
+const formatRiskScore = (val?: string) => {
+if (!val) return "--";
+return val;
+};
+
+return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div className="max-w-7xl mx-auto">
+{/* HEADER */} <header className="mb-6 border-b border-zinc-800 pb-4"> <div className="relative h-32 w-full mb-3 overflow-hidden rounded-lg"> <img
+           src="/header-final.png"
+           alt="Atra Vigil Header"
+           className="absolute inset-0 h-full w-full object-cover opacity-70"
+         /> <div className="absolute inset-0 bg-black/30" /> </div>
+
+```
+      <div className="flex justify-end">
+        <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
+
+          <Link href="/night-vector" className="text-yellow-200/85 transition-colors hover:text-yellow-100">
+            Night Vector
+          </Link>
+
+          <Link href="/night-signal" className="text-sky-200/85 transition-colors hover:text-sky-100">
+            Night Signal
+          </Link>
+
+          <span className="cursor-default text-orange-300/85 transition-colors hover:text-orange-200">
+            Night Stalker
+          </span>
+
+          <a href="/sectors" className="text-zinc-300/85 transition-colors hover:text-zinc-100">
+            Sectors
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    {/* SIGNAL STRIP */}
+    <section className="mb-6">
+      <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 md:p-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <div>
+            <p className="text-xs uppercase tracking-widest text-zinc-500 mb-1">
+              Night Vector
+            </p>
+            <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightVector?.state)}`}>
+              {formatValue((data as any)?.nightVector?.state)}
+            </p>
+            <p className={`text-sm ${getStateColor((data as any)?.nightVector?.character)}`}>
+              {formatValue((data as any)?.nightVector?.character)}
+            </p>
           </div>
 
-          <div className="flex justify-end">
-            <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
-
-              <Link href="/night-vector" className="text-yellow-200/85 transition-colors hover:text-yellow-100">
-                Night Vector
-              </Link>
-
-              <Link href="/night-signal" className="text-sky-200/85 transition-colors hover:text-sky-100">
-  Night Signal
-</Link>
-              <span className="cursor-default text-orange-300/85 transition-colors hover:text-orange-200">
-                Night Stalker
-              </span>
-              <a href="/sectors" className="text-zinc-300/85 transition-colors hover:text-zinc-100">
-                Sectors
-              </a>
-            </nav>
+          <div>
+            <p className="text-xs uppercase tracking-widest text-zinc-500 mb-1">
+              Night Signal
+            </p>
+            <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightSignal?.alignment)}`}>
+              {formatValue((data as any)?.nightSignal?.alignment)}
+            </p>
+            <p className={`text-sm ${getStateColor((data as any)?.nightSignal?.alignmentStrength)}`}>
+              {formatValue((data as any)?.nightSignal?.alignmentStrength)}
+            </p>
           </div>
-        </header>
 
-{/* SIGNAL STRIP */}
-<section className="mb-6">
-  <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 md:p-5">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-      {/* NIGHT VECTOR */}
-      <div>
-        <p className="text-xs uppercase tracking-widest text-zinc-500 mb-1">
-          Night Vector
-        </p>
-        <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightVector?.state)}`}>
-          {formatValue((data as any)?.nightVector?.state)}
-        </p>
-        <p className={`text-sm ${getStateColor((data as any)?.nightVector?.character)}`}>
-          {formatValue((data as any)?.nightVector?.character)}
-        </p>
+        </div>
       </div>
+    </section>
+```
 
-      {/* NIGHT SIGNAL */}
-      <div>
-        <p className="text-xs uppercase tracking-widest text-zinc-500 mb-1">
-          Night Signal
-        </p>
-        <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightSignal?.alignment)}`}>
-          {formatValue((data as any)?.nightSignal?.alignment)}
-        </p>
-        <p className={`text-sm ${getStateColor((data as any)?.nightSignal?.alignmentStrength)}`}>
-          {formatValue((data as any)?.nightSignal?.alignmentStrength)}
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
 
         {/* STATUS */}
         <section className="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
