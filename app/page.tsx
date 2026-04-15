@@ -212,138 +212,80 @@ export default function Home() {
           </div>
         </section>
 
-        {/* MARKET + RISK */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
-          <div className="rounded-lg border border-zinc-800 p-5">
-            <h2 className="mb-4 text-2xl md:text-3xl font-semibold text-zinc-100 tracking-wide">
-              Market Snapshot
-            </h2>
+      {/* MARKET SNAPSHOT ONLY */}
+<section className="mb-6">
+  <div className="rounded-lg border border-zinc-800 p-5">
+    <h2 className="mb-4 text-2xl md:text-3xl font-semibold text-zinc-100 tracking-wide">
+      Market Snapshot
+    </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <p className="mb-2 text-base font-medium text-zinc-300">
-                  🇺🇸 United States
-                </p>
-                <div className="space-y-1 text-sm">
-                  <p>
-                    Dow: {formatValue(data?.market?.dow)}{" "}
-                    <span className={getColor(data?.market?.dowChange)}>
-                      {formatPct(data?.market?.dowChange)}
-                    </span>
-                  </p>
-                  <p>
-                    Nasdaq: {formatValue(data?.market?.nasdaq)}{" "}
-                    <span className={getColor(data?.market?.nasdaqChange)}>
-                      {formatPct(data?.market?.nasdaqChange)}
-                    </span>
-                  </p>
-                  <p>
-                    S&amp;P: {formatValue(data?.market?.sp500)}{" "}
-                    <span className={getColor(data?.market?.sp500Change)}>
-                      {formatPct(data?.market?.sp500Change)}
-                    </span>
-                  </p>
-                  <p>
-                    Russell: {formatValue(data?.market?.russell)}{" "}
-                    <span className={getColor(data?.market?.russellChange)}>
-                      {formatPct(data?.market?.russellChange)}
-                    </span>
-                  </p>
-                </div>
-              </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      <div>
+        <p className="mb-2 text-base font-medium text-zinc-300">
+          🇺🇸 United States
+        </p>
+        <div className="space-y-1 text-sm">
+          <p>
+            Dow: {formatValue(data?.market?.dow)}{" "}
+            <span className={getColor(data?.market?.dowChange)}>
+              {formatPct(data?.market?.dowChange)}
+            </span>
+          </p>
+          <p>
+            Nasdaq: {formatValue(data?.market?.nasdaq)}{" "}
+            <span className={getColor(data?.market?.nasdaqChange)}>
+              {formatPct(data?.market?.nasdaqChange)}
+            </span>
+          </p>
+          <p>
+            S&amp;P: {formatValue(data?.market?.sp500)}{" "}
+            <span className={getColor(data?.market?.sp500Change)}>
+              {formatPct(data?.market?.sp500Change)}
+            </span>
+          </p>
+          <p>
+            Russell: {formatValue(data?.market?.russell)}{" "}
+            <span className={getColor(data?.market?.russellChange)}>
+              {formatPct(data?.market?.russellChange)}
+            </span>
+          </p>
+        </div>
+      </div>
 
-              <div>
-                <p className="mb-2 text-base font-medium text-zinc-300">
-                  Global
-                </p>
-                <div className="space-y-1 text-sm">
-                  <p>
-                    🇯🇵 Nikkei: {formatValue(data?.market?.nikkei)}{" "}
-                    <span className={getColor(data?.market?.nikkeiChange)}>
-                      {formatPct(data?.market?.nikkeiChange)}
-                    </span>
-                  </p>
-                  <p>
-                    🇭🇰 Hang Seng: {formatValue(data?.market?.hangSeng)}{" "}
-                    <span className={getColor(data?.market?.hangSengChange)}>
-                      {formatPct(data?.market?.hangSengChange)}
-                    </span>
-                  </p>
-                  <p>
-                    🇬🇧 FTSE: {formatValue(data?.market?.ftse)}{" "}
-                    <span className={getColor(data?.market?.ftseChange)}>
-                      {formatPct(data?.market?.ftseChange)}
-                    </span>
-                  </p>
-                  <p>
-                    🇩🇪 DAX: {formatValue(data?.market?.dax)}{" "}
-                    <span className={getColor(data?.market?.daxChange)}>
-                      {formatPct(data?.market?.daxChange)}
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-lg border border-zinc-800 p-5">
-            <h2 className="mb-5 text-2xl md:text-4xl font-semibold text-zinc-100 tracking-wide">
-              Risk Snapshot
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-3 md:p-4">
-                <p className="text-sm font-medium text-zinc-400">VIX</p>
-                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.vix?.live)}</p>
-                <p className={getColor(data?.risk?.vix?.change)}>{formatPct(data?.risk?.vix?.change)}</p>
-                <p className="mt-1 text-sm font-semibold text-zinc-300">
-                  {formatRiskScore(data?.risk?.vix?.score)}
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
-                <p className="text-sm font-medium text-zinc-400">VVIX</p>
-                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.vvix?.live)}</p>
-                <p className={getColor(data?.risk?.vvix?.change)}>{formatPct(data?.risk?.vvix?.change)}</p>
-                <p className="mt-1 text-sm font-semibold text-zinc-300">
-                  {formatRiskScore(data?.risk?.vvix?.score)}
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
-                <p className="text-sm font-medium text-zinc-400">HYG</p>
-                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.hyg?.live)}</p>
-                <p className={getColor(data?.risk?.hyg?.change)}>{formatPct(data?.risk?.hyg?.change)}</p>
-                <p className="mt-1 text-sm font-semibold text-zinc-300">
-                  {formatRiskScore(data?.risk?.hyg?.score)}
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
-                <p className="text-sm font-medium text-zinc-400">TLT</p>
-                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.tlt?.live)}</p>
-                <p className={getColor(data?.risk?.tlt?.change)}>{formatPct(data?.risk?.tlt?.change)}</p>
-                <p className="mt-1 text-sm font-semibold text-zinc-300">
-                  {formatRiskScore(data?.risk?.tlt?.score)}
-                </p>
-              </div>
-
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
-                <p className="text-sm font-medium text-zinc-400">Breadth</p>
-                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatPct(data?.risk?.breadth?.live)}</p>
-              </div>
-
-              <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-3 md:p-4">
-                <p className="text-sm font-medium text-zinc-400">USDJPY</p>
-                <p className="mt-1 text-2xl md:text-3xl font-bold">{formatRiskLive(data?.risk?.usdjpy?.live)}</p>
-                <p className={getColor(data?.risk?.usdjpy?.change)}>{formatPct(data?.risk?.usdjpy?.change)}</p>
-                <p className="mt-1 text-sm font-semibold text-zinc-300">
-                  {formatRiskScore(data?.risk?.usdjpy?.score)}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+      <div>
+        <p className="mb-2 text-base font-medium text-zinc-300">
+          Global
+        </p>
+        <div className="space-y-1 text-sm">
+          <p>
+            🇯🇵 Nikkei: {formatValue(data?.market?.nikkei)}{" "}
+            <span className={getColor(data?.market?.nikkeiChange)}>
+              {formatPct(data?.market?.nikkeiChange)}
+            </span>
+          </p>
+          <p>
+            🇭🇰 Hang Seng: {formatValue(data?.market?.hangSeng)}{" "}
+            <span className={getColor(data?.market?.hangSengChange)}>
+              {formatPct(data?.market?.hangSengChange)}
+            </span>
+          </p>
+          <p>
+            🇬🇧 FTSE: {formatValue(data?.market?.ftse)}{" "}
+            <span className={getColor(data?.market?.ftseChange)}>
+              {formatPct(data?.market?.ftseChange)}
+            </span>
+          </p>
+          <p>
+            🇩🇪 DAX: {formatValue(data?.market?.dax)}{" "}
+            <span className={getColor(data?.market?.daxChange)}>
+              {formatPct(data?.market?.daxChange)}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
         {/* DISCLAIMER */}
         <section className="border-t border-zinc-800 pt-4">
