@@ -134,7 +134,40 @@ export default function Home() {
           </div>
         </header>
 
-        {/* rest of your file unchanged */}
+{/* SIGNAL STRIP */}
+<section className="mb-6">
+  <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 md:p-5">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      {/* NIGHT VECTOR */}
+      <div>
+        <p className="text-xs uppercase tracking-widest text-zinc-500 mb-1">
+          Night Vector
+        </p>
+        <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightVector?.state)}`}>
+          {formatValue((data as any)?.nightVector?.state)}
+        </p>
+        <p className={`text-sm ${getStateColor((data as any)?.nightVector?.character)}`}>
+          {formatValue((data as any)?.nightVector?.character)}
+        </p>
+      </div>
+
+      {/* NIGHT SIGNAL */}
+      <div>
+        <p className="text-xs uppercase tracking-widest text-zinc-500 mb-1">
+          Night Signal
+        </p>
+        <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightSignal?.alignment)}`}>
+          {formatValue((data as any)?.nightSignal?.alignment)}
+        </p>
+        <p className={`text-sm ${getStateColor((data as any)?.nightSignal?.alignmentStrength)}`}>
+          {formatValue((data as any)?.nightSignal?.alignmentStrength)}
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
 
         {/* STATUS */}
         <section className="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
