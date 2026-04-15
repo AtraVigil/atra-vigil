@@ -121,9 +121,9 @@ export default function Home() {
                 Night Vector
               </Link>
 
-              <span className="cursor-default text-sky-200/85 transition-colors hover:text-sky-100">
-                Night Signal
-              </span>
+              <<Link href="/night-signal" className="text-sky-200/85 transition-colors hover:text-sky-100">
+  Night Signal
+</Link>
               <span className="cursor-default text-orange-300/85 transition-colors hover:text-orange-200">
                 Night Stalker
               </span>
