@@ -137,7 +137,20 @@ const formatRiskScore = (val?: string) => {
 if (!val) return "--";
 return val;
 };
-
+const getStalkerState = (val?: number) => {
+  if (typeof val !== "number") return "--";
+  if (val < 40) return "Stable";
+  if (val < 60) return "Neutral";
+  if (val < 75) return "Fragile";
+  return "Critical";
+};
+const getStalkerColor = (val?: number) => {
+  if (typeof val !== "number") return "text-zinc-400";
+  if (val < 40) return "text-emerald-400";
+  if (val < 60) return "text-zinc-300";
+  if (val < 75) return "text-amber-400";
+  return "text-red-400";
+};
 return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div className="max-w-7xl mx-auto">
 {/* HEADER */} <header className="mb-6 border-b border-zinc-800 pb-4"> <div className="relative h-32 w-full mb-3 overflow-hidden rounded-lg"> <img
         src="/header-final.png"
@@ -225,9 +238,9 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   <p className="text-xs uppercase tracking-widest text-orange-300/85 mb-1">
     Night Stalker
   </p>
-  <p className="text-xl md:text-2xl font-semibold text-white">
-    {formatValue((data as any)?.nightStalker?.score)}
-  </p>
+  <p className={`text-xl md:text-2xl font-semibold ${getStalkerColor((data as any)?.nightStalker?.score)}`}>
+  {getStalkerState((data as any)?.nightStalker?.score)}
+</p>
   <p className="text-sm text-zinc-400">
     LR: {formatValue((data as any)?.nightStalker?.lr)} | CG: {formatValue((data as any)?.nightStalker?.cg)} | TS: {formatValue((data as any)?.nightStalker?.ts)}
   </p>
