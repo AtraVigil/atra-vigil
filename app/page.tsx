@@ -73,13 +73,40 @@ export default function Home() {
       .finally(() => setIsLoading(false));
   }, []);
 
-  const getColor = (val?: number) => {
-    if (typeof val !== "number") return "text-zinc-400";
-    if (val > 0) return "text-emerald-400";
-    if (val < 0) return "text-red-400";
-    return "text-zinc-400";
-  };
+  const getStateColor = (val?: string) => {
+  if (!val) return "text-zinc-400";
 
+  const v = val.toLowerCase();
+
+  if (
+    v.includes("bullish") ||
+    v.includes("positive") ||
+    v.includes("confirmed") ||
+    v.includes("supportive") ||
+    v.includes("strong")
+  ) {
+    return "text-emerald-400";
+  }
+
+  if (
+    v.includes("mixed") ||
+    v.includes("neutral") ||
+    v.includes("extended")
+  ) {
+    return "text-yellow-300";
+  }
+
+  if (
+    v.includes("weak") ||
+    v.includes("stretched") ||
+    v.includes("risk") ||
+    v.includes("reactive")
+  ) {
+    return "text-red-400";
+  }
+
+  return "text-zinc-400";
+};
   const formatPct = (val?: number) => {
     if (typeof val !== "number") return "--";
     return `${val > 0 ? "+" : ""}${(val * 100).toFixed(2)}%`;
