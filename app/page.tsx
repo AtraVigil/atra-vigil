@@ -241,8 +241,8 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   <p className={`text-xl md:text-2xl font-semibold ${getStalkerColor((data as any)?.nightStalker?.score)}`}>
   {getStalkerState((data as any)?.nightStalker?.score)}
 </p>
-  <p className="text-sm text-zinc-400">
-  LR: {((data as any)?.nightStalker?.lr ?? 0).toFixed(1)} | CG: {((data as any)?.nightStalker?.cg ?? 0).toFixed(1)} | TS: {((data as any)?.nightStalker?.ts ?? 0).toFixed(2)}
+  <p className="text-sm text-zinc-500">
+  Liquidity / Correlation / Tail Risk
 </p>
 </div>
 
