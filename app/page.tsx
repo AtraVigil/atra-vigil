@@ -22,7 +22,7 @@ hangSeng?: number;
 ftse?: number;
 dax?: number;
 
-```
+
 dowChange?: number;
 nasdaqChange?: number;
 sp500Change?: number;
@@ -31,7 +31,7 @@ nikkeiChange?: number;
 hangSengChange?: number;
 ftseChange?: number;
 daxChange?: number;
-```
+
 
 };
 risk: {
@@ -145,7 +145,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
         className="absolute inset-0 h-full w-full object-cover opacity-70"
       /> <div className="absolute inset-0 bg-black/30" /> </div>
 
-```
+
   <div className="flex justify-end">
     <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
 
@@ -188,7 +188,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
     </p>
   </div>
 </section>
-```
+
 
 {/* SIGNAL STRIP */}
 
@@ -196,7 +196,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 md:p-5">
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-```
+
   <div>
     <p className="text-xs uppercase tracking-widest text-yellow-200/85 mb-1">
       Night Vector
@@ -234,7 +234,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   </div>
 
 </div>
-```
+
 
   </div>
 </section>
