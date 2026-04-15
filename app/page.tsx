@@ -10,57 +10,54 @@ score?: string;
 };
 
 type AtraData = {
-status: string;
-lastRefresh: string;
-market: {
-dow?: number;
-nasdaq?: number;
-sp500?: number;
-russell?: number;
-nikkei?: number;
-hangSeng?: number;
-ftse?: number;
-dax?: number;
+  status: string;
+  lastRefresh: string;
+  market: {
+    dow?: number;
+    nasdaq?: number;
+    sp500?: number;
+    russell?: number;
+    nikkei?: number;
+    hangSeng?: number;
+    ftse?: number;
+    dax?: number;
 
-```
-dowChange?: number;
-nasdaqChange?: number;
-sp500Change?: number;
-russellChange?: number;
-nikkeiChange?: number;
-hangSengChange?: number;
-ftseChange?: number;
-daxChange?: number;
-
+    dowChange?: number;
+    nasdaqChange?: number;
+    sp500Change?: number;
+    russellChange?: number;
+    nikkeiChange?: number;
+    hangSengChange?: number;
+    ftseChange?: number;
+    daxChange?: number;
+  };
+  risk: {
+    vix?: RiskItem;
+    vvix?: RiskItem;
+    hyg?: RiskItem;
+    tlt?: RiskItem;
+    breadth?: {
+      live?: number;
+    };
+    usdjpy?: RiskItem;
+  };
+  structure: {
+    spy?: {
+      live?: number;
+      change?: number;
+    };
+    rsp?: {
+      live?: number;
+      change?: number;
+    };
+    breadth?: {
+      live?: number;
+      score?: string;
+    };
+    alignmentState?: string;
+    leadershipState?: string;
+  };
 };
-risk: {
-vix?: RiskItem;
-vvix?: RiskItem;
-hyg?: RiskItem;
-tlt?: RiskItem;
-breadth?: {
-live?: number;
-};
-usdjpy?: RiskItem;
-};
-structure: {
-spy?: {
-live?: number;
-change?: number;
-};
-rsp?: {
-live?: number;
-change?: number;
-};
-breadth?: {
-live?: number;
-score?: string;
-};
-alignmentState?: string;
-leadershipState?: string;
-};
-};
-
 export default function Home() {
 const [data, setData] = useState<AtraData | null>(null);
 const [isLoading, setIsLoading] = useState(true);
