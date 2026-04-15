@@ -70,7 +70,7 @@ fetch("https://script.google.com/macros/s/AKfycbzK8wLNQT92AXsnRmnnytWHA3pi6gmuji
   .then((json) => setData(json))
   .catch((err) => console.error("Fetch error:", err))
   .finally(() => setIsLoading(false));
-```
+
 
 }, []);
 
@@ -84,7 +84,7 @@ return "text-zinc-400";
 const getStateColor = (val?: string) => {
 if (!val) return "text-zinc-400";
 
-```
+
 const v = val.toLowerCase();
 
 if (
@@ -115,7 +115,7 @@ if (
 }
 
 return "text-zinc-400";
-```
+
 
 };
 
@@ -146,7 +146,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
            className="absolute inset-0 h-full w-full object-cover opacity-70"
          /> <div className="absolute inset-0 bg-black/30" /> </div>
 
-```
+
       <div className="flex justify-end">
         <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
 
@@ -201,7 +201,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
         </div>
       </div>
     </section>
-```
+
 
 
         {/* STATUS */}
