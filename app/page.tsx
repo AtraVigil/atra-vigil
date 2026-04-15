@@ -157,9 +157,9 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
         Night Signal
       </Link>
 
-      <span className="cursor-default text-orange-300/85 transition-colors hover:text-orange-200">
-        Night Stalker
-      </span>
+      <Link href="/night-stalker" className="text-orange-300/85 transition-colors hover:text-orange-200">
+  Night Stalker
+</Link>
 
       <a href="/sectors" className="text-zinc-300/85 transition-colors hover:text-zinc-100">
         Sectors
@@ -222,16 +222,16 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   </div>
 
   <div>
-    <p className="text-xs uppercase tracking-widest text-orange-300/85 mb-1">
-      Night Stalker
-    </p>
-    <p className="text-xl md:text-2xl font-semibold text-zinc-400">
-      --
-    </p>
-    <p className="text-sm text-zinc-500">
-      --
-    </p>
-  </div>
+  <p className="text-xs uppercase tracking-widest text-orange-300/85 mb-1">
+    Night Stalker
+  </p>
+  <p className="text-xl md:text-2xl font-semibold text-white">
+    {formatValue((data as any)?.nightStalker?.score)}
+  </p>
+  <p className="text-sm text-zinc-400">
+    LR: {formatValue((data as any)?.nightStalker?.lr)} | CG: {formatValue((data as any)?.nightStalker?.cg)} | TS: {formatValue((data as any)?.nightStalker?.ts)}
+  </p>
+</div>
 
 </div>
 
