@@ -65,7 +65,6 @@ const [isLoading, setIsLoading] = useState(true);
 useEffect(() => {
 setIsLoading(true);
 
-```
 fetch("https://script.google.com/macros/s/AKfycbzK8wLNQT92AXsnRmnnytWHA3pi6gmujinQoL_gTZg7MUZS8b8_enlK0zszufKHiaDw/exec")
   .then((res) => res.json())
   .then((json) => setData(json))
