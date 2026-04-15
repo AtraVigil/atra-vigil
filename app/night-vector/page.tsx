@@ -58,19 +58,22 @@ export default function NightVectorPage() {
     <div className="min-h-screen bg-black text-zinc-200 font-mono px-6 py-8">
       <div className="max-w-3xl mx-auto space-y-6">
 
+        {/* BACK LINK */}
+        <div>
+          <a href="/" className="text-sm text-zinc-400 hover:text-white">
+            ← Dashboard
+          </a>
+        </div>
+
         {/* HEADER */}
         <div className="flex items-center gap-4">
           <img
             src="/Vector.png"
             alt="Night Vector"
-            className="h-16 w-16 object-contain"
+            className="h-24 w-24 object-contain"
           />
 
           <div>
-            <div className="text-sm text-white tracking-widest">
-              NIGHT VECTOR
-            </div>
-
             <div className={`text-2xl font-semibold ${getStateColor(data.state)}`}>
               {data.state}
             </div>
@@ -116,7 +119,7 @@ export default function NightVectorPage() {
 
           <div className="flex justify-between">
             <span className="text-white">NIGHT VECTOR SCORE</span>
-            <span className="text-white">
+            <span className={getStateColor(data.state)}>
               {Number(data.score).toFixed(2)}
             </span>
           </div>
