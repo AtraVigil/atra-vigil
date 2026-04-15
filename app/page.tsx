@@ -31,7 +31,6 @@ nikkeiChange?: number;
 hangSengChange?: number;
 ftseChange?: number;
 daxChange?: number;
-```
 
 };
 risk: {
