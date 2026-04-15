@@ -8,7 +8,7 @@ export default function NightSignalPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("PASTE_YOUR_APPS_SCRIPT_URL_HERE");
+        const res = await fetch("https://script.google.com/macros/s/AKfycbzK8wLNQT92AXsnRmnnytWHA3pi6gmujinQoL_gTZg7MUZS8b8_enlK0zszufKHiaDw/exec");
         const json = await res.json();
         setData(json.nightSignal);
       } catch (err) {
