@@ -242,8 +242,8 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   {getStalkerState((data as any)?.nightStalker?.score)}
 </p>
   <p className="text-sm text-zinc-400">
-    LR: {formatValue((data as any)?.nightStalker?.lr)} | CG: {formatValue((data as any)?.nightStalker?.cg)} | TS: {formatValue((data as any)?.nightStalker?.ts)}
-  </p>
+  LR: {((data as any)?.nightStalker?.lr ?? 0).toFixed(1)} | CG: {((data as any)?.nightStalker?.cg ?? 0).toFixed(1)} | TS: {((data as any)?.nightStalker?.ts ?? 0).toFixed(2)}
+</p>
 </div>
 
 </div>
