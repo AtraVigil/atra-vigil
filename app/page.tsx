@@ -174,9 +174,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   Night Stalker
 </Link>
 
-      <a href="/sectors" className="text-zinc-300/85 transition-colors hover:text-zinc-100">
-        Sectors
-      </a>
+
     </nav>
   </div>
 </header>
