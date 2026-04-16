@@ -372,9 +372,9 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
     <h2 className="mb-4 font-semibold">Market Internals (Broad Market Structure)</h2>
 
-    <div className="space-y-2 text-sm max-w-sm">
+    <div className="space-y-1.5 text-sm max-w-md">
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-6">
         <span className="text-white">Breadth</span>
         <span className={`font-semibold ${getStateColor(formatParticipation(data?.structure?.breadth?.score))}`}>
   {formatParticipation(data?.structure?.breadth?.score)}
