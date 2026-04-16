@@ -10,6 +10,14 @@ const getScoreColor = (val: number) => {
   return "text-emerald-400";
 };
 
+const getStalkerState = (val: number) => {
+  if (val === null || val === undefined) return "--";
+  if (val < 40) return "Stable";
+  if (val < 60) return "Neutral";
+  if (val < 75) return "Fragile";
+  return "Critical";
+};
+
 export default function NightStalkerPage() {
   const [data, setData] = useState<any>(null);
 
@@ -58,8 +66,11 @@ export default function NightStalkerPage() {
 
           <div>
             <div className={`text-2xl font-semibold ${getScoreColor(data.score)}`}>
-              {data.score}
-            </div>
+  {getStalkerState(data.score)}
+</div>
+            <div className="text-sm text-zinc-400">
+  Composite State
+</div>
           </div>
         </div>
 
@@ -69,21 +80,21 @@ export default function NightStalkerPage() {
           <div className="flex justify-between">
             <span className="text-white">LR (LIQUIDITY RESILIENCY)</span>
             <span className={getScoreColor(data.lr)}>
-              {data.lr}
+              {data.lr?.toFixed(1)}
             </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-white">CG (CORRELATION GRIP)</span>
             <span className={getScoreColor(data.cg)}>
-              {data.cg}
+              {data.cg?.toFixed(1)}
             </span>
           </div>
 
           <div className="flex justify-between">
             <span className="text-white">TS (TAIL SYNCHRONIZATION)</span>
             <span className={getScoreColor(data.ts)}>
-              {data.ts}
+              {data.ts?.toFixed(2)}
             </span>
           </div>
         </div>
