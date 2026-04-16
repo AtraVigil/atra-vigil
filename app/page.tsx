@@ -159,7 +159,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
       /> <div className="absolute inset-0 bg-black/30" /> </div>
 
 
-  <div className="flex justify-end">
+  <div className="flex justify-center">
     <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
 
       <Link href="/night-vector" className="text-yellow-200/85 transition-colors hover:text-yellow-100">
