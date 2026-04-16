@@ -128,13 +128,15 @@ const getStateColor = (val?: string) => {
 
   // NEUTRAL
   if (
-    v.includes("mixed") ||
-    v.includes("neutral") ||
-    v.includes("extended") ||
-    v.includes("concentrated")
-  ) {
-    return "text-amber-400";
-  }
+  v.includes("mixed") ||
+  v.includes("neutral") ||
+  v.includes("extended") ||
+  v.includes("concentrated") ||
+  v.includes("diverging") ||
+  v.includes("indeterminate")
+) {
+  return "text-amber-400";
+}
 
   // RED
   if (
@@ -153,11 +155,30 @@ const getStateColor = (val?: string) => {
 
 const getVixColor = (val?: number) => {
   if (typeof val !== "number") return "text-zinc-400";
-  if (val < 15) return "text-emerald-400";
-  if (val < 25) return "text-amber-400";
-  return "text-red-400";
+if (val < 15) return "text-emerald-400";
+if (val < 22) return "text-amber-400";
+return "text-red-400";
+};
+const getBreadthColor = (val?: string) => {
+  const v = formatParticipation(val)?.toLowerCase();
+  if (!v) return "text-zinc-400";
+  if (v.includes("broad")) return "text-emerald-400";
+  if (v.includes("concentrated")) return "text-amber-400";
+  if (v.includes("limited")) return "text-red-400";
+  return "text-zinc-400";
 };
 
+const getLeadershipColor = (val?: string) => {
+  if (!val) return "text-zinc-400";
+
+  const v = val.toLowerCase();
+
+  if (v.includes("defensive")) return "text-red-400";
+  if (v.includes("cyclical")) return "text-amber-400";
+  if (v.includes("mixed")) return "text-amber-400";
+
+  return "text-zinc-400";
+};
 const formatPct = (val?: number) => {
   if (typeof val !== "number") return "--";
   return `${val > 0 ? "+" : ""}${(val * 100).toFixed(2)}%`;
@@ -249,46 +270,43 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 md:p-5">
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
+      <div className="space-y-1">
+        <p className="text-sm md:text-base uppercase tracking-widest text-yellow-200/85 mb-1">
+          Night Vector
+        </p>
+        <p className={`text-l md:text-xl font-semibold leading-tight ${getStateColor((data as any)?.nightVector?.state)}`}>
+          {formatBias((data as any)?.nightVector?.state)}
+        </p>
+        <p className={`text-base ${getStateColor((data as any)?.nightVector?.character)}`}>
+          {formatValue((data as any)?.nightVector?.character)}
+        </p>
+      </div>
 
-  <div>
-    <p className="text-xs uppercase tracking-widest text-yellow-200/85 mb-1">
-      Night Vector
-    </p>
-    <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightVector?.state)}`}>
-      {formatBias((data as any)?.nightVector?.state)}
-    </p>
-    <p className={`text-sm ${getStateColor((data as any)?.nightVector?.character)}`}>
-      {formatValue((data as any)?.nightVector?.character)}
-    </p>
-  </div>
+      <div className="space-y-1">
+       <p className="text-sm md:text-base uppercase tracking-widest text-sky-200/85 mb-1">
+          Night Signal
+        </p>
+        <p className={`text-l md:text-xl font-semibold leading-tight ${getStateColor((data as any)?.nightSignal?.alignment)}`}>
+          {formatValue((data as any)?.nightSignal?.alignment)}
+        </p>
+        <p className={`text-base ${getStateColor((data as any)?.nightSignal?.alignmentStrength)}`}>
+          {formatParticipation((data as any)?.nightSignal?.alignmentStrength)}
+        </p>
+      </div>
 
-  <div>
-    <p className="text-xs uppercase tracking-widest text-sky-200/85 mb-1">
-      Night Signal
-    </p>
-    <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightSignal?.alignment)}`}>
-      {formatValue((data as any)?.nightSignal?.alignment)}
-    </p>
-    <p className={`text-sm ${getStateColor((data as any)?.nightSignal?.alignmentStrength)}`}>
-      {formatParticipation((data as any)?.nightSignal?.alignmentStrength)}
-    </p>
-  </div>
+      <div className="space-y-1">
+        <p className="text-sm md:text-base uppercase tracking-widest text-orange-300/85 mb-1">
+          Night Stalker
+        </p>
+        <p className={`text-l md:text-xl font-semibold leading-tight ${getStalkerColor((data as any)?.nightStalker?.score)}`}>
+          {getStalkerState((data as any)?.nightStalker?.score)}
+        </p>
+        <p className="text-base text-zinc-500">
+          Liquidity / Correlation / Tail Risk
+        </p>
+      </div>
 
-  <div>
-  <p className="text-xs uppercase tracking-widest text-orange-300/85 mb-1">
-    Night Stalker
-  </p>
-  <p className={`text-xl md:text-2xl font-semibold ${getStalkerColor((data as any)?.nightStalker?.score)}`}>
-  {getStalkerState((data as any)?.nightStalker?.score)}
-</p>
-  <p className="text-sm text-zinc-500">
-  Liquidity / Correlation / Tail Risk
-</p>
-</div>
-
-</div>
-
-
+    </div>
   </div>
 </section>
 
@@ -376,7 +394,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
       <div className="flex items-center justify-between gap-6">
         <span className="text-white">Breadth</span>
-        <span className={`font-semibold ${getStateColor(formatParticipation(data?.structure?.breadth?.score))}`}>
+        <span className={`font-semibold ${getBreadthColor(data?.structure?.breadth?.score)}`}>
   {formatParticipation(data?.structure?.breadth?.score)}
 </span>
       </div>
@@ -390,7 +408,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
       <div className="flex items-center justify-between">
         <span className="text-white">Leadership</span>
-        <span className={`font-semibold ${getStateColor(data?.structure?.leadershipState)}`}>
+        <span className={`font-semibold ${getLeadershipColor(data?.structure?.leadershipState)}`}>
   {formatValue(data?.structure?.leadershipState)}
 </span>
       </div>
