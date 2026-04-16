@@ -65,6 +65,28 @@ export default function Home() {
 const [data, setData] = useState<AtraData | null>(null);
 const [isLoading, setIsLoading] = useState(true);
 
+const formatBias = (val?: string) => {
+    if (!val) return "-";
+
+    const v = val.toLowerCase();
+
+    if (v.includes("bull")) return "Positive";
+    if (v.includes("bear")) return "Negative";
+    if (v.includes("neutral")) return "Neutral";
+
+    return val;
+  };
+const formatParticipation = (val?: string) => {
+  if (!val) return "-";
+
+  const v = val.toLowerCase();
+
+  if (v.includes("strong")) return "Broad";
+  if (v.includes("weak")) return "Limited";
+  if (v.includes("mixed")) return "Concentrated";
+
+  return val;
+};
 useEffect(() => {
 setIsLoading(true);
 
@@ -213,7 +235,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
       Night Vector
     </p>
     <p className={`text-xl md:text-2xl font-semibold ${getStateColor((data as any)?.nightVector?.state)}`}>
-      {formatValue((data as any)?.nightVector?.state)}
+      {formatBias((data as any)?.nightVector?.state)}
     </p>
     <p className={`text-sm ${getStateColor((data as any)?.nightVector?.character)}`}>
       {formatValue((data as any)?.nightVector?.character)}
@@ -228,7 +250,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
       {formatValue((data as any)?.nightSignal?.alignment)}
     </p>
     <p className={`text-sm ${getStateColor((data as any)?.nightSignal?.alignmentStrength)}`}>
-      {formatValue((data as any)?.nightSignal?.alignmentStrength)}
+      {formatParticipation((data as any)?.nightSignal?.alignmentStrength)}
     </p>
   </div>
 
@@ -250,18 +272,15 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   </div>
 </section>
 
-
-      {/* MARKET SNAPSHOT ONLY */}
+{/* MARKET SNAPSHOT ONLY */}
 <section className="mb-6">
   <div className="rounded-lg border border-zinc-800 p-5">
-    <h2 className="mb-4 text-2xl md:text-3xl font-semibold text-zinc-100 tracking-wide">
-      Market Snapshot
-    </h2>
+    <h2 className="mb-4 font-semibold">Current Market State</h2>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
       <div>
         <p className="mb-2 text-base font-medium text-zinc-300">
-          🇺🇸 United States
+          🇺🇸 United States Indices
         </p>
         <div className="space-y-1 text-sm">
           <p>
@@ -293,7 +312,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
       <div>
         <p className="mb-2 text-base font-medium text-zinc-300">
-          Global
+          🌐 International Indices
         </p>
         <div className="space-y-1 text-sm">
           <p>
@@ -323,16 +342,52 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
-        {/* DISCLAIMER */}
-        <section className="border-t border-zinc-800 pt-4">
-          <p className="text-sm text-zinc-500">
-            This dashboard is for informational and educational purposes only and does not constitute financial advice, investment advice, or a recommendation to buy or sell any security.
-          </p>
-        </section>
+{/* MARKET INTERNALS */}
+<section className="mb-6">
+  <div className="rounded-lg border border-zinc-800 p-5 max-w-md">
+
+    <h2 className="mb-4 font-semibold">Market Internals</h2>
+
+    <div className="space-y-2 text-sm max-w-sm">
+
+      <div className="flex items-center justify-between">
+        <span className="text-zinc-300">Breadth</span>
+        <span className="text-white font-medium">
+          {formatParticipation(data?.structure?.breadth?.score)}
+        </span>
       </div>
-    </main>
-  );
+
+      <div className="flex items-center justify-between">
+        <span className="text-zinc-300">Volatility (VIX)</span>
+        <span className="text-white font-medium">
+          {formatRiskLive(data?.risk?.vix?.live)}
+        </span>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <span className="text-zinc-300">Leadership</span>
+        <span className="text-white font-medium">
+          {formatValue(data?.structure?.leadershipState)}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{/* DISCLAIMER */}
+<section className="border-t border-zinc-800 pt-4">
+  <p className="text-sm text-zinc-500">
+    This dashboard is for informational and educational purposes only and does not constitute financial advice, investment advice, or a recommendation to buy or sell any security.
+  </p>
+</section>
+
+</div>
+</main>
+);
 }
