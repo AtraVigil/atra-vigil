@@ -76,6 +76,7 @@ const formatBias = (val?: string) => {
 
     return val;
   };
+
 const formatParticipation = (val?: string) => {
   if (!val) return "-";
 
@@ -84,9 +85,11 @@ const formatParticipation = (val?: string) => {
   if (v.includes("strong")) return "Broad";
   if (v.includes("weak")) return "Limited";
   if (v.includes("mixed")) return "Concentrated";
+  if (v.includes("narrow")) return "Limited";   // ← ADD THIS
 
   return val;
 };
+
 useEffect(() => {
 setIsLoading(true);
 
@@ -99,66 +102,82 @@ fetch("https://script.google.com/macros/s/AKfycbzK8wLNQT92AXsnRmnnytWHA3pi6gmuji
 }, []);
 
 const getColor = (val?: number) => {
-if (typeof val !== "number") return "text-zinc-400";
-if (val > 0) return "text-emerald-400";
-if (val < 0) return "text-red-400";
-return "text-zinc-400";
+  if (typeof val !== "number") return "text-zinc-400";
+  if (val > 0) return "text-emerald-400";
+  if (val < 0) return "text-red-400";
+  return "text-zinc-400";
 };
 
 const getStateColor = (val?: string) => {
-if (!val) return "text-zinc-400";
+  if (!val) return "text-zinc-400";
 
-const v = val.toLowerCase();
+  const v = val.toLowerCase();
 
-if (
-v.includes("bullish") ||
-v.includes("positive") ||
-v.includes("confirmed") ||
-v.includes("supportive") ||
-v.includes("strong")
-) {
-return "text-emerald-400";
-}
+  // GREEN
+  if (
+    v.includes("bullish") ||
+    v.includes("positive") ||
+    v.includes("confirmed") ||
+    v.includes("supportive") ||
+    v.includes("strong") ||
+    v.includes("broad") ||
+    v.includes("cyclical")
+  ) {
+    return "text-emerald-400";
+  }
 
-if (
-v.includes("mixed") ||
-v.includes("neutral") ||
-v.includes("extended")
-) {
-return "text-yellow-300";
-}
+  // NEUTRAL
+  if (
+    v.includes("mixed") ||
+    v.includes("neutral") ||
+    v.includes("extended") ||
+    v.includes("concentrated")
+  ) {
+    return "text-amber-400";
+  }
 
-if (
-v.includes("weak") ||
-v.includes("stretched") ||
-v.includes("risk") ||
-v.includes("reactive")
-) {
-return "text-red-400";
-}
+  // RED
+  if (
+    v.includes("weak") ||
+    v.includes("stretched") ||
+    v.includes("risk") ||
+    v.includes("reactive") ||
+    v.includes("limited") ||
+    v.includes("defensive")
+  ) {
+    return "text-red-400";
+  }
 
-return "text-zinc-400";
+  return "text-zinc-400";
+};
+
+const getVixColor = (val?: number) => {
+  if (typeof val !== "number") return "text-zinc-400";
+  if (val < 15) return "text-emerald-400";
+  if (val < 25) return "text-amber-400";
+  return "text-red-400";
 };
 
 const formatPct = (val?: number) => {
-if (typeof val !== "number") return "--";
-return `${val > 0 ? "+" : ""}${(val * 100).toFixed(2)}%`;
+  if (typeof val !== "number") return "--";
+  return `${val > 0 ? "+" : ""}${(val * 100).toFixed(2)}%`;
 };
 
 const formatValue = (val?: string | number) => {
-if (val === null || val === undefined || val === "") return "--";
-return val;
+  if (val === null || val === undefined || val === "") return "--";
+  return val;
 };
 
 const formatRiskLive = (val?: number) => {
-if (typeof val !== "number") return "--";
-return val;
+  if (typeof val !== "number") return "--";
+  return val;
 };
 
 const formatRiskScore = (val?: string) => {
-if (!val) return "--";
-return val;
+  if (!val) return "--";
+  return val;
 };
+
 const getStalkerState = (val?: number) => {
   if (typeof val !== "number") return "--";
   if (val < 40) return "Stable";
@@ -166,6 +185,7 @@ const getStalkerState = (val?: number) => {
   if (val < 75) return "Fragile";
   return "Critical";
 };
+
 const getStalkerColor = (val?: number) => {
   if (typeof val !== "number") return "text-zinc-400";
   if (val < 40) return "text-emerald-400";
@@ -204,7 +224,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 {/* STATUS */}
 <section className="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
   <div className="rounded-lg border border-zinc-800 p-4 md:p-5">
-    <p className="text-sm font-medium text-zinc-400">SYSTEM STATUS</p>
+    <p className="text-sm font-semibold text-zinc-400">SYSTEM STATUS</p>
     <p
       className={`mt-1 text-xl font-semibold uppercase ${
         isLoading ? "text-amber-400 animate-pulse" : "text-emerald-400"
@@ -215,8 +235,8 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
   </div>
 
   <div className="rounded-lg border border-zinc-800 p-4 md:p-5">
-    <p className="text-sm font-medium text-zinc-400">LAST REFRESH</p>
-    <p className="mt-1 text-xl font-medium">
+    <p className="text-sm font-semibold text-zinc-400">LAST REFRESH</p>
+    <p className="mt-1 text-xl font-semibold">
       {data?.lastRefresh ? new Date(data.lastRefresh).toLocaleString() : "--"}
     </p>
   </div>
@@ -279,7 +299,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
       <div>
-        <p className="mb-2 text-base font-medium text-zinc-300">
+        <p className="mb-2 text-base font-semibold text-zinc-300">
           🇺🇸 United States Indices
         </p>
         <div className="space-y-1 text-sm">
@@ -311,7 +331,7 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
       </div>
 
       <div>
-        <p className="mb-2 text-base font-medium text-zinc-300">
+        <p className="mb-2 text-base font-semibold text-zinc-300">
           🌐 International Indices
         </p>
         <div className="space-y-1 text-sm">
@@ -348,31 +368,31 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
 {/* MARKET INTERNALS */}
 <section className="mb-6">
-  <div className="rounded-lg border border-zinc-800 p-5 max-w-md">
+  <div className="rounded-lg border border-zinc-800 p-5">
 
-    <h2 className="mb-4 font-semibold">Market Internals</h2>
+    <h2 className="mb-4 font-semibold">Market Internals (Broad Market Structure)</h2>
 
     <div className="space-y-2 text-sm max-w-sm">
 
       <div className="flex items-center justify-between">
-        <span className="text-zinc-300">Breadth</span>
-        <span className="text-white font-medium">
-          {formatParticipation(data?.structure?.breadth?.score)}
-        </span>
+        <span className="text-white">Breadth</span>
+        <span className={`font-semibold ${getStateColor(formatParticipation(data?.structure?.breadth?.score))}`}>
+  {formatParticipation(data?.structure?.breadth?.score)}
+</span>
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-zinc-300">Volatility (VIX)</span>
-        <span className="text-white font-medium">
-          {formatRiskLive(data?.risk?.vix?.live)}
-        </span>
+        <span className="text-white">Volatility (VIX)</span>
+        <span className={`font-semibold ${getVixColor(data?.risk?.vix?.live)}`}>
+  {formatRiskLive(data?.risk?.vix?.live)}
+</span>
       </div>
 
       <div className="flex items-center justify-between">
-        <span className="text-zinc-300">Leadership</span>
-        <span className="text-white font-medium">
-          {formatValue(data?.structure?.leadershipState)}
-        </span>
+        <span className="text-white">Leadership</span>
+        <span className={`font-semibold ${getStateColor(data?.structure?.leadershipState)}`}>
+  {formatValue(data?.structure?.leadershipState)}
+</span>
       </div>
 
     </div>
