@@ -214,6 +214,18 @@ const getStalkerColor = (val?: number) => {
   if (val < 75) return "text-amber-400";
   return "text-red-400";
 };
+
+const getAtraColor = (val?: string) => {
+  if (!val) return "text-zinc-400";
+
+  const v = val.toLowerCase();
+
+  if (v.includes("favorable")) return "text-emerald-400";
+  if (v.includes("neutral")) return "text-amber-400";
+  if (v.includes("defensive")) return "text-red-400";
+
+  return "text-zinc-400";
+};
 return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div className="max-w-7xl mx-auto">
 {/* HEADER */} <header className="mb-6 border-b border-zinc-800 pb-4"> <div className="relative h-32 w-full mb-3 overflow-hidden rounded-lg"> <img
         src="/header-final.png"
@@ -268,18 +280,29 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
 <section className="mb-6">
   <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 md:p-5">
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
 
-      <div className="space-y-1">
+<div className="space-y-1">
+  <p className="text-sm md:text-base uppercase tracking-widest text-blue-300/85 mb-1">
+    Noctis Index
+  </p>
+  <p className={`text-l md:text-xl font-semibold leading-tight ${getAtraColor((data as any)?.atraSignal?.state)}`}>
+    {formatValue((data as any)?.atraSignal?.state)}
+  </p>
+  <p className="text-base text-zinc-500">
+    Market Score
+  </p>
+</div>      
+<div className="space-y-1">
         <p className="text-sm md:text-base uppercase tracking-widest text-yellow-200/85 mb-1">
           Night Vector
         </p>
         <p className={`text-l md:text-xl font-semibold leading-tight ${getStateColor((data as any)?.nightVector?.state)}`}>
           {formatBias((data as any)?.nightVector?.state)}
         </p>
-        <p className={`text-base ${getStateColor((data as any)?.nightVector?.character)}`}>
-          {formatValue((data as any)?.nightVector?.character)}
-        </p>
+        <p className="text-base text-zinc-500">
+  Market State
+</p>
       </div>
 
       <div className="space-y-1">
@@ -289,9 +312,9 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
         <p className={`text-l md:text-xl font-semibold leading-tight ${getStateColor((data as any)?.nightSignal?.alignment)}`}>
           {formatValue((data as any)?.nightSignal?.alignment)}
         </p>
-        <p className={`text-base ${getStateColor((data as any)?.nightSignal?.alignmentStrength)}`}>
-          {formatParticipation((data as any)?.nightSignal?.alignmentStrength)}
-        </p>
+        <p className="text-base text-zinc-500">
+  Market Alignment
+</p>
       </div>
 
       <div className="space-y-1">
@@ -302,8 +325,8 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
           {getStalkerState((data as any)?.nightStalker?.score)}
         </p>
         <p className="text-base text-zinc-500">
-          Liquidity / Correlation / Tail Risk
-        </p>
+  Market Stability
+</p>
       </div>
 
     </div>
@@ -379,40 +402,6 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
           </p>
         </div>
       </div>
-    </div>
-
-  </div>
-</section>
-
-{/* MARKET INTERNALS */}
-<section className="mb-6">
-  <div className="rounded-lg border border-zinc-800 p-5">
-
-    <h2 className="mb-4 font-semibold">Market Internals (Broad Market Structure)</h2>
-
-    <div className="space-y-1.5 text-sm max-w-md">
-
-      <div className="flex items-center justify-between gap-6">
-        <span className="text-white">Breadth</span>
-        <span className={`font-semibold ${getBreadthColor(data?.structure?.breadth?.score)}`}>
-  {formatParticipation(data?.structure?.breadth?.score)}
-</span>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <span className="text-white">Volatility (VIX)</span>
-        <span className={`font-semibold ${getVixColor(data?.risk?.vix?.live)}`}>
-  {formatRiskLive(data?.risk?.vix?.live)}
-</span>
-      </div>
-
-      <div className="flex items-center justify-between">
-        <span className="text-white">Leadership</span>
-        <span className={`font-semibold ${getLeadershipColor(data?.structure?.leadershipState)}`}>
-  {formatValue(data?.structure?.leadershipState)}
-</span>
-      </div>
-
     </div>
 
   </div>
