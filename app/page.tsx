@@ -93,7 +93,7 @@ const formatParticipation = (val?: string) => {
 useEffect(() => {
 setIsLoading(true);
 
-fetch("https://script.google.com/macros/s/AKfycbzK8wLNQT92AXsnRmnnytWHA3pi6gmujinQoL_gTZg7MUZS8b8_enlK0zszufKHiaDw/exec")
+fetch("https://script.google.com/macros/s/AKfycbzav0sRI-Zp9bh41Ui1VOIG3-OECAyHNiPQaRSyKm-WOIfSbWdZuDAsCmre0kCl_RrotQ/exec")
 .then((res) => res.json())
 .then((json) => setData(json))
 .catch((err) => console.error("Fetch error:", err))
@@ -199,22 +199,6 @@ const formatRiskScore = (val?: string) => {
   return val;
 };
 
-const getStalkerState = (val?: number) => {
-  if (typeof val !== "number") return "--";
-  if (val < 40) return "Stable";
-  if (val < 60) return "Neutral";
-  if (val < 75) return "Fragile";
-  return "Critical";
-};
-
-const getStalkerColor = (val?: number) => {
-  if (typeof val !== "number") return "text-zinc-400";
-  if (val < 40) return "text-emerald-400";
-  if (val < 60) return "text-zinc-300";
-  if (val < 75) return "text-amber-400";
-  return "text-red-400";
-};
-
 const getAtraColor = (val?: string) => {
   if (!val) return "text-zinc-400";
 
@@ -235,27 +219,13 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
 
 
   <div className="flex justify-center">
-    <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
-
-      <Link href="/night-vector" className="text-yellow-200/85 transition-colors hover:text-yellow-100">
-        Night Vector
-      </Link>
-
-      <Link href="/night-signal" className="text-sky-200/85 transition-colors hover:text-sky-100">
-        Night Signal
-      </Link>
-
-      <Link href="/night-stalker" className="text-orange-300/85 transition-colors hover:text-orange-200">
-  Night Stalker
-</Link>
-
-
-    </nav>
+  <nav className="flex flex-wrap justify-end gap-4 text-sm md:text-base uppercase tracking-[0.12em]">
+</nav>
   </div>
 </header>
 
 {/* STATUS */}
-<section className="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
+<section className="grid grid-cols-1 gap-4 mb-6">
   <div className="rounded-lg border border-zinc-800 p-4 md:p-5">
     <p className="text-sm font-semibold text-zinc-400">SYSTEM STATUS</p>
     <p
@@ -267,70 +237,114 @@ return ( <main className="min-h-screen bg-black text-white p-4 md:p-8"> <div cla
     </p>
   </div>
 
-  <div className="rounded-lg border border-zinc-800 p-4 md:p-5">
-    <p className="text-sm font-semibold text-zinc-400">LAST REFRESH</p>
-    <p className="mt-1 text-xl font-semibold">
-      {data?.lastRefresh ? new Date(data.lastRefresh).toLocaleString() : "--"}
+{/* OPERATIONAL STATE */}
+<section className="mb-6">
+  <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-6 text-center">
+    
+    <p className="text-xs uppercase tracking-[0.22em] text-zinc-500 mb-3">
+      Operational State
     </p>
+
+    <p className={`text-5xl md:text-7xl font-semibold tracking-tight ${getAtraColor((data as any)?.operationalState)}`}>
+      {formatValue((data as any)?.operationalState)}
+    </p>
+
+    <p className="mt-3 text-sm text-zinc-600">
+      Market Condition Classification
+    </p>
+
   </div>
 </section>
 
-
-{/* SIGNAL STRIP */}
-
+{/* CORE COMPONENTS */}
 <section className="mb-6">
-  <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-4 md:p-5">
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+  <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-5">
 
-<div className="space-y-1">
-  <p className="text-sm md:text-base uppercase tracking-widest text-blue-300/85 mb-1">
-    Noctis Index
-  </p>
-  <p className={`text-l md:text-xl font-semibold leading-tight ${getAtraColor((data as any)?.atraSignal?.state)}`}>
-    {formatValue((data as any)?.atraSignal?.state)}
-  </p>
-  <p className="text-base text-zinc-500">
-    Market Score
-  </p>
-</div>      
-<div className="space-y-1">
-        <p className="text-sm md:text-base uppercase tracking-widest text-yellow-200/85 mb-1">
-          Night Vector
+    <p className="text-sm uppercase tracking-widest text-zinc-400 mb-4">
+      Core Components
+    </p>
+
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+
+      {/* MOTUS */}
+      <div>
+        <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-600 mb-2">
+          Motus
         </p>
-        <p className={`text-l md:text-xl font-semibold leading-tight ${getStateColor((data as any)?.nightVector?.state)}`}>
-          {formatBias((data as any)?.nightVector?.state)}
+        <p className={`text-lg font-semibold ${getStateColor((data as any)?.components?.motus)}`}>
+          {formatBias((data as any)?.components?.motus)}
         </p>
-        <p className="text-base text-zinc-500">
-  Market State
+      </div>
+
+      {/* CONCORDIA */}
+      <div>
+        <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-600 mb-2">
+          Concordia
+        </p>
+        <p className={`text-lg font-semibold ${getStateColor((data as any)?.components?.concordia)}`}>
+          {formatValue((data as any)?.components?.concordia)}
+        </p>
+      </div>
+
+      {/* CUSTODIA */}
+      <div>
+        <p className="text-[11px] uppercase tracking-[0.18em] text-zinc-600 mb-2">
+          Custodia
+        </p>
+        <p className={`text-2xl font-semibold ${getStateColor((data as any)?.components?.custodia)}`}>
+  {formatValue((data as any)?.components?.custodia)}
 </p>
       </div>
 
-      <div className="space-y-1">
-       <p className="text-sm md:text-base uppercase tracking-widest text-sky-200/85 mb-1">
-          Night Signal
+      {/* AXIS */}
+      <div>
+        <p className="text-xs uppercase tracking-widest text-zinc-500 mb-1">
+          Axis
         </p>
-        <p className={`text-l md:text-xl font-semibold leading-tight ${getStateColor((data as any)?.nightSignal?.alignment)}`}>
-          {formatValue((data as any)?.nightSignal?.alignment)}
-        </p>
-        <p className="text-base text-zinc-500">
-  Market Alignment
-</p>
-      </div>
-
-      <div className="space-y-1">
-        <p className="text-sm md:text-base uppercase tracking-widest text-orange-300/85 mb-1">
-          Night Stalker
-        </p>
-        <p className={`text-l md:text-xl font-semibold leading-tight ${getStalkerColor((data as any)?.nightStalker?.score)}`}>
-          {getStalkerState((data as any)?.nightStalker?.score)}
-        </p>
-        <p className="text-base text-zinc-500">
-  Market Stability
+        <p className={`text-lg font-semibold ${getStateColor((data as any)?.components?.axis)}`}>
+  {formatValue((data as any)?.components?.axis)}
 </p>
       </div>
 
     </div>
+
   </div>
+</section>
+
+{/* OBSERVED FORWARD BEHAVIOR */}
+<section className="mb-6">
+  <div className="rounded-lg border border-zinc-800 bg-zinc-950 p-5">
+
+    <p className="text-xs uppercase tracking-[0.20em] text-zinc-500 mb-5">
+      Observed Forward Behavior (Historical)
+    </p>
+
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+
+      {/* NEXT DAY */}
+      <div>
+        <p className="text-zinc-300 font-semibold mb-1">Next Day</p>
+        <p>Win Rate: --</p>
+        <p>Avg Return: --</p>
+      </div>
+
+      {/* 3 DAY */}
+      <div>
+        <p className="text-zinc-300 font-semibold mb-1">3-Day</p>
+        <p>Drift: --</p>
+        <p>Volatility: --</p>
+      </div>
+
+      {/* TAIL RISK */}
+      <div>
+        <p className="text-zinc-300 font-semibold mb-1">Tail Risk</p>
+        <p>--</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 </section>
 
 {/* MARKET SNAPSHOT ONLY */}
