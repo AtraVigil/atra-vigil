@@ -18,7 +18,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch("PASTE_YOUR_APPS_SCRIPT_URL")
+    fetch("https://script.google.com/macros/s/AKfycbzav0sRI-Zp9bh41Ui1VOIG3-OECAyHNiPQaRSyKm-WOIfSbWdZuDAsCmre0kCl_RrotQ/exec")
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch((err) => console.error(err))
