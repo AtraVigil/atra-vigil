@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { loadAtraPraeData } from "../../lib/atrapraeSheet";
 
 export const metadata = {
   title: "Atra Prae V2 | Atra Vigil",
@@ -7,143 +7,6 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const runtime = "nodejs";
-
-type ImportRow = {
-  ticker: string;
-  date?: string;
-  snapshotTime?: string;
-};
-
-type ImportSource = {
-  file: string;
-  sessionDate: string;
-  snapshotTime: string;
-  count: number;
-};
-
-type CandidateRow = {
-  eventId: string;
-  ticker: string;
-  timestamp: string;
-  price: string;
-  threeMPass: string;
-  wmicroActive: string;
-};
-
-type CandidateSummary = {
-  count: number;
-  threeMPassCount: number;
-  wmicroActiveCount: number;
-};
-
-type WMicroRow = {
-  eventId: string;
-  ticker: string;
-  candidateTime: string;
-  state: string;
-  status: string;
-  tickCount: string;
-  lastReturn: string;
-  highReturn: string;
-  lowReturn: string;
-};
-
-type WMicroSummary = {
-  sessions: number;
-  active: number;
-  supporting: number;
-  fading: number;
-  thin: number;
-  neutral: number;
-};
-
-type AtraPraeData = {
-  importSource: ImportSource;
-  importRows: ImportRow[];
-  candidateSummary: CandidateSummary;
-  candidateRows: CandidateRow[];
-  wmicroSummary: WMicroSummary;
-  wmicroRows: WMicroRow[];
-  loadError?: string;
-};
-
-const emptyData: AtraPraeData = {
-  importSource: {
-    file: "not configured",
-    sessionDate: "--",
-    snapshotTime: "--",
-    count: 0,
-  },
-  importRows: [],
-  candidateSummary: {
-    count: 0,
-    threeMPassCount: 0,
-    wmicroActiveCount: 0,
-  },
-  candidateRows: [],
-  wmicroSummary: {
-    sessions: 0,
-    active: 0,
-    supporting: 0,
-    fading: 0,
-    thin: 0,
-    neutral: 0,
-  },
-  wmicroRows: [],
-};
-
-function parseAtraPraeData(text: string): AtraPraeData {
-  const parsed = JSON.parse(text);
-
-  return {
-    ...emptyData,
-    ...parsed,
-    importSource: {
-      ...emptyData.importSource,
-      ...(parsed.importSource || {}),
-    },
-    candidateSummary: {
-      ...emptyData.candidateSummary,
-      ...(parsed.candidateSummary || {}),
-    },
-    wmicroSummary: {
-      ...emptyData.wmicroSummary,
-      ...(parsed.wmicroSummary || {}),
-    },
-    importRows: Array.isArray(parsed.importRows) ? parsed.importRows : [],
-    candidateRows: Array.isArray(parsed.candidateRows) ? parsed.candidateRows : [],
-    wmicroRows: Array.isArray(parsed.wmicroRows) ? parsed.wmicroRows : [],
-  };
-}
-
-function loadAtraPraeData(): AtraPraeData {
-  try {
-    const b64 = process.env.ATRA_PRAE_DATA_B64;
-    if (b64) {
-      return parseAtraPraeData(Buffer.from(b64, "base64").toString("utf-8"));
-    }
-
-    const rawJson = process.env.ATRA_PRAE_DATA_JSON;
-    if (rawJson) {
-      return parseAtraPraeData(rawJson);
-    }
-
-    const file = process.env.ATRA_PRAE_DATA_FILE;
-    if (file && existsSync(file)) {
-      return parseAtraPraeData(readFileSync(file, "utf-8"));
-    }
-
-    return {
-      ...emptyData,
-      loadError: "Atra Prae data source is not configured.",
-    };
-  } catch {
-    return {
-      ...emptyData,
-      loadError: "Atra Prae data failed to load.",
-    };
-  }
-}
 
 function Metric({ label, value }: { label: string; value: string | number }) {
   return (
@@ -228,8 +91,8 @@ function StatePill({ value }: { value: string }) {
   );
 }
 
-export default function AtraPraePage() {
-  const data = loadAtraPraeData();
+export default async function AtraPraePage() {
+  const data = await loadAtraPraeData();
 
   return (
     <main className="min-h-screen bg-black p-4 text-white md:p-8">
