@@ -41,6 +41,15 @@ export default function Home() {
           </div>
         </header>
 
+        <nav className="mb-6 flex gap-3 text-sm">
+          <a
+            href="/atraprae"
+            className="rounded-lg border border-blue-900/60 bg-blue-950/30 px-3 py-2 text-blue-300 hover:text-white"
+          >
+            AtraPrae
+          </a>
+        </nav>
+
         {/* STATUS + OPERATIONAL */}
         <section className="mb-8">
           <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-6">
