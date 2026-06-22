@@ -13,7 +13,9 @@ type OvernightMarket = {
   ok: boolean;
   error: string | null;
   isMarketOpen: boolean;
-  marketStatusLabel: "Open" | "Closed";
+  marketStatusLabel: "Open" | "Closed" | "Holiday" | "Lunch Break";
+  marketTone: DataTone;
+  holidayName: string | null;
   localClock: string;
   price: number | null;
   change: number | null;
@@ -230,7 +232,7 @@ export default function Home() {
                   </div>
 
                   <div className="text-right">
-                    <div className={`ml-auto h-2.5 w-2.5 rounded-full ${dotToneClass(market.dataTone)}`} />
+                    <div className={`ml-auto h-2.5 w-2.5 rounded-full ${dotToneClass(market.marketTone)}`} />
                     <p className={`mt-3 text-xs font-semibold uppercase tracking-[0.2em] ${statusToneClass(market.dataTone)}`}>
                       {market.marketStatusLabel}
                     </p>
