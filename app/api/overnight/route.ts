@@ -132,7 +132,18 @@ const MARKETS: MarketConfig[] = [
       "2026-12-31": CLOSED("New Year's Eve"),
     },
   },
-];
+ ];
+
+function publicMarketBase(market: MarketConfig) {
+  return {
+    key: market.key,
+    name: market.name,
+    symbol: market.symbol,
+    region: market.region,
+    flag: market.flag,
+    exchangeTimeZone: market.exchangeTimeZone,
+  };
+}
 
 function getExchangeClock(timeZone: string) {
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -396,7 +407,7 @@ export async function GET() {
         );
 
         return {
-          ...market,
+          ...publicMarketBase(market),
           ok: usable,
           error: usable ? null : "No usable market data returned.",
           ...sessionState,
@@ -420,7 +431,7 @@ export async function GET() {
         };
       } catch (err) {
         return {
-          ...market,
+          ...publicMarketBase(market),
           ok: false,
           error: err instanceof Error ? err.message : "Unknown fetch error.",
           ...sessionState,
