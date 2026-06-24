@@ -12,7 +12,8 @@ type Asset = {
   price: number | null;
   change: number | null;
   changePercent: number | null;
-  previousClose: number | null;
+  changeLabel: string;
+  changeBasis: string;
   open: number | null;
   high: number | null;
   low: number | null;
@@ -118,7 +119,7 @@ export default function UsMarketPage() {
               U.S. Market Command
             </h1>
             <p className="mt-3 max-w-3xl text-sm leading-6 text-zinc-400">
-              Strict no-proxy view. Only direct index symbols currently verified with your Finnhub feed are shown.
+              Direct index view. Values use the latest public market feed.
             </p>
           </div>
 
@@ -168,17 +169,17 @@ export default function UsMarketPage() {
                     </div>
 
                     <div className={`mt-2 text-sm font-medium ${valueClass(asset.changeTone)}`}>
-                      {formatSigned(asset.change)} / {formatSigned(asset.changePercent)}%
+                      {asset.changeLabel}: {formatSigned(asset.change)} / {formatSigned(asset.changePercent)}%
                     </div>
 
-                    <div className="mt-5 grid grid-cols-2 gap-3 text-xs">
+                    <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-zinc-600">
+                      Basis: {asset.changeBasis}
+                    </div>
+
+                    <div className="mt-5 grid grid-cols-3 gap-3 text-xs">
                       <div className="rounded-xl bg-white/[0.03] p-3">
                         <div className="text-zinc-600">Open</div>
                         <div className="mt-1 text-zinc-300">{formatNumber(asset.open)}</div>
-                      </div>
-                      <div className="rounded-xl bg-white/[0.03] p-3">
-                        <div className="text-zinc-600">Prev Close</div>
-                        <div className="mt-1 text-zinc-300">{formatNumber(asset.previousClose)}</div>
                       </div>
                       <div className="rounded-xl bg-white/[0.03] p-3">
                         <div className="text-zinc-600">High</div>

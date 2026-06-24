@@ -1,41 +1,6 @@
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
-type FinnhubQuote = {
-  c?: number;
-  d?: number;
-  dp?: number;
-  h?: number;
-  l?: number;
-  o?: number;
-  pc?: number;
-  t?: number;
-};
-
-type FinnhubCandle = {
-  c?: number[];
-  h?: number[];
-  l?: number[];
-  o?: number[];
-  t?: number[];
-  v?: number[];
-  s?: string;
-};
-
-type MarketSession = {
-  start: number;
-  end: number;
-  state: "open" | "break";
-  label?: "Open" | "Lunch Break";
-};
-
-type MarketHoliday = {
-  label: string;
-  status: "closed" | "early_close";
-  closeMinutes?: number;
-};
 
 type MarketConfig = {
   key: string;
@@ -44,16 +9,8 @@ type MarketConfig = {
   region: string;
   flag: string;
   exchangeTimeZone: string;
-  sessions: MarketSession[];
-  holidays2026: Record<string, MarketHoliday>;
+  sessions: [number, number][];
 };
-
-const CLOSED = (label: string): MarketHoliday => ({ label, status: "closed" });
-const EARLY_CLOSE = (label: string, closeMinutes: number): MarketHoliday => ({
-  label,
-  status: "early_close",
-  closeMinutes,
-});
 
 const MARKETS: MarketConfig[] = [
   {
@@ -61,403 +18,295 @@ const MARKETS: MarketConfig[] = [
     name: "Nikkei 225",
     symbol: "^N225",
     region: "Japan",
-    flag: "🇯🇵",
+    flag: "JP",
     exchangeTimeZone: "Asia/Tokyo",
     sessions: [
-      { start: 9 * 60, end: 11 * 60 + 30, state: "open", label: "Open" },
-      { start: 11 * 60 + 30, end: 12 * 60 + 30, state: "break", label: "Lunch Break" },
-      { start: 12 * 60 + 30, end: 15 * 60 + 30, state: "open", label: "Open" },
+      [9 * 60, 11 * 60 + 30],
+      [12 * 60 + 30, 15 * 60 + 30],
     ],
-    holidays2026: {
-      "2026-01-01": CLOSED("New Year's Day"),
-      "2026-01-02": CLOSED("Market Holiday"),
-      "2026-01-03": CLOSED("Market Holiday"),
-      "2026-01-12": CLOSED("Coming of Age Day"),
-      "2026-02-11": CLOSED("National Foundation Day"),
-      "2026-02-23": CLOSED("Emperor's Birthday"),
-      "2026-03-20": CLOSED("Vernal Equinox"),
-      "2026-04-29": CLOSED("Showa Day"),
-      "2026-05-03": CLOSED("Constitution Memorial Day"),
-      "2026-05-04": CLOSED("Greenery Day"),
-      "2026-05-05": CLOSED("Children's Day"),
-      "2026-05-06": CLOSED("Constitution Memorial Day observed"),
-      "2026-07-20": CLOSED("Marine Day"),
-      "2026-08-11": CLOSED("Mountain Day"),
-      "2026-09-21": CLOSED("Respect for the Aged Day"),
-      "2026-09-22": CLOSED("National Holiday"),
-      "2026-09-23": CLOSED("Autumnal Equinox"),
-      "2026-10-12": CLOSED("Sports Day"),
-      "2026-11-03": CLOSED("Culture Day"),
-      "2026-11-23": CLOSED("Labor Thanksgiving Day"),
-      "2026-12-31": CLOSED("Market Holiday"),
-    },
   },
   {
     key: "ftse",
     name: "FTSE 100",
     symbol: "^FTSE",
     region: "United Kingdom",
-    flag: "🇬🇧",
+    flag: "UK",
     exchangeTimeZone: "Europe/London",
-    sessions: [{ start: 8 * 60, end: 16 * 60 + 30, state: "open", label: "Open" }],
-    holidays2026: {
-      "2026-01-01": CLOSED("New Year's Day"),
-      "2026-04-03": CLOSED("Good Friday"),
-      "2026-04-06": CLOSED("Easter Monday"),
-      "2026-05-04": CLOSED("Early May Bank Holiday"),
-      "2026-05-25": CLOSED("Spring Bank Holiday"),
-      "2026-08-31": CLOSED("Summer Bank Holiday"),
-      "2026-12-24": EARLY_CLOSE("Christmas Eve", 12 * 60 + 30),
-      "2026-12-25": CLOSED("Christmas Day"),
-      "2026-12-28": CLOSED("Boxing Day observed"),
-      "2026-12-31": EARLY_CLOSE("New Year's Eve", 12 * 60 + 30),
-    },
+    sessions: [[8 * 60, 16 * 60 + 30]],
   },
   {
     key: "dax",
     name: "DAX",
     symbol: "^GDAXI",
     region: "Germany",
-    flag: "🇩🇪",
+    flag: "DE",
     exchangeTimeZone: "Europe/Berlin",
-    sessions: [{ start: 9 * 60, end: 17 * 60 + 30, state: "open", label: "Open" }],
-    holidays2026: {
-      "2026-01-01": CLOSED("New Year's Day"),
-      "2026-04-03": CLOSED("Good Friday"),
-      "2026-04-06": CLOSED("Easter Monday"),
-      "2026-05-01": CLOSED("Labor Day"),
-      "2026-12-24": CLOSED("Christmas Eve"),
-      "2026-12-25": CLOSED("Christmas Day"),
-      "2026-12-26": CLOSED("Boxing Day"),
-      "2026-12-31": CLOSED("New Year's Eve"),
-    },
+    sessions: [[9 * 60, 17 * 60 + 30]],
   },
- ];
+];
 
-function publicMarketBase(market: MarketConfig) {
-  return {
-    key: market.key,
-    name: market.name,
-    symbol: market.symbol,
-    region: market.region,
-    flag: market.flag,
-    exchangeTimeZone: market.exchangeTimeZone,
-  };
+const CACHE_MS = 20_000;
+
+let cachedAt = 0;
+let cachedPayload: unknown = null;
+
+function numberOrNull(value: unknown): number | null {
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-function getExchangeClock(timeZone: string) {
+function toneFor(value: number | null) {
+  if (value === null) return "neutral";
+  if (value > 0) return "green";
+  if (value < 0) return "red";
+  return "neutral";
+}
+
+function partsInZone(date: Date, timeZone: string) {
   const parts = new Intl.DateTimeFormat("en-US", {
     timeZone,
-    weekday: "short",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
+    weekday: "short",
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
-  }).formatToParts(new Date());
+  }).formatToParts(date);
 
-  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
-  const rawHour = Number(part("hour"));
-  const hour = rawHour === 24 ? 0 : rawHour;
-  const minute = Number(part("minute"));
+  const get = (type: string) => parts.find((p) => p.type === type)?.value || "";
 
   return {
-    weekday: part("weekday"),
-    dateKey: `${part("year")}-${part("month")}-${part("day")}`,
-    minutes: hour * 60 + minute,
+    year: Number(get("year")),
+    month: Number(get("month")),
+    day: Number(get("day")),
+    weekday: get("weekday"),
+    hour: Number(get("hour")),
+    minute: Number(get("minute")),
   };
 }
 
-function formatLocalClock(timeZone: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    timeZone,
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  }).format(new Date());
-}
-
-function formatQuoteExchangeTime(timestampSeconds?: number, timeZone?: string) {
-  if (!timestampSeconds || !timeZone) return null;
-
+function localClock(date: Date, timeZone: string) {
   return new Intl.DateTimeFormat("en-US", {
     timeZone,
     month: "short",
-    day: "2-digit",
+    day: "numeric",
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
-  }).format(new Date(timestampSeconds * 1000));
+  }).format(date);
 }
 
-function isWeekend(weekday: string) {
-  return weekday === "Sat" || weekday === "Sun";
-}
+function marketStatus(market: MarketConfig) {
+  const now = new Date();
+  const p = partsInZone(now, market.exchangeTimeZone);
+  const minute = p.hour * 60 + p.minute;
 
-function applyEarlyClose(sessions: MarketSession[], closeMinutes?: number) {
-  if (!closeMinutes) return sessions;
-
-  return sessions
-    .map((session) => {
-      if (session.start >= closeMinutes) return null;
-      if (session.end > closeMinutes) return { ...session, end: closeMinutes };
-      return session;
-    })
-    .filter(Boolean) as MarketSession[];
-}
-
-function getMarketSessionState(market: MarketConfig): {
-  isMarketOpen: boolean;
-  marketStatusLabel: "Open" | "Closed" | "Holiday" | "Lunch Break";
-  marketTone: "green" | "red" | "amber";
-  holidayName: string | null;
-} {
-  const clock = getExchangeClock(market.exchangeTimeZone);
-  const holiday = market.holidays2026[clock.dateKey];
-
-  if (holiday?.status === "closed") {
-    return {
-      isMarketOpen: false,
-      marketStatusLabel: "Holiday",
-      marketTone: "red",
-      holidayName: holiday.label,
-    };
-  }
-
-  if (isWeekend(clock.weekday)) {
+  if (p.weekday === "Sat" || p.weekday === "Sun") {
     return {
       isMarketOpen: false,
       marketStatusLabel: "Closed",
       marketTone: "red",
-      holidayName: null,
+      holidayName: p.weekday === "Sat" || p.weekday === "Sun" ? "Weekend" : null,
+      localClock: localClock(now, market.exchangeTimeZone),
     };
   }
 
-  const sessions = applyEarlyClose(market.sessions, holiday?.closeMinutes);
-  const current = sessions.find(
-    (s) => clock.minutes >= s.start && clock.minutes < s.end
-  );
-
-  if (current?.state === "open") {
-    return {
-      isMarketOpen: true,
-      marketStatusLabel: "Open",
-      marketTone: "green",
-      holidayName: holiday?.label ?? null,
-    };
-  }
-
-  if (current?.state === "break") {
+  if (market.key === "nikkei" && minute >= 11 * 60 + 30 && minute < 12 * 60 + 30) {
     return {
       isMarketOpen: false,
       marketStatusLabel: "Lunch Break",
       marketTone: "amber",
       holidayName: null,
+      localClock: localClock(now, market.exchangeTimeZone),
     };
   }
 
+  const isOpen = market.sessions.some(([start, end]) => minute >= start && minute <= end);
+
   return {
-    isMarketOpen: false,
-    marketStatusLabel: "Closed",
-    marketTone: "red",
-    holidayName: holiday?.label ?? null,
+    isMarketOpen: isOpen,
+    marketStatusLabel: isOpen ? "Open" : "Closed",
+    marketTone: isOpen ? "green" : "red",
+    holidayName: null,
+    localClock: localClock(now, market.exchangeTimeZone),
   };
 }
 
-function isUsableQuote(q: FinnhubQuote) {
-  return typeof q.pc === "number" && q.pc > 0;
-}
+async function yahooChart(symbol: string) {
+  const enc = encodeURIComponent(symbol);
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${enc}?interval=1m&range=1d`;
 
-function getQuoteAgeMinutes(timestampSeconds?: number | null) {
-  if (!timestampSeconds) return null;
-  return Math.max(0, Math.round((Date.now() - timestampSeconds * 1000) / 60000));
-}
+  const res = await fetch(url, {
+    cache: "no-store",
+    headers: {
+      "User-Agent": "Mozilla/5.0",
+      Accept: "application/json,text/plain,*/*",
+    },
+  });
 
-function getDataStatus(
-  usable: boolean,
-  marketOpen: boolean,
-  ageMinutes: number | null
-): {
-  dataStatus: "open" | "closed" | "stale";
-  dataStatusLabel: "Open" | "Closed" | "Stale";
-  dataTone: "green" | "red" | "amber";
-} {
-  if (!usable) {
-    return { dataStatus: "stale", dataStatusLabel: "Stale", dataTone: "amber" };
+  if (!res.ok) {
+    throw new Error(`Yahoo HTTP ${res.status}`);
   }
-
-  if (!marketOpen) {
-    return { dataStatus: "closed", dataStatusLabel: "Closed", dataTone: "red" };
-  }
-
-  if (ageMinutes !== null && ageMinutes <= 20) {
-    return { dataStatus: "open", dataStatusLabel: "Open", dataTone: "green" };
-  }
-
-  return { dataStatus: "stale", dataStatusLabel: "Stale", dataTone: "amber" };
-}
-
-async function fetchQuote(symbol: string, token: string): Promise<FinnhubQuote> {
-  const url = new URL("https://finnhub.io/api/v1/quote");
-  url.searchParams.set("symbol", symbol);
-  url.searchParams.set("token", token);
-
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Finnhub quote HTTP ${res.status}`);
 
   return res.json();
 }
 
-async function fetchCandles(symbol: string, token: string): Promise<FinnhubCandle> {
-  const now = Math.floor(Date.now() / 1000);
-  const from = now - 60 * 60 * 12;
+function parseYahoo(chart: Record<string, unknown>) {
+  const result = (((chart.chart as Record<string, unknown>)?.result as unknown[]) || [])[0] as Record<string, unknown> | undefined;
 
-  const url = new URL("https://finnhub.io/api/v1/stock/candle");
-  url.searchParams.set("symbol", symbol);
-  url.searchParams.set("resolution", "1");
-  url.searchParams.set("from", String(from));
-  url.searchParams.set("to", String(now));
-  url.searchParams.set("token", token);
-
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Finnhub candle HTTP ${res.status}`);
-
-  return res.json();
-}
-
-function latestCandle(candle: FinnhubCandle) {
-  if (candle.s !== "ok") return null;
-  if (!candle.t?.length || !candle.c?.length) return null;
-
-  const lastIndex = candle.t.length - 1;
-  const timestamp = candle.t[lastIndex];
-  const close = candle.c[lastIndex];
-
-  if (typeof timestamp !== "number" || typeof close !== "number" || close <= 0) {
-    return null;
+  if (!result) {
+    throw new Error("Yahoo returned no chart result");
   }
 
+  const meta = result.meta as Record<string, unknown>;
+  const timestamps = (result.timestamp as unknown[]) || [];
+  const quote = (((result.indicators as Record<string, unknown>)?.quote as unknown[]) || [])[0] as Record<string, unknown>;
+
+  const opens = ((quote.open as unknown[]) || []).map(numberOrNull);
+  const highs = ((quote.high as unknown[]) || []).map(numberOrNull);
+  const lows = ((quote.low as unknown[]) || []).map(numberOrNull);
+  const closes = ((quote.close as unknown[]) || []).map(numberOrNull);
+
+  const validIndexes = closes
+    .map((value, index) => ({ value, index }))
+    .filter((row): row is { value: number; index: number } => row.value !== null && row.value > 0);
+
+  if (!validIndexes.length) {
+    throw new Error("Yahoo returned no valid closes");
+  }
+
+  const last = validIndexes[validIndexes.length - 1];
+  const first = validIndexes[0];
+
+  const validOpens = opens.filter((v): v is number => v !== null && v > 0);
+  const validHighs = highs.filter((v): v is number => v !== null && v > 0);
+  const validLows = lows.filter((v): v is number => v !== null && v > 0);
+
+  const price = last.value;
+  const previousClose = numberOrNull(meta.chartPreviousClose);
+  const open = validOpens.length ? validOpens[0] : first.value;
+  const high = validHighs.length ? Math.max(...validHighs) : null;
+  const low = validLows.length ? Math.min(...validLows) : null;
+
+  const change = previousClose && previousClose !== 0 ? price - previousClose : price - open;
+  const changePercent =
+    previousClose && previousClose !== 0 ? (change / previousClose) * 100 : open ? (change / open) * 100 : null;
+
+  const dataTime = numberOrNull(timestamps[last.index]) || numberOrNull(meta.regularMarketTime);
+  const ageMinutes =
+    dataTime && dataTime > 0 ? Math.max(0, Math.round((Date.now() / 1000 - dataTime) / 60)) : null;
+
   return {
-    close,
-    timestamp,
-    open: candle.o?.[0] ?? null,
-    high: candle.h?.length ? Math.max(...candle.h) : null,
-    low: candle.l?.length ? Math.min(...candle.l) : null,
+    price,
+    change,
+    changePercent,
+    previousClose,
+    high,
+    low,
+    open,
+    dataTime,
+    quoteTime: dataTime ? new Date(dataTime * 1000).toISOString() : null,
+    quoteAgeMinutes: ageMinutes,
+    exchangeName: meta.exchangeName || null,
+    yahooTimezone: meta.timezone || null,
   };
+}
+
+async function loadMarket(market: MarketConfig) {
+  try {
+    const chart = await yahooChart(market.symbol);
+    const parsed = parseYahoo(chart);
+    const status = marketStatus(market);
+
+    return {
+      key: market.key,
+      name: market.name,
+      symbol: market.symbol,
+      region: market.region,
+      flag: market.flag,
+      exchangeTimeZone: market.exchangeTimeZone,
+      ok: true,
+      error: null,
+      ...status,
+      price: parsed.price,
+      change: parsed.change,
+      changePercent: parsed.changePercent,
+      previousClose: parsed.previousClose,
+      high: parsed.high,
+      low: parsed.low,
+      open: parsed.open,
+      quoteTime: parsed.quoteTime,
+      exchangeTime: parsed.quoteTime
+        ? new Intl.DateTimeFormat("en-US", {
+            timeZone: market.exchangeTimeZone,
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+          }).format(new Date(parsed.quoteTime))
+        : null,
+      quoteAgeMinutes: parsed.quoteAgeMinutes,
+      dataSource: "Market data",
+      dataStatus: "ok",
+      dataStatusLabel: parsed.quoteAgeMinutes !== null && parsed.quoteAgeMinutes <= 30 ? "Fresh" : "Delayed / Closed",
+      dataTone: parsed.quoteAgeMinutes !== null && parsed.quoteAgeMinutes <= 30 ? "green" : "amber",
+      dataVendorExchange: parsed.exchangeName,
+      dataVendorTimezone: parsed.yahooTimezone,
+      dataToneDirection: toneFor(parsed.change),
+    };
+  } catch (err) {
+    const status = marketStatus(market);
+
+    return {
+      key: market.key,
+      name: market.name,
+      symbol: market.symbol,
+      region: market.region,
+      flag: market.flag,
+      exchangeTimeZone: market.exchangeTimeZone,
+      ok: false,
+      error: err instanceof Error ? err.message : "Unknown error",
+      ...status,
+      price: null,
+      change: null,
+      changePercent: null,
+      previousClose: null,
+      high: null,
+      low: null,
+      open: null,
+      quoteTime: null,
+      exchangeTime: null,
+      quoteAgeMinutes: null,
+      dataSource: "Market data",
+      dataStatus: "error",
+      dataStatusLabel: "Unavailable",
+      dataTone: "red",
+    };
+  }
 }
 
 export async function GET() {
-  const token = process.env.FINNHUB_API_KEY;
+  const now = Date.now();
 
-  if (!token) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: "FINNHUB_API_KEY is not configured.",
-        updatedAt: new Date().toISOString(),
-        markets: [],
-      },
-      { status: 500 }
-    );
+  if (cachedPayload && now - cachedAt < CACHE_MS) {
+    return NextResponse.json(cachedPayload, {
+      headers: { "Cache-Control": "no-store" },
+    });
   }
 
-  const markets = await Promise.all(
-    MARKETS.map(async (market) => {
-      const sessionState = getMarketSessionState(market);
+  const markets = await Promise.all(MARKETS.map(loadMarket));
 
-      try {
-        const [quoteResult, candleResult] = await Promise.allSettled([
-          fetchQuote(market.symbol, token),
-          fetchCandles(market.symbol, token),
-        ]);
-
-        const quote = quoteResult.status === "fulfilled" ? quoteResult.value : {};
-        const candle =
-          candleResult.status === "fulfilled" ? latestCandle(candleResult.value) : null;
-
-        const quoteUsable = isUsableQuote(quote);
-        const candleUsable = candle !== null;
-
-        const previousClose = quoteUsable ? quote.pc ?? null : null;
-
-        const selectedPrice = candleUsable
-          ? candle.close
-          : typeof quote.c === "number" && quote.c > 0
-          ? quote.c
-          : null;
-
-        const selectedTimestamp = candleUsable ? candle.timestamp : quote.t ?? null;
-        const quoteAgeMinutes = getQuoteAgeMinutes(selectedTimestamp);
-
-        const usable =
-          selectedPrice !== null &&
-          selectedPrice > 0 &&
-          previousClose !== null &&
-          previousClose > 0;
-
-        const change = usable ? selectedPrice - previousClose : null;
-        const changePercent =
-          usable && previousClose ? ((selectedPrice - previousClose) / previousClose) * 100 : null;
-
-        const dataStatus = getDataStatus(
-          usable,
-          sessionState.isMarketOpen,
-          quoteAgeMinutes
-        );
-
-        return {
-          ...publicMarketBase(market),
-          ok: usable,
-          error: usable ? null : "No usable market data returned.",
-          ...sessionState,
-          localClock: formatLocalClock(market.exchangeTimeZone),
-          price: selectedPrice,
-          change,
-          changePercent,
-          previousClose,
-          high: candleUsable ? candle.high : quote.h ?? null,
-          low: candleUsable ? candle.low : quote.l ?? null,
-          open: candleUsable ? candle.open : quote.o ?? null,
-          quoteTime: selectedTimestamp
-            ? new Date(selectedTimestamp * 1000).toISOString()
-            : null,
-          exchangeTime: selectedTimestamp
-            ? formatQuoteExchangeTime(selectedTimestamp, market.exchangeTimeZone)
-            : null,
-          quoteAgeMinutes,
-          dataSource: candleUsable ? "candle" : "quote",
-          ...dataStatus,
-        };
-      } catch (err) {
-        return {
-          ...publicMarketBase(market),
-          ok: false,
-          error: err instanceof Error ? err.message : "Unknown fetch error.",
-          ...sessionState,
-          localClock: formatLocalClock(market.exchangeTimeZone),
-          price: null,
-          change: null,
-          changePercent: null,
-          previousClose: null,
-          high: null,
-          low: null,
-          open: null,
-          quoteTime: null,
-          exchangeTime: null,
-          quoteAgeMinutes: null,
-          dataSource: "none",
-          dataStatus: "stale",
-          dataStatusLabel: "Stale",
-          dataTone: "amber",
-        };
-      }
-    })
-  );
-
-  return NextResponse.json({
-    ok: markets.some((m) => m.ok),
+  const payload = {
+    ok: true,
     updatedAt: new Date().toISOString(),
+    source: "Market data",
     markets,
+  };
+
+  cachedPayload = payload;
+  cachedAt = now;
+
+  return NextResponse.json(payload, {
+    headers: { "Cache-Control": "no-store" },
   });
 }
