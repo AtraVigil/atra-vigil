@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 function unauthorized() {
   return new NextResponse("Authentication required", {
@@ -10,14 +10,30 @@ function unauthorized() {
   });
 }
 
+function isLocalhost(request: NextRequest): boolean {
+  const host = request.headers.get("host") || "";
+
+  return (
+    host.startsWith("localhost:") ||
+    host.startsWith("127.0.0.1:") ||
+    host.startsWith("[::1]:")
+  );
+}
+
 export function proxy(request: NextRequest) {
+  if (isLocalhost(request)) {
+    return NextResponse.next();
+  }
+
   const expectedUser = process.env.ATRA_PRAE_USER || "atra";
   const expectedPassword = process.env.ATRA_PRAE_PASSWORD;
 
   if (!expectedPassword) {
     return new NextResponse("Atra Prae password is not configured.", {
       status: 503,
-      headers: { "Cache-Control": "no-store" },
+      headers: {
+        "Cache-Control": "no-store",
+      },
     });
   }
 
@@ -34,9 +50,7 @@ export function proxy(request: NextRequest) {
     const password = separator >= 0 ? decoded.slice(separator + 1) : "";
 
     if (user === expectedUser && password === expectedPassword) {
-      const response = NextResponse.next();
-      response.headers.set("Cache-Control", "no-store");
-      return response;
+      return NextResponse.next();
     }
   } catch {
     return unauthorized();

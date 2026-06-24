@@ -1,137 +1,137 @@
 import { google } from "googleapis";
 
-export type ImportRow = {
-  ticker: string;
-  date?: string;
-  snapshotTime?: string;
+export type MarketPulseRow = {
+  label: string;
+  value: string;
+  change: string;
 };
 
-export type ImportSource = {
-  file: string;
-  sessionDate: string;
-  snapshotTime: string;
-  count: number;
+export type SystemHealthRow = {
+  label: string;
+  value: string;
 };
 
-export type CandidateRow = {
-  eventId: string;
-  ticker: string;
-  timestamp: string;
-  price: string;
-  threeMPass: string;
-  wmicroActive: string;
-};
-
-export type CandidateSummary = {
-  count: number;
-  threeMPassCount: number;
-  wmicroActiveCount: number;
-};
-
-export type WMicroRow = {
-  eventId: string;
+export type WatchRow = {
   ticker: string;
   candidateTime: string;
-  state: string;
   status: string;
-  tickCount: string;
-  lastReturn: string;
-  highReturn: string;
-  lowReturn: string;
+  expires: string;
+  detail: string;
 };
 
-export type WMicroSummary = {
-  sessions: number;
-  active: number;
-  supporting: number;
-  fading: number;
-  thin: number;
-  neutral: number;
+export type TerminalCandidateRow = {
+  time: string;
+  ticker: string;
+  price: string;
+  status: string;
+  threeMReturn: string;
+  threeMHigh: string;
+  threeMLow: string;
+  detail: string;
+};
+
+export type TerminalHeader = {
+  title: string;
+  updated: string;
+  market: string;
+  session: string;
+};
+
+export type TerminalSummary = {
+  importCount: string;
+  runner: string;
+  candles: string;
+  wmicro: string;
+  candidates: string;
+  email: string;
+  threeMPass: string;
+  threeMFail: string;
+  threeMPlusTwoPass: string;
+  threeMPlusTwoFail: string;
+  wmicroSubs: string;
+  active: string;
+  expired: string;
+  pending: string;
 };
 
 export type AtraPraeData = {
-  importSource: ImportSource;
-  importRows: ImportRow[];
-  candidateSummary: CandidateSummary;
-  candidateRows: CandidateRow[];
-  wmicroSummary: WMicroSummary;
-  wmicroRows: WMicroRow[];
+  source: string;
+  header: TerminalHeader;
+  summary: TerminalSummary;
+  marketPulse: MarketPulseRow[];
+  systemHealth: SystemHealthRow[];
+  watchRows: WatchRow[];
+  watchMessage: string;
+  candidateRows: TerminalCandidateRow[];
   loadError?: string;
 };
 
 const emptyData: AtraPraeData = {
-  importSource: {
-    file: "Google Sheet not configured",
-    sessionDate: "--",
-    snapshotTime: "--",
-    count: 0,
+  source: "Google Sheet: Terminal",
+  header: {
+    title: "Atra Prae V2 — Live Terminal",
+    updated: "--",
+    market: "--",
+    session: "--",
   },
-  importRows: [],
-  candidateSummary: {
-    count: 0,
-    threeMPassCount: 0,
-    wmicroActiveCount: 0,
+  summary: {
+    importCount: "--",
+    runner: "--",
+    candles: "--",
+    wmicro: "--",
+    candidates: "--",
+    email: "--",
+    threeMPass: "--",
+    threeMFail: "--",
+    threeMPlusTwoPass: "--",
+    threeMPlusTwoFail: "--",
+    wmicroSubs: "--",
+    active: "--",
+    expired: "--",
+    pending: "--",
   },
+  marketPulse: [],
+  systemHealth: [],
+  watchRows: [],
+  watchMessage: "--",
   candidateRows: [],
-  wmicroSummary: {
-    sessions: 0,
-    active: 0,
-    supporting: 0,
-    fading: 0,
-    thin: 0,
-    neutral: 0,
-  },
-  wmicroRows: [],
 };
 
-type SheetRow = Record<string, string>;
+type GridRow = string[];
 
-function normalizeKey(value: string): string {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
-}
-
-function cell(row: SheetRow, keys: string[]): string {
-  for (const key of keys) {
-    const value = row[normalizeKey(key)];
-    if (value !== undefined && value !== null && String(value).trim() !== "") {
-      return String(value).trim();
-    }
-  }
-  return "";
+function clean(value: unknown): string {
+  return String(value ?? "").trim();
 }
 
 function upper(value: string): string {
-  return String(value || "").trim().toUpperCase();
+  return clean(value).toUpperCase();
 }
 
-function yesNo(value: boolean): "YES" | "NO" {
-  return value ? "YES" : "NO";
+function normalize(value: string): string {
+  return clean(value).toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function rowCell(row: GridRow | undefined, index: number): string {
+  if (!row) return "";
+  return clean(row[index]);
+}
+
+function parseColonCell(value: string): { label: string; value: string } {
+  const text = clean(value);
+  const idx = text.indexOf(":");
+
+  if (idx < 0) {
+    return { label: text, value: "" };
+  }
+
+  return {
+    label: clean(text.slice(0, idx)),
+    value: clean(text.slice(idx + 1)),
+  };
 }
 
 function quoteSheetName(name: string): string {
   return `'${name.replace(/'/g, "''")}'!A:ZZ`;
-}
-
-function rowsFromValues(values: unknown[][] | undefined | null): SheetRow[] {
-  if (!values || values.length < 2) {
-    return [];
-  }
-
-  const headers = values[0].map((header) => normalizeKey(String(header || "")));
-
-  return values.slice(1).map((line) => {
-    const row: SheetRow = {};
-
-    headers.forEach((header, index) => {
-      if (!header) return;
-      row[header] = String(line[index] ?? "").trim();
-    });
-
-    return row;
-  });
 }
 
 async function getSheetsClient(): Promise<{
@@ -168,11 +168,11 @@ async function getSheetsClient(): Promise<{
   };
 }
 
-async function readFirstAvailableTab(
+async function readFirstAvailableRawTab(
   sheets: Awaited<ReturnType<typeof getSheetsClient>>["sheets"],
   sheetId: string,
   names: string[],
-): Promise<{ name: string; rows: SheetRow[] }> {
+): Promise<{ name: string; rows: GridRow[] }> {
   const errors: string[] = [];
 
   for (const name of names) {
@@ -184,9 +184,10 @@ async function readFirstAvailableTab(
         dateTimeRenderOption: "FORMATTED_STRING",
       });
 
+      const values = response.data.values || [];
       return {
         name,
-        rows: rowsFromValues(response.data.values),
+        rows: values.map((row) => row.map((cell) => clean(cell))),
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -194,175 +195,208 @@ async function readFirstAvailableTab(
     }
   }
 
-  return {
-    name: names[0] || "unknown",
-    rows: [],
-  };
+  throw new Error(`Unable to read Terminal tab. Tried: ${names.join(", ")}. ${errors.join(" | ")}`);
 }
 
-function mapImportRows(rows: SheetRow[], sourceName: string): { source: ImportSource; rows: ImportRow[] } {
-  const importRows = rows
-    .map((row) => ({
-      ticker: upper(cell(row, ["ticker", "symbol"])),
-      date: cell(row, ["date", "session_date", "session date"]),
-      snapshotTime: cell(row, ["snapshot_time", "snapshot time", "timestamp", "created_at"]),
-    }))
-    .filter((row) => row.ticker);
-
-  const sessionDate =
-    importRows.find((row) => row.date)?.date ||
-    cell(rows[0] || {}, ["date", "session_date", "session date"]) ||
-    "--";
-
-  const snapshotTime =
-    importRows.find((row) => row.snapshotTime)?.snapshotTime ||
-    cell(rows[0] || {}, ["snapshot_time", "snapshot time", "timestamp", "created_at"]) ||
-    "--";
-
-  return {
-    rows: importRows,
-    source: {
-      file: `Google Sheet: ${sourceName}`,
-      sessionDate,
-      snapshotTime,
-      count: importRows.length,
-    },
-  };
+function findSection(rows: GridRow[], sectionName: string): number {
+  const target = normalize(sectionName);
+  return rows.findIndex((row) => normalize(rowCell(row, 0)) === target);
 }
 
-function buildThreeMStatusMap(rows: SheetRow[]): Map<string, string> {
-  const map = new Map<string, string>();
+function nextSectionIndex(rows: GridRow[], startIndex: number, sectionNames: string[]): number {
+  const sectionSet = new Set(sectionNames.map(normalize));
 
-  for (const row of rows) {
-    const eventId = cell(row, ["event_id", "event id", "Event ID"]);
-    const status = cell(row, ["3m Status", "three_m_status", "threemstatus", "3m_status"]);
-    if (eventId && status) {
-      map.set(eventId, upper(status));
+  for (let i = startIndex + 1; i < rows.length; i += 1) {
+    if (sectionSet.has(normalize(rowCell(rows[i], 0)))) {
+      return i;
     }
   }
 
-  return map;
+  return rows.length;
 }
 
-function mapWMicroRows(rows: SheetRow[]): WMicroRow[] {
-  const mapped = rows
-    .map((row) => {
-      const eventId = cell(row, ["event_id", "event id", "Event ID"]);
-      return {
-        eventId,
-        ticker: upper(cell(row, ["ticker", "symbol"])),
-        candidateTime: cell(row, ["candidate_time_et", "candidate_time", "candidate time", "Candidate Time"]),
-        state: upper(cell(row, ["state", "wmicro_state", "WMicro State"])) || "--",
-        status: upper(cell(row, ["status", "wmicro_status", "WMicro Status"])) || "--",
-        tickCount: cell(row, ["raw_tick_count", "tick_count", "tick count", "Raw Tick Count"]) || "0",
-        lastReturn: cell(row, ["last_pct_from_candidate", "last_return", "Last Return %"]) || "--",
-        highReturn: cell(row, ["max_pct_from_candidate", "high_return", "High Return %"]) || "--",
-        lowReturn: cell(row, ["min_pct_from_candidate", "low_return", "Low Return %"]) || "--",
-      };
-    })
-    .filter((row) => row.eventId || row.ticker);
+function parseHeader(rows: GridRow[]): TerminalHeader {
+  const title = rowCell(rows[0], 0) || "Atra Prae V2 — Live Terminal";
+  const line = rows[1] || [];
 
-  const deduped = new Map<string, WMicroRow>();
-  for (const row of mapped) {
-    const key = row.eventId || `${row.ticker}:${row.candidateTime}`;
-    deduped.set(key, row);
+  const updated = parseColonCell(rowCell(line, 0)).value || "--";
+  const market = parseColonCell(rowCell(line, 1)).value || "--";
+  const session = parseColonCell(rowCell(line, 2)).value || "--";
+
+  return { title, updated, market, session };
+}
+
+function parseMarketPulse(rows: GridRow[]): MarketPulseRow[] {
+  const start = findSection(rows, "MARKET PULSE");
+  if (start < 0) return [];
+
+  const end = nextSectionIndex(rows, start, ["SYSTEM HEALTH", "WATCH NOW", "TODAY'S CANDIDATES"]);
+  const output: MarketPulseRow[] = [];
+
+  for (let i = start + 1; i < end; i += 1) {
+    const label = rowCell(rows[i], 0).replace(/:$/, "");
+    const value = rowCell(rows[i], 1);
+    const change = rowCell(rows[i], 2);
+
+    if (!label && !value && !change) continue;
+
+    output.push({
+      label,
+      value: value || "--",
+      change: change || "--",
+    });
   }
 
-  return Array.from(deduped.values());
+  return output;
 }
 
-function mapCandidateRows(
-  candidateRowsRaw: SheetRow[],
-  alertRowsRaw: SheetRow[],
-  wmicroRows: WMicroRow[],
-): CandidateRow[] {
-  const statusMap = buildThreeMStatusMap([...candidateRowsRaw, ...alertRowsRaw]);
-  const activeWMicroEventIds = new Set(
-    wmicroRows
-      .filter((row) => upper(row.status) === "ACTIVE")
-      .map((row) => row.eventId)
-      .filter(Boolean),
-  );
+function parseSystemHealth(rows: GridRow[]): SystemHealthRow[] {
+  const start = findSection(rows, "SYSTEM HEALTH");
+  if (start < 0) return [];
 
-  const deduped = new Map<string, CandidateRow>();
+  const end = nextSectionIndex(rows, start, ["WATCH NOW", "TODAY'S CANDIDATES"]);
+  const output: SystemHealthRow[] = [];
 
-  for (const row of candidateRowsRaw) {
-    const eventType = upper(cell(row, ["event_type", "event type", "type", "stage", "row_type", "row type"]));
-    const eventId = cell(row, ["event_id", "event id", "Event ID"]);
-    const ticker = upper(cell(row, ["ticker", "symbol"]));
-    const candidateTime = cell(row, ["candidate_time", "candidate time", "Candidate Time", "timestamp", "time"]);
-    const candidatePrice = cell(row, ["candidate_price", "candidate price", "Candidate Price", "price"]);
+  for (let i = start + 1; i < end; i += 1) {
+    const row = rows[i] || [];
+    const nonEmpty = row.some((value) => clean(value));
+    if (!nonEmpty) continue;
 
-    const looksLikeCandidate =
-      eventType.includes("CANDIDATE") ||
-      (!eventType && Boolean(eventId || ticker) && Boolean(candidateTime || candidatePrice));
+    for (let col = 0; col < row.length; col += 2) {
+      const label = rowCell(row, col);
+      const value = rowCell(row, col + 1);
 
-    if (!looksLikeCandidate || (!eventId && !ticker)) {
+      if (!label && !value) continue;
+
+      output.push({
+        label: label || "--",
+        value: value || "--",
+      });
+    }
+  }
+
+  return output;
+}
+
+function makeSummary(systemHealth: SystemHealthRow[]): TerminalSummary {
+  const map = new Map(systemHealth.map((item) => [normalize(item.label), item.value]));
+
+  return {
+    importCount: map.get("import") || "--",
+    runner: map.get("runner") || "--",
+    candles: map.get("candles") || "--",
+    wmicro: map.get("wmicro") || "--",
+    candidates: map.get("candidates") || "--",
+    email: map.get("email") || "--",
+    threeMPass: map.get("3mpass") || "--",
+    threeMFail: map.get("3mfail") || "--",
+    threeMPlusTwoPass: map.get("3m2pass") || "--",
+    threeMPlusTwoFail: map.get("3m2fail") || "--",
+    wmicroSubs: map.get("wmicrosubs") || "--",
+    active: map.get("active") || "--",
+    expired: map.get("expired") || "--",
+    pending: map.get("pending") || "--",
+  };
+}
+
+function parseWatchNow(rows: GridRow[]): { rows: WatchRow[]; message: string } {
+  const start = findSection(rows, "WATCH NOW");
+  if (start < 0) return { rows: [], message: "--" };
+
+  const end = nextSectionIndex(rows, start, ["TODAY'S CANDIDATES"]);
+  const firstData = rows[start + 2];
+
+  if (normalize(rowCell(firstData, 0)) === "noactive") {
+    return { rows: [], message: "No Active" };
+  }
+
+  const output: WatchRow[] = [];
+
+  for (let i = start + 2; i < end; i += 1) {
+    const row = rows[i] || [];
+    const ticker = upper(rowCell(row, 0));
+    const candidateTime = rowCell(row, 1);
+    const status = rowCell(row, 2);
+    const expires = rowCell(row, 3);
+    const detail = rowCell(row, 4);
+
+    if (!ticker && !candidateTime && !status && !expires && !detail) continue;
+
+    output.push({
+      ticker,
+      candidateTime,
+      status,
+      expires,
+      detail,
+    });
+  }
+
+  return {
+    rows: output,
+    message: output.length ? "" : "No Active",
+  };
+}
+
+function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
+  const start = findSection(rows, "TODAY'S CANDIDATES");
+  if (start < 0) return [];
+
+  const output: TerminalCandidateRow[] = [];
+
+  for (let i = start + 2; i < rows.length; i += 1) {
+    const row = rows[i] || [];
+    const time = rowCell(row, 0);
+    const ticker = upper(rowCell(row, 1));
+    const price = rowCell(row, 2);
+    const status = rowCell(row, 3);
+    const threeMReturn = rowCell(row, 4);
+    const threeMHigh = rowCell(row, 5);
+    const threeMLow = rowCell(row, 6);
+    const detail = rowCell(row, 7);
+
+    if (!time && !ticker && !price && !status && !threeMReturn && !threeMHigh && !threeMLow && !detail) {
       continue;
     }
 
-    const threeMStatus = statusMap.get(eventId) || "";
-    const mapped: CandidateRow = {
-      eventId,
+    output.push({
+      time,
       ticker,
-      timestamp: candidateTime,
-      price: candidatePrice,
-      threeMPass: yesNo(threeMStatus === "PASS"),
-      wmicroActive: yesNo(Boolean(eventId && activeWMicroEventIds.has(eventId))),
-    };
-
-    const key = eventId || `${ticker}:${candidateTime}`;
-    if (!deduped.has(key)) {
-      deduped.set(key, mapped);
-    }
+      price,
+      status,
+      threeMReturn,
+      threeMHigh,
+      threeMLow,
+      detail,
+    });
   }
 
-  return Array.from(deduped.values());
+  return output;
 }
 
-function summarizeCandidates(rows: CandidateRow[]): CandidateSummary {
-  return {
-    count: rows.length,
-    threeMPassCount: rows.filter((row) => row.threeMPass === "YES").length,
-    wmicroActiveCount: rows.filter((row) => row.wmicroActive === "YES").length,
-  };
-}
+function parseTerminalRows(rows: GridRow[], sourceName: string): AtraPraeData {
+  const header = parseHeader(rows);
+  const marketPulse = parseMarketPulse(rows);
+  const systemHealth = parseSystemHealth(rows);
+  const watch = parseWatchNow(rows);
+  const candidateRows = parseTodayCandidates(rows);
 
-function summarizeWMicro(rows: WMicroRow[]): WMicroSummary {
   return {
-    sessions: rows.length,
-    active: rows.filter((row) => upper(row.status) === "ACTIVE").length,
-    supporting: rows.filter((row) => upper(row.state) === "SUPPORTING").length,
-    fading: rows.filter((row) => upper(row.state) === "FADING").length,
-    thin: rows.filter((row) => upper(row.state) === "THIN").length,
-    neutral: rows.filter((row) => upper(row.state) === "NEUTRAL").length,
+    source: `Google Sheet: ${sourceName}`,
+    header,
+    summary: makeSummary(systemHealth),
+    marketPulse,
+    systemHealth,
+    watchRows: watch.rows,
+    watchMessage: watch.message,
+    candidateRows,
   };
 }
 
 export async function loadAtraPraeData(): Promise<AtraPraeData> {
   try {
     const { sheetId, sheets } = await getSheetsClient();
-
-    const [importTab, liveEventsTab, alertTab, wmicroTab] = await Promise.all([
-      readFirstAvailableTab(sheets, sheetId, ["Import"]),
-      readFirstAvailableTab(sheets, sheetId, ["V2_Live_Events", "Candidate_Events", "candidate_events", "Candidates"]),
-      readFirstAvailableTab(sheets, sheetId, ["Alert History", "Alert_History", "alert_history", "V2_Alert_History"]),
-      readFirstAvailableTab(sheets, sheetId, ["V2_WMicro", "WMicro", "wmicro_current_state", "Wmicro_Current"]),
-    ]);
-
-    const mappedImport = mapImportRows(importTab.rows, importTab.name);
-    const wmicroRows = mapWMicroRows(wmicroTab.rows);
-    const candidateSourceRows = liveEventsTab.rows.length ? liveEventsTab.rows : alertTab.rows;
-    const candidateRows = mapCandidateRows(candidateSourceRows, alertTab.rows, wmicroRows);
-
-    return {
-      importSource: mappedImport.source,
-      importRows: mappedImport.rows,
-      candidateSummary: summarizeCandidates(candidateRows),
-      candidateRows,
-      wmicroSummary: summarizeWMicro(wmicroRows),
-      wmicroRows,
-    };
+    const terminal = await readFirstAvailableRawTab(sheets, sheetId, ["Terminal", "V2_Terminal"]);
+    return parseTerminalRows(terminal.rows, terminal.name);
   } catch (error) {
     const message = error instanceof Error ? error.message : "Atra Prae Google Sheet data failed to load.";
 
