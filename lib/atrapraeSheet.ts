@@ -63,6 +63,34 @@ export type AtraPraeData = {
   watchRows: WatchRow[];
   watchMessage: string;
   candidateRows: TerminalCandidateRow[];
+  rawTerminalRows?: string[][];
+  loadError?: string;
+};
+
+export type ArchiveTable = {
+  headers: string[];
+  rows: string[][];
+};
+
+export type ArchiveDailyRow = {
+  sessionDate: string;
+  archivedAtLocal: string;
+  archivedAtMarket: string;
+  runId: string;
+  terminalRows: string;
+  alertHistoryRows: string;
+  wmicroRows: string;
+  status: string;
+  notes: string;
+};
+
+export type AtraPraeArchiveData = {
+  dates: string[];
+  selectedDate: string;
+  daily?: ArchiveDailyRow;
+  terminal: AtraPraeData;
+  alertHistory: ArchiveTable;
+  wmicro: ArchiveTable;
   loadError?: string;
 };
 
@@ -95,6 +123,7 @@ const emptyData: AtraPraeData = {
   watchRows: [],
   watchMessage: "--",
   candidateRows: [],
+  rawTerminalRows: [],
 };
 
 type GridRow = string[];
@@ -168,6 +197,22 @@ async function getSheetsClient(): Promise<{
   };
 }
 
+async function readRawTab(
+  sheets: Awaited<ReturnType<typeof getSheetsClient>>["sheets"],
+  sheetId: string,
+  name: string,
+): Promise<GridRow[]> {
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId: sheetId,
+    range: quoteSheetName(name),
+    valueRenderOption: "FORMATTED_VALUE",
+    dateTimeRenderOption: "FORMATTED_STRING",
+  });
+
+  const values = response.data.values || [];
+  return values.map((row) => row.map((cell) => clean(cell)));
+}
+
 async function readFirstAvailableRawTab(
   sheets: Awaited<ReturnType<typeof getSheetsClient>>["sheets"],
   sheetId: string,
@@ -177,18 +222,8 @@ async function readFirstAvailableRawTab(
 
   for (const name of names) {
     try {
-      const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: sheetId,
-        range: quoteSheetName(name),
-        valueRenderOption: "FORMATTED_VALUE",
-        dateTimeRenderOption: "FORMATTED_STRING",
-      });
-
-      const values = response.data.values || [];
-      return {
-        name,
-        rows: values.map((row) => row.map((cell) => clean(cell))),
-      };
+      const rows = await readRawTab(sheets, sheetId, name);
+      return { name, rows };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       errors.push(`${name}: ${message}`);
@@ -389,6 +424,80 @@ function parseTerminalRows(rows: GridRow[], sourceName: string): AtraPraeData {
     watchRows: watch.rows,
     watchMessage: watch.message,
     candidateRows,
+    rawTerminalRows: rows,
+  };
+}
+
+function tableFromRows(rows: GridRow[]): ArchiveTable {
+  if (!rows.length) {
+    return { headers: [], rows: [] };
+  }
+
+  return {
+    headers: rows[0] || [],
+    rows: rows.slice(1),
+  };
+}
+
+function headerIndex(headers: string[], name: string): number {
+  const target = normalize(name);
+  return headers.findIndex((header) => normalize(header) === target);
+}
+
+function filterArchiveRowsByDate(rows: GridRow[], sessionDate: string): GridRow[] {
+  if (!rows.length) return [];
+  const headers = rows[0] || [];
+  const dateIndex = headerIndex(headers, "session_date");
+  if (dateIndex < 0) return [headers];
+
+  return [
+    headers,
+    ...rows.slice(1).filter((row) => rowCell(row, dateIndex) === sessionDate),
+  ];
+}
+
+function stripArchiveMeta(rows: GridRow[], sourcePrefix?: string): GridRow[] {
+  if (!rows.length) return [];
+
+  const headers = rows[0] || [];
+  const archiveKeyIndex = headerIndex(headers, "archive_key");
+
+  if (sourcePrefix) {
+    const sourceStart = headers.findIndex((header) => normalize(header).startsWith(sourcePrefix));
+    const startIndex = sourceStart >= 0 ? sourceStart : archiveKeyIndex >= 0 ? archiveKeyIndex + 1 : 7;
+    return rows.map((row) => row.slice(startIndex));
+  }
+
+  const startIndex = archiveKeyIndex >= 0 ? archiveKeyIndex + 1 : 7;
+  return rows.map((row) => row.slice(startIndex));
+}
+
+function parseArchiveDaily(rows: GridRow[], selectedDate: string): ArchiveDailyRow | undefined {
+  if (!rows.length) return undefined;
+
+  const headers = rows[0] || [];
+  const filtered = rows.slice(1).find((row) => {
+    const dateIndex = headerIndex(headers, "session_date");
+    return dateIndex >= 0 && rowCell(row, dateIndex) === selectedDate;
+  });
+
+  if (!filtered) return undefined;
+
+  const get = (name: string) => {
+    const idx = headerIndex(headers, name);
+    return idx >= 0 ? rowCell(filtered, idx) : "";
+  };
+
+  return {
+    sessionDate: get("session_date"),
+    archivedAtLocal: get("archived_at_local"),
+    archivedAtMarket: get("archived_at_market"),
+    runId: get("run_id"),
+    terminalRows: get("terminal_rows"),
+    alertHistoryRows: get("alert_history_rows"),
+    wmicroRows: get("wmicro_rows"),
+    status: get("status"),
+    notes: get("notes"),
   };
 }
 
@@ -402,6 +511,93 @@ export async function loadAtraPraeData(): Promise<AtraPraeData> {
 
     return {
       ...emptyData,
+      loadError: message,
+    };
+  }
+}
+
+export async function listAtraPraeArchiveDates(): Promise<string[]> {
+  try {
+    const { sheetId, sheets } = await getSheetsClient();
+    const rows = await readRawTab(sheets, sheetId, "AP_Archive_Daily");
+
+    if (!rows.length) return [];
+
+    const headers = rows[0] || [];
+    const dateIndex = headerIndex(headers, "session_date");
+    if (dateIndex < 0) return [];
+
+    return Array.from(
+      new Set(
+        rows
+          .slice(1)
+          .map((row) => rowCell(row, dateIndex))
+          .filter(Boolean),
+      ),
+    ).sort((a, b) => b.localeCompare(a));
+  } catch {
+    return [];
+  }
+}
+
+export async function loadAtraPraeArchiveData(requestedDate?: string): Promise<AtraPraeArchiveData> {
+  const dates = await listAtraPraeArchiveDates();
+  const selectedDate = requestedDate && dates.includes(requestedDate) ? requestedDate : dates[0] || "";
+
+  if (!selectedDate) {
+    return {
+      dates,
+      selectedDate: "",
+      terminal: {
+        ...emptyData,
+        source: "Google Sheet: AP_Archive_Terminal",
+        loadError: "No archived Atra Prae dates found.",
+      },
+      alertHistory: { headers: [], rows: [] },
+      wmicro: { headers: [], rows: [] },
+      loadError: "No archived Atra Prae dates found.",
+    };
+  }
+
+  try {
+    const { sheetId, sheets } = await getSheetsClient();
+
+    const [dailyRows, terminalArchiveRows, alertRows, wmicroRows] = await Promise.all([
+      readRawTab(sheets, sheetId, "AP_Archive_Daily"),
+      readRawTab(sheets, sheetId, "AP_Archive_Terminal"),
+      readRawTab(sheets, sheetId, "AP_Archive_Alert_History"),
+      readRawTab(sheets, sheetId, "AP_Archive_WMicro"),
+    ]);
+
+    const filteredTerminal = filterArchiveRowsByDate(terminalArchiveRows, selectedDate);
+    const filteredAlert = filterArchiveRowsByDate(alertRows, selectedDate);
+    const filteredWmicro = filterArchiveRowsByDate(wmicroRows, selectedDate);
+
+    const terminalRows = stripArchiveMeta(filteredTerminal, "col");
+    const alertTable = tableFromRows(stripArchiveMeta(filteredAlert));
+    const wmicroTable = tableFromRows(stripArchiveMeta(filteredWmicro));
+
+    return {
+      dates,
+      selectedDate,
+      daily: parseArchiveDaily(dailyRows, selectedDate),
+      terminal: parseTerminalRows(terminalRows, `AP_Archive_Terminal ${selectedDate}`),
+      alertHistory: alertTable,
+      wmicro: wmicroTable,
+    };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Atra Prae archive failed to load.";
+
+    return {
+      dates,
+      selectedDate,
+      terminal: {
+        ...emptyData,
+        source: "Google Sheet: AP_Archive_Terminal",
+        loadError: message,
+      },
+      alertHistory: { headers: [], rows: [] },
+      wmicro: { headers: [], rows: [] },
       loadError: message,
     };
   }
