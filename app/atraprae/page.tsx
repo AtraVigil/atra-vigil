@@ -77,7 +77,7 @@ function HeaderNav({ mode }: { mode: "live" | "history" }) {
             Atra Prae V2
           </p>
           <h1 className="mt-1 text-2xl font-semibold text-white">
-            {mode === "history" ? "History" : "Live Terminal"}
+            {mode === "history" ? "Atra Prae History" : "Live Terminal"}
           </h1>
         </div>
       </div>
@@ -100,7 +100,7 @@ function HeaderNav({ mode }: { mode: "live" | "history" }) {
           Live Terminal
         </a>
         <a
-          href="/atraprae?mode=history"
+          href="/atraprae/history"
           className={
             mode === "history"
               ? "rounded-lg border border-blue-900/60 bg-blue-950/30 px-3 py-2 text-blue-300"
