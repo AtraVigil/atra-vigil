@@ -12,63 +12,34 @@ function cell(value: string | undefined): string {
   return value && String(value).trim() ? String(value).trim() : "--";
 }
 
-function tableHeaders(headers: string[]) {
-  return headers.length ? headers : ["No columns"];
+function returnTone(value: string): string {
+  const text = String(value || "").trim();
+  if (text.startsWith("+")) return "text-emerald-300";
+  if (text.startsWith("-")) return "text-red-300";
+  return "text-zinc-300";
 }
 
-function tableRows(rows: string[][], width: number) {
-  if (rows.length) return rows;
-  return [Array.from({ length: Math.max(1, width) }, () => "--")];
-}
+function statusPillClass(value: string): string {
+  const text = String(value || "").trim().toUpperCase();
+  const base = "inline-flex rounded-full border px-2 py-1 text-[11px] font-medium uppercase tracking-[0.12em]";
 
-function RawTable({
-  title,
-  headers,
-  rows,
-}: {
-  title: string;
-  headers: string[];
-  rows: string[][];
-}) {
-  const safeHeaders = tableHeaders(headers);
-  const safeRows = tableRows(rows, safeHeaders.length);
+  if (text.includes("PASS")) {
+    return `${base} border-emerald-900/60 bg-emerald-950/30 text-emerald-300`;
+  }
 
-  return (
-    <section className="mb-8 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
-      <div className="mb-4 flex items-end justify-between gap-4">
-        <p className="text-[12px] uppercase tracking-[0.25em] text-blue-400">{title}</p>
-        <p className="text-xs text-zinc-500">{rows.length} rows</p>
-      </div>
+  if (text.includes("FAIL")) {
+    return `${base} border-red-900/60 bg-red-950/30 text-red-300`;
+  }
 
-      <div className="overflow-x-auto rounded-lg border border-zinc-800 bg-black">
-        <table className="min-w-full divide-y divide-zinc-900 text-xs">
-          <thead className="bg-zinc-950">
-            <tr>
-              {safeHeaders.map((header, index) => (
-                <th
-                  key={`${header}-${index}`}
-                  className="whitespace-nowrap px-3 py-3 text-left text-[10px] uppercase tracking-[0.14em] text-zinc-500"
-                >
-                  {cell(header)}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-900">
-            {safeRows.map((row, rowIndex) => (
-              <tr key={`row-${rowIndex}`} className="hover:bg-zinc-900/70">
-                {safeHeaders.map((_, colIndex) => (
-                  <td key={`${rowIndex}-${colIndex}`} className="whitespace-nowrap px-3 py-2 text-zinc-300">
-                    {cell(row[colIndex])}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
+  if (text.includes("ACTIVE") || text.includes("WATCH")) {
+    return `${base} border-blue-900/60 bg-blue-950/30 text-blue-300`;
+  }
+
+  if (text.includes("FALLBACK") || text.includes("PENDING")) {
+    return `${base} border-amber-900/60 bg-amber-950/30 text-amber-300`;
+  }
+
+  return `${base} border-zinc-800 bg-zinc-950 text-zinc-400`;
 }
 
 export default async function AtraPraeHistoryPage({
@@ -78,6 +49,7 @@ export default async function AtraPraeHistoryPage({
 }) {
   const params = searchParams ? await searchParams : {};
   const archive = await loadAtraPraeArchiveData(params?.date);
+  const candidates = archive.terminal.candidateRows;
 
   return (
     <main className="min-h-screen bg-black p-4 text-white md:p-8">
@@ -128,31 +100,36 @@ export default async function AtraPraeHistoryPage({
         <section className="mb-6 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
           <div className="mb-4">
             <p className="text-[12px] uppercase tracking-[0.25em] text-blue-400">
-              Archive Dates
+              Select Archive Date
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            {archive.dates.length === 0 ? (
-              <span className="rounded-lg border border-zinc-800 bg-black px-3 py-2 text-sm text-zinc-500">
-                No archived dates found.
-              </span>
-            ) : null}
-
-            {archive.dates.map((date) => (
-              <a
-                key={date}
-                href={`/atraprae/history?date=${encodeURIComponent(date)}`}
-                className={
-                  date === archive.selectedDate
-                    ? "rounded-lg border border-blue-900/60 bg-blue-950/30 px-3 py-2 text-sm text-blue-300"
-                    : "rounded-lg border border-zinc-800 bg-black px-3 py-2 text-sm text-zinc-300 hover:text-white"
-                }
+          {archive.dates.length === 0 ? (
+            <div className="rounded-lg border border-zinc-800 bg-black p-5 text-sm text-zinc-500">
+              No archived dates found.
+            </div>
+          ) : (
+            <form action="/atraprae/history" className="flex flex-wrap items-center gap-3">
+              <select
+                name="date"
+                defaultValue={archive.selectedDate}
+                className="min-w-48 rounded-lg border border-zinc-700 bg-black px-3 py-2 text-sm text-white"
               >
-                {date}
-              </a>
-            ))}
-          </div>
+                {archive.dates.map((date) => (
+                  <option key={date} value={date}>
+                    {date}
+                  </option>
+                ))}
+              </select>
+
+              <button
+                type="submit"
+                className="rounded-lg border border-blue-900/60 bg-blue-950/30 px-4 py-2 text-sm text-blue-300 hover:text-white"
+              >
+                Load Date
+              </button>
+            </form>
+          )}
         </section>
 
         {archive.daily ? (
@@ -169,42 +146,71 @@ export default async function AtraPraeHistoryPage({
                 <p className="mt-1 text-base text-white">{cell(archive.daily.sessionDate)}</p>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-black p-3">
-                <p className="text-[10px] uppercase tracking-[0.16em] text-zinc-500">Terminal Rows</p>
-                <p className="mt-1 text-base text-white">{cell(archive.daily.terminalRows)}</p>
+                <p className="text-[10px] uppercase tracking-[0.16em] text-zinc-500">Candidates</p>
+                <p className="mt-1 text-base text-white">{candidates.length}</p>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-black p-3">
-                <p className="text-[10px] uppercase tracking-[0.16em] text-zinc-500">Alert Rows</p>
-                <p className="mt-1 text-base text-white">{cell(archive.daily.alertHistoryRows)}</p>
+                <p className="text-[10px] uppercase tracking-[0.16em] text-zinc-500">Archived Local</p>
+                <p className="mt-1 text-base text-white">{cell(archive.daily.archivedAtLocal)}</p>
               </div>
               <div className="rounded-lg border border-zinc-800 bg-black p-3">
-                <p className="text-[10px] uppercase tracking-[0.16em] text-zinc-500">WMicro Rows</p>
-                <p className="mt-1 text-base text-white">{cell(archive.daily.wmicroRows)}</p>
+                <p className="text-[10px] uppercase tracking-[0.16em] text-zinc-500">Status</p>
+                <p className="mt-1 text-base text-white">{cell(archive.daily.status)}</p>
               </div>
             </div>
-
-            <p className="mt-4 text-xs text-zinc-500">
-              Archived local: {cell(archive.daily.archivedAtLocal)} | Market: {cell(archive.daily.archivedAtMarket)} | Status: {cell(archive.daily.status)}
-            </p>
           </section>
         ) : null}
 
-        <RawTable
-          title="Archived Candidates / Terminal Snapshot"
-          headers={archive.terminal.rawTerminalRows?.[0] || []}
-          rows={archive.terminal.rawTerminalRows?.slice(1) || []}
-        />
+        <section className="mb-10 rounded-xl border border-zinc-800 bg-zinc-950 p-5">
+          <div className="mb-4 flex items-end justify-between gap-4">
+            <p className="text-[12px] uppercase tracking-[0.25em] text-blue-400">
+              Archived Candidates
+            </p>
+            <p className="text-xs text-zinc-500">{candidates.length} rows</p>
+          </div>
 
-        <RawTable
-          title="Archived Alert History"
-          headers={archive.alertHistory.headers}
-          rows={archive.alertHistory.rows}
-        />
+          <div className="overflow-x-auto rounded-lg border border-zinc-800 bg-black">
+            <table className="min-w-full divide-y divide-zinc-900 text-sm">
+              <thead className="bg-zinc-950">
+                <tr>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Time</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ticker</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Price</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Status</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">3m Ret</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">3m High</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">3m Low</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Detail</th>
+                </tr>
+              </thead>
 
-        <RawTable
-          title="Archived WMicro"
-          headers={archive.wmicro.headers}
-          rows={archive.wmicro.rows}
-        />
+              <tbody className="divide-y divide-zinc-900">
+                {candidates.map((row, index) => (
+                  <tr key={`${row.ticker}-${row.time}-${index}`} className="hover:bg-zinc-900/70">
+                    <td className="px-4 py-3 text-zinc-200">{cell(row.time)}</td>
+                    <td className="px-4 py-3 font-medium tracking-wide text-white">{cell(row.ticker)}</td>
+                    <td className="px-4 py-3 text-zinc-200">{cell(row.price)}</td>
+                    <td className="px-4 py-3">
+                      <span className={statusPillClass(row.status)}>{cell(row.status)}</span>
+                    </td>
+                    <td className={`px-4 py-3 ${returnTone(row.threeMReturn)}`}>{cell(row.threeMReturn)}</td>
+                    <td className={`px-4 py-3 ${returnTone(row.threeMHigh)}`}>{cell(row.threeMHigh)}</td>
+                    <td className={`px-4 py-3 ${returnTone(row.threeMLow)}`}>{cell(row.threeMLow)}</td>
+                    <td className="px-4 py-3 text-zinc-400">{cell(row.detail)}</td>
+                  </tr>
+                ))}
+
+                {candidates.length === 0 ? (
+                  <tr>
+                    <td colSpan={8} className="px-4 py-6 text-center text-zinc-500">
+                      No archived candidate rows.
+                    </td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
+          </div>
+        </section>
       </div>
     </main>
   );
