@@ -27,6 +27,7 @@ export type TerminalCandidateRow = {
   threeMReturn: string;
   threeMHigh: string;
   threeMLow: string;
+  oneEightyMReturn: string;
   detail: string;
 };
 
@@ -387,9 +388,10 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
     const threeMReturn = rowCell(row, 4);
     const threeMHigh = rowCell(row, 5);
     const threeMLow = rowCell(row, 6);
-    const detail = rowCell(row, 7);
+    const oneEightyMReturn = rowCell(row, 7);
+    const detail = rowCell(row, 8);
 
-    if (!time && !ticker && !price && !status && !threeMReturn && !threeMHigh && !threeMLow && !detail) {
+    if (!time && !ticker && !price && !status && !threeMReturn && !threeMHigh && !threeMLow && !oneEightyMReturn && !detail) {
       continue;
     }
 
@@ -401,6 +403,7 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
       threeMReturn,
       threeMHigh,
       threeMLow,
+      oneEightyMReturn,
       detail,
     });
   }
