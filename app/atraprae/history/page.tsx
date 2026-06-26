@@ -181,6 +181,9 @@ export default async function AtraPraeHistoryPage({
                   <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">3m High</th>
                   <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">3m Low</th>
                   <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">180M Ret</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Tick3+</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Vol3k+</th>
+                  <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Room5+</th>
                   <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Detail</th>
                 </tr>
               </thead>
@@ -198,13 +201,16 @@ export default async function AtraPraeHistoryPage({
                     <td className={`px-4 py-3 ${returnTone(row.threeMHigh)}`}>{cell(row.threeMHigh)}</td>
                     <td className={`px-4 py-3 ${returnTone(row.threeMLow)}`}>{cell(row.threeMLow)}</td>
                     <td className={`px-4 py-3 ${returnTone(row.oneEightyMReturn)}`}>{cell(row.oneEightyMReturn)}</td>
+                    <td className="px-4 py-3 text-zinc-200">{cell(row.tick3Plus)}</td>
+                    <td className="px-4 py-3 text-zinc-200">{cell(row.vol3kPlus)}</td>
+                    <td className="px-4 py-3 text-zinc-200">{cell(row.room5Plus)}</td>
                     <td className="px-4 py-3 text-zinc-400">{cell(row.detail)}</td>
                   </tr>
                 ))}
 
                 {candidates.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="px-4 py-6 text-center text-zinc-500">
+                    <td colSpan={12} className="px-4 py-6 text-center text-zinc-500">
                       No archived candidate rows.
                     </td>
                   </tr>

@@ -28,6 +28,9 @@ export type TerminalCandidateRow = {
   threeMHigh: string;
   threeMLow: string;
   oneEightyMReturn: string;
+  tick3Plus: string;
+  vol3kPlus: string;
+  room5Plus: string;
   detail: string;
 };
 
@@ -377,21 +380,62 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
   const start = findSection(rows, "TODAY'S CANDIDATES");
   if (start < 0) return [];
 
+  const headerRow = rows[start + 1] || [];
+  const indexFor = (names: string[], fallback: number): number => {
+    for (const name of names) {
+      const target = normalize(name);
+      const idx = headerRow.findIndex((header) => normalize(header) === target);
+      if (idx >= 0) return idx;
+    }
+    return fallback;
+  };
+
+  const idx = {
+    time: indexFor(["Time"], 0),
+    ticker: indexFor(["Ticker"], 1),
+    price: indexFor(["Price"], 2),
+    status: indexFor(["Status"], 3),
+    threeMReturn: indexFor(["3m Ret", "3m Return"], 4),
+    threeMHigh: indexFor(["3m High"], 5),
+    threeMLow: indexFor(["3m Low"], 6),
+    oneEightyMReturn: indexFor(["180M Ret", "180M Return"], 7),
+    tick3Plus: indexFor(["Tick3+", "Tick3"], 8),
+    vol3kPlus: indexFor(["Vol3k+", "Vol3k"], 9),
+    room5Plus: indexFor(["Room5+", "Room5"], 10),
+    detail: indexFor(["Detail"], 11),
+  };
+
   const output: TerminalCandidateRow[] = [];
 
   for (let i = start + 2; i < rows.length; i += 1) {
     const row = rows[i] || [];
-    const time = rowCell(row, 0);
-    const ticker = upper(rowCell(row, 1));
-    const price = rowCell(row, 2);
-    const status = rowCell(row, 3);
-    const threeMReturn = rowCell(row, 4);
-    const threeMHigh = rowCell(row, 5);
-    const threeMLow = rowCell(row, 6);
-    const oneEightyMReturn = rowCell(row, 7);
-    const detail = rowCell(row, 8);
+    const time = rowCell(row, idx.time);
+    const ticker = upper(rowCell(row, idx.ticker));
+    const price = rowCell(row, idx.price);
+    const status = rowCell(row, idx.status);
+    const threeMReturn = rowCell(row, idx.threeMReturn);
+    const threeMHigh = rowCell(row, idx.threeMHigh);
+    const threeMLow = rowCell(row, idx.threeMLow);
+    const oneEightyMReturn = rowCell(row, idx.oneEightyMReturn);
+    const tick3Plus = rowCell(row, idx.tick3Plus);
+    const vol3kPlus = rowCell(row, idx.vol3kPlus);
+    const room5Plus = rowCell(row, idx.room5Plus);
+    const detail = rowCell(row, idx.detail);
 
-    if (!time && !ticker && !price && !status && !threeMReturn && !threeMHigh && !threeMLow && !oneEightyMReturn && !detail) {
+    if (
+      !time &&
+      !ticker &&
+      !price &&
+      !status &&
+      !threeMReturn &&
+      !threeMHigh &&
+      !threeMLow &&
+      !oneEightyMReturn &&
+      !tick3Plus &&
+      !vol3kPlus &&
+      !room5Plus &&
+      !detail
+    ) {
       continue;
     }
 
@@ -404,6 +448,9 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
       threeMHigh,
       threeMLow,
       oneEightyMReturn,
+      tick3Plus,
+      vol3kPlus,
+      room5Plus,
       detail,
     });
   }

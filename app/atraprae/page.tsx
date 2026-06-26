@@ -199,6 +199,9 @@ function CandidatesSection({ data, title = "Today’s Candidates" }: { data: Atr
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">3m High</th>
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">3m Low</th>
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">180M Ret</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Tick3+</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Vol3k+</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Room5+</th>
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Detail</th>
             </tr>
           </thead>
@@ -214,13 +217,16 @@ function CandidatesSection({ data, title = "Today’s Candidates" }: { data: Atr
                 <td className={`px-4 py-3 ${returnTone(row.threeMHigh)}`}>{row.threeMHigh || "--"}</td>
                 <td className={`px-4 py-3 ${returnTone(row.threeMLow)}`}>{row.threeMLow || "--"}</td>
                 <td className={`px-4 py-3 ${returnTone(row.oneEightyMReturn)}`}>{row.oneEightyMReturn || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.tick3Plus || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.vol3kPlus || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.room5Plus || "--"}</td>
                 <td className="px-4 py-3 text-zinc-400">{row.detail || "--"}</td>
               </tr>
             ))}
 
             {data.candidateRows.length === 0 ? (
               <tr>
-                <td colSpan={9} className="px-4 py-6 text-center text-zinc-500">
+                <td colSpan={12} className="px-4 py-6 text-center text-zinc-500">
                   No candidate rows.
                 </td>
               </tr>
