@@ -105,6 +105,15 @@ export default function UsMarketPage() {
 
   return (
     <main className="min-h-screen bg-black px-5 py-6 text-white sm:px-8">
+
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200 transition hover:border-cyan-300 hover:bg-cyan-400/15"
+          >
+            ← Back to Market Command
+          </Link>
+        </div>
       <div className="mx-auto max-w-7xl">
         <header className="mb-8 flex flex-col gap-4 rounded-3xl border border-white/10 bg-zinc-950/80 p-6 shadow-2xl shadow-black/30 md:flex-row md:items-end md:justify-between">
           <div>

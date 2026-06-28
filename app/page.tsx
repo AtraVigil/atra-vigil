@@ -26,14 +26,23 @@ const destinations = [
 export default function Home() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-black text-white">
+      <div
+        aria-hidden="true"
+        data-mark="AV_BACKGROUND_MARK"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
+      >
+        <div className="select-none text-[28vw] font-black tracking-[-0.12em] text-cyan-400/[0.035]">
+          AV
+        </div>
+      </div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.12),transparent_45%)]" />
 
       {logoUrl ? (
         <div
-          className="atra-logo-bg absolute inset-0 bg-center bg-no-repeat opacity-20"
+          className="atra-logo-bg pointer-events-none absolute inset-0 bg-center bg-no-repeat opacity-35"
           style={{
             backgroundImage: `url(${logoUrl})`,
-            backgroundSize: "min(72vw, 760px)",
+            backgroundSize: "min(82vw, 900px)",
           }}
         />
       ) : (
@@ -44,12 +53,14 @@ export default function Home() {
 
       <section className="relative z-10 flex min-h-screen items-center justify-center px-6 py-16">
         <div className="w-full max-w-6xl">
-          <div className="mx-auto mb-10 max-w-3xl text-center">
-            <div className="mb-4 text-xs uppercase tracking-[0.45em] text-zinc-500">
-              Atra Vigil
-            </div>
-            <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-              Market Command
+          <div className="mx-auto mb-10 max-w-4xl text-center">
+            <h1 className="tracking-tight">
+              <span className="block text-7xl font-black tracking-[-0.07em] text-blue-300 drop-shadow-[0_0_28px_rgba(96,165,250,0.22)] sm:text-8xl md:text-9xl">
+                Atra Vigil
+              </span>
+              <span className="mt-4 block text-xl font-semibold uppercase tracking-[0.34em] text-zinc-300 sm:text-2xl">
+                Market Command
+              </span>
             </h1>
             <p className="mt-5 text-sm leading-6 text-zinc-400 sm:text-base">
               Select the operating view.
@@ -103,8 +114,8 @@ export default function Home() {
             filter: brightness(0.45) saturate(1.10);
           }
           100% {
-            opacity: 0.30;
-            filter: brightness(0.82) saturate(1.18);
+            opacity: 0.42;
+            filter: brightness(0.95) saturate(1.22);
             transform: scale(1);
           }
         }

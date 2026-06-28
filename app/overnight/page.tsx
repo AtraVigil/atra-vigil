@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useEffect, useMemo, useState } from "react";
 
 type DataTone = "green" | "red" | "amber";
@@ -139,6 +141,15 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#050608] text-white">
+
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200 transition hover:border-cyan-300 hover:bg-cyan-400/15"
+          >
+            ← Back to Market Command
+          </Link>
+        </div>
       <div className="mx-auto max-w-7xl px-5 py-6 md:px-8">
         <header className="mb-8 border-b border-zinc-800 pb-6">
           <div className="relative mb-5 h-28 w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 md:h-36">
