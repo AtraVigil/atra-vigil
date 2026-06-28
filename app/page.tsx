@@ -53,7 +53,21 @@ const destinations = [
     title: "Atra Optio",
     eyebrow: "Protected Terminal",
     href: "/atraoptio",
-    detail: "Options command shell",
+    detail: "Restricted system access",
+  },
+  {
+    key: "lectio",
+    title: "Atra Lectio",
+    eyebrow: "Protected Terminal",
+    href: "/atralectio",
+    detail: "Restricted system access",
+  },
+  {
+    key: "dis",
+    title: "Atra Dis",
+    eyebrow: "Protected Terminal",
+    href: "/atradis",
+    detail: "Restricted system access",
   },
 ];
 
@@ -182,6 +196,8 @@ export default function Home() {
       domestic: calcDomesticTone(usData?.assets || []),
       protected: "blue" as TapeTone,
       optio: "blue" as TapeTone,
+      lectio: "blue" as TapeTone,
+      dis: "blue" as TapeTone,
     };
   }, [overnightData, usData]);
 
@@ -256,7 +272,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {destinations.map((item) => {
               const tone = cardTones[item.key as keyof typeof cardTones];
 
