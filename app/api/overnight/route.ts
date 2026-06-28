@@ -43,6 +43,33 @@ const MARKETS: MarketConfig[] = [
     exchangeTimeZone: "Europe/Berlin",
     sessions: [[9 * 60, 17 * 60 + 30]],
   },
+  {
+    key: "cac40",
+    name: "CAC 40",
+    symbol: "^FCHI",
+    region: "France",
+    flag: "FR",
+    exchangeTimeZone: "Europe/Paris",
+    sessions: [[9 * 60, 17 * 60 + 30]],
+  },
+  {
+    key: "eurostoxx50",
+    name: "Euro Stoxx 50",
+    symbol: "^STOXX50E",
+    region: "Europe",
+    flag: "EU",
+    exchangeTimeZone: "Europe/Zurich",
+    sessions: [[9 * 60, 17 * 60 + 30]],
+  },
+  {
+    key: "asx200",
+    name: "ASX 200",
+    symbol: "^AXJO",
+    region: "Australia",
+    flag: "AU",
+    exchangeTimeZone: "Australia/Sydney",
+    sessions: [[10 * 60, 16 * 60]],
+  },
 ];
 
 const CACHE_MS = 20_000;
