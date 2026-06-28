@@ -30,20 +30,20 @@ const destinations = [
   {
     key: "global",
     title: "Overnight Markets",
-    eyebrow: "Global Tape",
+    eyebrow: "🌐 Global",
     href: "/overnight",
     detail: "International session monitor",
   },
   {
     key: "domestic",
     title: "U.S. Markets",
-    eyebrow: "Domestic Tape",
+    eyebrow: "🇺🇸 United States",
     href: "/us",
     detail: "Primary U.S. index command",
   },
   {
     key: "protected",
-    title: "Atra Prae V2",
+    title: "Atra Prae",
     eyebrow: "Protected Terminal",
     href: "/atraprae",
     detail: "Restricted system access",
