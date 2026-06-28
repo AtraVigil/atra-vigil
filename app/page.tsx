@@ -264,6 +264,7 @@ export default function Home() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  prefetch={false}
                   className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/78 p-6 shadow-xl shadow-black/35 backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:bg-zinc-900/85 ${toneBorder(tone)}`}
                 >
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
