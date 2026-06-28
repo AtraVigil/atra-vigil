@@ -60,10 +60,20 @@ function getServiceAccount() {
     };
   }
 
-  if (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY) {
+  const clientEmail =
+    process.env.GOOGLE_CLIENT_EMAIL ||
+    process.env.ATRA_PRAE_GOOGLE_CLIENT_EMAIL ||
+    "";
+
+  const privateKey =
+    process.env.GOOGLE_PRIVATE_KEY ||
+    process.env.ATRA_PRAE_GOOGLE_PRIVATE_KEY ||
+    "";
+
+  if (clientEmail && privateKey) {
     return {
-      client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: normalizePrivateKey(process.env.GOOGLE_PRIVATE_KEY),
+      client_email: clientEmail,
+      private_key: normalizePrivateKey(privateKey),
     };
   }
 
