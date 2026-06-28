@@ -1,64 +1,108 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-function unauthorized() {
+const REALM = "Atra Vigil";
+
+function safeEqual(a: string, b: string) {
+  if (a.length !== b.length) return false;
+
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i += 1) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+
+  return mismatch === 0;
+}
+
+function getRouteAuth(pathname: string) {
+  const username =
+    process.env.ATRA_PROTECTED_USERNAME ||
+    process.env.BASIC_AUTH_USERNAME ||
+    process.env.BASIC_AUTH_USER ||
+    process.env.AUTH_USERNAME ||
+    process.env.AUTH_USER ||
+    "";
+
+  const commonPassword =
+    process.env.ATRA_PROTECTED_PASSWORD ||
+    process.env.BASIC_AUTH_PASSWORD ||
+    process.env.AUTH_PASSWORD ||
+    "";
+
+  let password = commonPassword;
+  let realm = REALM;
+
+  if (pathname.startsWith("/atraprae")) {
+    password = process.env.ATRA_PRAE_PASSWORD || commonPassword;
+    realm = "Atra Prae";
+  } else if (
+    pathname.startsWith("/atraoptio") ||
+    pathname.startsWith("/api/atra-optio-dashboard")
+  ) {
+    password = process.env.ATRA_OPTIO_PASSWORD || commonPassword;
+    realm = "Atra Optio";
+  } else if (pathname.startsWith("/atralectio")) {
+    password = process.env.ATRA_LECTIO_PASSWORD || commonPassword;
+    realm = "Atra Lectio";
+  } else if (pathname.startsWith("/atradis")) {
+    password = process.env.ATRA_DIS_PASSWORD || commonPassword;
+    realm = "Atra Dis";
+  }
+
+  return { username, password, realm };
+}
+
+function unauthorized(realm: string) {
   return new NextResponse("Authentication required", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="Atra Prae V2", charset="UTF-8"',
+      "WWW-Authenticate": `Basic realm="${realm}", charset="UTF-8"`,
       "Cache-Control": "no-store",
     },
   });
 }
 
-function isLocalhost(request: NextRequest): boolean {
-  const host = request.headers.get("host") || "";
-
-  return (
-    host.startsWith("localhost:") ||
-    host.startsWith("127.0.0.1:") ||
-    host.startsWith("[::1]:")
-  );
-}
-
 export function proxy(request: NextRequest) {
-  if (isLocalhost(request)) {
-    return NextResponse.next();
+  const { pathname } = request.nextUrl;
+  const { username, password, realm } = getRouteAuth(pathname);
+
+  if (!username || !password) {
+    return unauthorized(realm);
   }
 
-  const expectedUser = process.env.ATRA_PRAE_USER || "atra";
-  const expectedPassword = process.env.ATRA_PRAE_PASSWORD;
+  const authorization = request.headers.get("authorization");
 
-  if (!expectedPassword) {
-    return new NextResponse("Atra Prae password is not configured.", {
-      status: 503,
-      headers: {
-        "Cache-Control": "no-store",
-      },
-    });
+  if (!authorization || !authorization.startsWith("Basic ")) {
+    return unauthorized(realm);
   }
 
-  const auth = request.headers.get("authorization");
-
-  if (!auth || !auth.startsWith("Basic ")) {
-    return unauthorized();
-  }
+  let suppliedUsername = "";
+  let suppliedPassword = "";
 
   try {
-    const decoded = atob(auth.slice("Basic ".length));
-    const separator = decoded.indexOf(":");
-    const user = separator >= 0 ? decoded.slice(0, separator) : "";
-    const password = separator >= 0 ? decoded.slice(separator + 1) : "";
+    const decoded = atob(authorization.slice("Basic ".length));
+    const splitAt = decoded.indexOf(":");
 
-    if (user === expectedUser && password === expectedPassword) {
-      return NextResponse.next();
+    if (splitAt >= 0) {
+      suppliedUsername = decoded.slice(0, splitAt);
+      suppliedPassword = decoded.slice(splitAt + 1);
     }
   } catch {
-    return unauthorized();
+    return unauthorized(realm);
   }
 
-  return unauthorized();
+  if (!safeEqual(suppliedUsername, username) || !safeEqual(suppliedPassword, password)) {
+    return unauthorized(realm);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/atraprae/:path*", "/atraoptio/:path*", "/atralectio/:path*", "/atradis/:path*"],
+  matcher: [
+    "/atraprae/:path*",
+    "/atraoptio/:path*",
+    "/atralectio/:path*",
+    "/atradis/:path*",
+    "/api/atra-optio-dashboard/:path*",
+  ],
 };
