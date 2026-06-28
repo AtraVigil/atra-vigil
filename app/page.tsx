@@ -234,8 +234,27 @@ export default function Home() {
                 Market systems interface
               </div>
             </div>
-            <div className="hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-zinc-500 sm:block">
-              Secure Command Layer
+            <div className="flex items-center gap-3">
+              <a
+                href="https://x.com/atravigil"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Atra Vigil on X"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-zinc-400 transition hover:border-blue-400/40 hover:bg-blue-500/10 hover:text-white"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-4 w-4"
+                  fill="currentColor"
+                >
+                  <path d="M18.244 2H21.5l-7.11 8.13L22.75 22h-6.55l-5.13-6.71L5.2 22H1.94l7.61-8.7L1.5 2h6.72l4.64 6.14L18.244 2Zm-1.14 17.91h1.8L7.24 3.98H5.31l11.794 15.93Z" />
+                </svg>
+              </a>
+
+              <div className="hidden rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-zinc-500 sm:block">
+                Secure Command Layer
+              </div>
             </div>
           </div>
 
