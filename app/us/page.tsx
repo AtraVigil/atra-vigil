@@ -115,6 +115,17 @@ export default function UsMarketPage() {
           </Link>
         </div>
       <div className="mx-auto max-w-7xl">
+        <div
+          data-mark="US_MARKET_LOGO_HEADER"
+          className="relative mb-6 h-28 w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 md:h-36"
+        >
+          <img
+            src="/header-final.png"
+            alt="Atra Vigil Header"
+            className="absolute inset-0 h-full w-full object-cover opacity-75"
+          />
+        </div>
+
         <header className="mb-8 flex flex-col gap-4 rounded-3xl border border-white/10 bg-zinc-950/80 p-6 shadow-2xl shadow-black/30 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="mb-3 flex flex-wrap gap-3 text-xs uppercase tracking-[0.24em] text-zinc-500">
