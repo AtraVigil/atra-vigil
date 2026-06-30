@@ -98,6 +98,8 @@ export type AtraPraeArchiveData = {
   loadError?: string;
 };
 
+const ATRA_PRAE_HISTORY_V2_START_DATE = "2026-06-25";
+
 const emptyData: AtraPraeData = {
   source: "Google Sheet: Terminal",
   header: {
@@ -562,6 +564,86 @@ function alertMetricByEventId(alertRows: GridRow[]): Map<string, Record<string, 
   return map;
 }
 
+function parseAlertHistoryTerminalRows(
+  alertRows: GridRow[],
+  selectedDate: string,
+): AtraPraeData | undefined {
+  if (!alertRows.length) return undefined;
+
+  const headers = alertRows[0] || [];
+  const eventIdIndex = headerIndex(headers, "Event ID");
+  const tickerIndex = headerIndex(headers, "Ticker");
+  const timeIndex = headerIndex(headers, "Candidate Time");
+  const priceIndex = headerIndex(headers, "Candidate Price");
+
+  if (tickerIndex < 0 || timeIndex < 0 || priceIndex < 0) {
+    return undefined;
+  }
+
+  const get = (row: GridRow, name: string) => {
+    const index = headerIndex(headers, name);
+    return index >= 0 ? rowCell(row, index) : "";
+  };
+
+  const candidateRows = alertRows
+    .slice(1)
+    .map((row) => {
+      const ticker = rowCell(row, tickerIndex);
+      const time = rowCell(row, timeIndex);
+      const price = rowCell(row, priceIndex);
+      const eventId = eventIdIndex >= 0 ? rowCell(row, eventIdIndex) : "";
+      const status = get(row, "3m Status") || get(row, "Outcome Status") || "CANDIDATE";
+      const notes = get(row, "Notes");
+      const outcome = get(row, "Outcome Status");
+      const rule = get(row, "Rule");
+      const detail = [outcome, notes, rule, eventId].filter(Boolean).join(" | ");
+
+      return {
+        time,
+        ticker,
+        price,
+        status,
+        threeMReturn: get(row, "3m Return %"),
+        threeMHigh: get(row, "3m High %"),
+        threeMLow: get(row, "3m Low %"),
+        oneEightyMReturn: get(row, "180M Return %"),
+        tick3Plus: get(row, "first_3m_tick_count"),
+        vol3kPlus: get(row, "candidate_candle_volume"),
+        room5Plus: get(row, "room_to_session_high_pct"),
+        detail,
+      };
+    })
+    .filter((row) => row.ticker || row.time);
+
+  if (candidateRows.length === 0) {
+    return undefined;
+  }
+
+  const passCount = candidateRows.filter((row) => row.status === "PASS").length;
+  const failCount = candidateRows.filter((row) => row.status === "FAIL").length;
+  const noDataCount = candidateRows.filter((row) => row.status === "NO_DATA").length;
+
+  return {
+    ...emptyData,
+    source: `Google Sheet: AP_Archive_Alert_History ${selectedDate}`,
+    header: {
+      title: "Atra Prae Archive",
+      updated: "--",
+      market: "--",
+      session: selectedDate,
+    },
+    summary: {
+      ...emptyData.summary,
+      candidates: String(candidateRows.length),
+      threeMPass: String(passCount),
+      threeMFail: String(failCount),
+      pending: String(noDataCount),
+    },
+    candidateRows,
+    rawTerminalRows: alertRows,
+  };
+}
+
 function parseStructuredArchiveTerminalRows(
   rows: GridRow[],
   selectedDate: string,
@@ -722,7 +804,9 @@ export async function listAtraPraeArchiveDates(): Promise<string[]> {
       }
     }
 
-    return Array.from(new Set(allDates)).sort((a, b) => b.localeCompare(a));
+    return Array.from(new Set(allDates))
+    .filter((date) => date >= ATRA_PRAE_HISTORY_V2_START_DATE)
+    .sort((a, b) => b.localeCompare(a));
   } catch {
     return [];
   }
@@ -762,6 +846,7 @@ export async function loadAtraPraeArchiveData(requestedDate?: string): Promise<A
     const filteredAlert = filterArchiveRowsByDate(alertRows, selectedDate);
     const filteredWmicro = filterArchiveRowsByDate(wmicroRows, selectedDate);
 
+    const alertTerminal = parseAlertHistoryTerminalRows(filteredAlert, selectedDate);
     const structuredTerminal = parseStructuredArchiveTerminalRows(filteredTerminal, selectedDate, filteredAlert);
     const terminalRows = stripArchiveMeta(filteredTerminal, "col");
     const alertTable = tableFromRows(stripArchiveMeta(filteredAlert));
@@ -771,7 +856,10 @@ export async function loadAtraPraeArchiveData(requestedDate?: string): Promise<A
       dates,
       selectedDate,
       daily: parseArchiveDaily(dailyRows, selectedDate),
-      terminal: structuredTerminal || parseTerminalRows(terminalRows, `AP_Archive_Terminal ${selectedDate}`),
+      terminal:
+        alertTerminal ||
+        structuredTerminal ||
+        parseTerminalRows(terminalRows, `AP_Archive_Terminal ${selectedDate}`),
       alertHistory: alertTable,
       wmicro: wmicroTable,
     };
