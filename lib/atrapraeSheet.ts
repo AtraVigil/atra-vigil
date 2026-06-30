@@ -522,6 +522,85 @@ function stripArchiveMeta(rows: GridRow[], sourcePrefix?: string): GridRow[] {
   return rows.map((row) => row.slice(startIndex));
 }
 
+
+function structuredArchiveCell(headers: string[], row: GridRow, name: string): string {
+  const index = headerIndex(headers, name);
+  return index >= 0 ? rowCell(row, index) : "";
+}
+
+function parseStructuredArchiveTerminalRows(
+  rows: GridRow[],
+  selectedDate: string,
+): AtraPraeData | undefined {
+  if (!rows.length) return undefined;
+
+  const headers = rows[0] || [];
+  const tickerIndex = headerIndex(headers, "ticker");
+  const timeIndex = headerIndex(headers, "candidate_time");
+  const priceIndex = headerIndex(headers, "candidate_price");
+
+  if (tickerIndex < 0 || timeIndex < 0 || priceIndex < 0) {
+    return undefined;
+  }
+
+  const candidateRows = rows
+    .slice(1)
+    .map((row) => {
+      const ticker = rowCell(row, tickerIndex);
+      const candidateTime = rowCell(row, timeIndex);
+      const candidatePrice = rowCell(row, priceIndex);
+      const status =
+        structuredArchiveCell(headers, row, "candidate_status") ||
+        structuredArchiveCell(headers, row, "archive_status") ||
+        "CANDIDATE";
+
+      const reason = structuredArchiveCell(headers, row, "candidate_reason");
+      const source = structuredArchiveCell(headers, row, "candidate_source");
+      const rule = structuredArchiveCell(headers, row, "candidate_rule");
+      const quality = structuredArchiveCell(headers, row, "candidate_data_quality");
+
+      const detail = [reason, source, rule, quality].filter(Boolean).join(" | ");
+
+      return {
+        time: candidateTime,
+        ticker,
+        price: candidatePrice,
+        status,
+        threeMReturn: "",
+        threeMHigh: "",
+        threeMLow: "",
+        oneEightyMReturn: "",
+        tick3Plus: "",
+        vol3kPlus: "",
+        room5Plus: "",
+        detail,
+      };
+    })
+    .filter((row) => row.ticker || row.time);
+
+  const archivedAtLocal =
+    rows.length > 1 ? structuredArchiveCell(headers, rows[1], "archived_at_local") : "";
+  const archivedAtMarket =
+    rows.length > 1 ? structuredArchiveCell(headers, rows[1], "archived_at_market") : "";
+
+  return {
+    ...emptyData,
+    source: `Google Sheet: AP_Archive_Terminal ${selectedDate}`,
+    header: {
+      title: "Atra Prae Archive",
+      updated: archivedAtLocal || archivedAtMarket || "--",
+      market: archivedAtMarket || "--",
+      session: selectedDate,
+    },
+    summary: {
+      ...emptyData.summary,
+      candidates: String(candidateRows.length),
+    },
+    candidateRows,
+    rawTerminalRows: rows,
+  };
+}
+
 function parseArchiveDaily(rows: GridRow[], selectedDate: string): ArchiveDailyRow | undefined {
   if (!rows.length) return undefined;
 
@@ -640,6 +719,7 @@ export async function loadAtraPraeArchiveData(requestedDate?: string): Promise<A
     const filteredAlert = filterArchiveRowsByDate(alertRows, selectedDate);
     const filteredWmicro = filterArchiveRowsByDate(wmicroRows, selectedDate);
 
+    const structuredTerminal = parseStructuredArchiveTerminalRows(filteredTerminal, selectedDate);
     const terminalRows = stripArchiveMeta(filteredTerminal, "col");
     const alertTable = tableFromRows(stripArchiveMeta(filteredAlert));
     const wmicroTable = tableFromRows(stripArchiveMeta(filteredWmicro));
@@ -648,7 +728,7 @@ export async function loadAtraPraeArchiveData(requestedDate?: string): Promise<A
       dates,
       selectedDate,
       daily: parseArchiveDaily(dailyRows, selectedDate),
-      terminal: parseTerminalRows(terminalRows, `AP_Archive_Terminal ${selectedDate}`),
+      terminal: structuredTerminal || parseTerminalRows(terminalRows, `AP_Archive_Terminal ${selectedDate}`),
       alertHistory: alertTable,
       wmicro: wmicroTable,
     };
