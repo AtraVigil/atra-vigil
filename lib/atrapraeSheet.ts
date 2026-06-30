@@ -566,29 +566,46 @@ export async function loadAtraPraeData(): Promise<AtraPraeData> {
   }
 }
 
+function archiveDatesFromRows(rows: GridRow[]): string[] {
+  const headers = rows[0] || [];
+  const dateIndex = headerIndex(headers, "session_date");
+
+  if (dateIndex < 0) return [];
+
+  return rows
+    .slice(1)
+    .map((row) => rowCell(row, dateIndex))
+    .filter(Boolean);
+}
+
 export async function listAtraPraeArchiveDates(): Promise<string[]> {
   try {
     const { sheetId, sheets } = await getSheetsClient();
-    const rows = await readRawTab(sheets, sheetId, "AP_Archive_Daily");
 
-    if (!rows.length) return [];
+    const tabNames = [
+      "AP_Archive_Daily",
+      "AP_Archive_Terminal",
+      "AP_Archive_Alert_History",
+      "AP_Archive_WMicro",
+    ];
 
-    const headers = rows[0] || [];
-    const dateIndex = headerIndex(headers, "session_date");
-    if (dateIndex < 0) return [];
+    const allDates: string[] = [];
 
-    return Array.from(
-      new Set(
-        rows
-          .slice(1)
-          .map((row) => rowCell(row, dateIndex))
-          .filter(Boolean),
-      ),
-    ).sort((a, b) => b.localeCompare(a));
+    for (const tabName of tabNames) {
+      try {
+        const rows = await readRawTab(sheets, sheetId, tabName);
+        allDates.push(...archiveDatesFromRows(rows));
+      } catch {
+        // Keep history usable if one archive tab is missing or stale.
+      }
+    }
+
+    return Array.from(new Set(allDates)).sort((a, b) => b.localeCompare(a));
   } catch {
     return [];
   }
 }
+
 
 export async function loadAtraPraeArchiveData(requestedDate?: string): Promise<AtraPraeArchiveData> {
   const dates = await listAtraPraeArchiveDates();
