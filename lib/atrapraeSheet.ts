@@ -528,9 +528,44 @@ function structuredArchiveCell(headers: string[], row: GridRow, name: string): s
   return index >= 0 ? rowCell(row, index) : "";
 }
 
+function alertMetricByEventId(alertRows: GridRow[]): Map<string, Record<string, string>> {
+  const map = new Map<string, Record<string, string>>();
+
+  if (!alertRows.length) return map;
+
+  const headers = alertRows[0] || [];
+  const eventIdIndex = headerIndex(headers, "Event ID");
+
+  if (eventIdIndex < 0) return map;
+
+  for (const row of alertRows.slice(1)) {
+    const eventId = rowCell(row, eventIdIndex);
+    if (!eventId) continue;
+
+    const get = (name: string) => {
+      const index = headerIndex(headers, name);
+      return index >= 0 ? rowCell(row, index) : "";
+    };
+
+    map.set(eventId, {
+      threeMReturn: get("3m Return %"),
+      threeMHigh: get("3m High %"),
+      threeMLow: get("3m Low %"),
+      oneEightyMReturn: get("180M Return %"),
+      tick3Plus: get("first_3m_tick_count"),
+      vol3kPlus: get("candidate_candle_volume"),
+      room5Plus: get("room_to_session_high_pct"),
+      status: get("3m Status"),
+    });
+  }
+
+  return map;
+}
+
 function parseStructuredArchiveTerminalRows(
   rows: GridRow[],
   selectedDate: string,
+  alertRows: GridRow[],
 ): AtraPraeData | undefined {
   if (!rows.length) return undefined;
 
@@ -542,6 +577,8 @@ function parseStructuredArchiveTerminalRows(
   if (tickerIndex < 0 || timeIndex < 0 || priceIndex < 0) {
     return undefined;
   }
+
+  const metricsByEventId = alertMetricByEventId(alertRows);
 
   const candidateRows = rows
     .slice(1)
@@ -560,23 +597,29 @@ function parseStructuredArchiveTerminalRows(
       const quality = structuredArchiveCell(headers, row, "candidate_data_quality");
 
       const detail = [reason, source, rule, quality].filter(Boolean).join(" | ");
+      const eventId = structuredArchiveCell(headers, row, "event_id");
+      const metrics = eventId ? metricsByEventId.get(eventId) : undefined;
 
       return {
         time: candidateTime,
         ticker,
         price: candidatePrice,
-        status,
-        threeMReturn: "",
-        threeMHigh: "",
-        threeMLow: "",
-        oneEightyMReturn: "",
-        tick3Plus: "",
-        vol3kPlus: "",
-        room5Plus: "",
+        status: metrics?.status || status,
+        threeMReturn: metrics?.threeMReturn || "",
+        threeMHigh: metrics?.threeMHigh || "",
+        threeMLow: metrics?.threeMLow || "",
+        oneEightyMReturn: metrics?.oneEightyMReturn || "",
+        tick3Plus: metrics?.tick3Plus || "",
+        vol3kPlus: metrics?.vol3kPlus || "",
+        room5Plus: metrics?.room5Plus || "",
         detail,
       };
     })
     .filter((row) => row.ticker || row.time);
+
+  if (candidateRows.length === 0) {
+    return undefined;
+  }
 
   const archivedAtLocal =
     rows.length > 1 ? structuredArchiveCell(headers, rows[1], "archived_at_local") : "";
@@ -719,7 +762,7 @@ export async function loadAtraPraeArchiveData(requestedDate?: string): Promise<A
     const filteredAlert = filterArchiveRowsByDate(alertRows, selectedDate);
     const filteredWmicro = filterArchiveRowsByDate(wmicroRows, selectedDate);
 
-    const structuredTerminal = parseStructuredArchiveTerminalRows(filteredTerminal, selectedDate);
+    const structuredTerminal = parseStructuredArchiveTerminalRows(filteredTerminal, selectedDate, filteredAlert);
     const terminalRows = stripArchiveMeta(filteredTerminal, "col");
     const alertTable = tableFromRows(stripArchiveMeta(filteredAlert));
     const wmicroTable = tableFromRows(stripArchiveMeta(filteredWmicro));
