@@ -202,6 +202,13 @@ function CandidatesSection({ data, title = "Today’s Candidates" }: { data: Atr
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Tick3+</th>
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Vol3k+</th>
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Room5+</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ignition Status</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ignition Type</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ignition Pre2 %</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ignition Post1 Max %</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ignition Post2 Max %</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ignition Vol2 vs Pre15</th>
+              <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Ignition Checked At</th>
               <th className="px-4 py-3 text-left text-[11px] uppercase tracking-[0.16em] text-zinc-500">Detail</th>
             </tr>
           </thead>
@@ -220,13 +227,20 @@ function CandidatesSection({ data, title = "Today’s Candidates" }: { data: Atr
                 <td className="px-4 py-3 text-zinc-200">{row.tick3Plus || "--"}</td>
                 <td className="px-4 py-3 text-zinc-200">{row.vol3kPlus || "--"}</td>
                 <td className="px-4 py-3 text-zinc-200">{row.room5Plus || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.ignitionStatus || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.ignitionType || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.ignitionPre2Pct || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.ignitionPost1MaxPct || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.ignitionPost2MaxPct || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.ignitionVol2VsPre15 || "--"}</td>
+                <td className="px-4 py-3 text-zinc-200">{row.ignitionCheckedAt || "--"}</td>
                 <td className="px-4 py-3 text-zinc-400">{row.detail || "--"}</td>
               </tr>
             ))}
 
             {data.candidateRows.length === 0 ? (
               <tr>
-                <td colSpan={12} className="px-4 py-6 text-center text-zinc-500">
+                <td colSpan={19} className="px-4 py-6 text-center text-zinc-500">
                   No candidate rows.
                 </td>
               </tr>

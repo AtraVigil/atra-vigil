@@ -31,6 +31,13 @@ export type TerminalCandidateRow = {
   tick3Plus: string;
   vol3kPlus: string;
   room5Plus: string;
+  ignitionStatus?: string;
+  ignitionType?: string;
+  ignitionPre2Pct?: string;
+  ignitionPost1MaxPct?: string;
+  ignitionPost2MaxPct?: string;
+  ignitionVol2VsPre15?: string;
+  ignitionCheckedAt?: string;
   detail: string;
 };
 
@@ -404,7 +411,14 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
     tick3Plus: indexFor(["Tick3+", "Tick3"], 8),
     vol3kPlus: indexFor(["Vol3k+", "Vol3k"], 9),
     room5Plus: indexFor(["Room5+", "Room5"], 10),
-    detail: indexFor(["Detail"], 11),
+    ignitionStatus: indexFor(["Ignition Status"], 11),
+    ignitionType: indexFor(["Ignition Type"], 12),
+    ignitionPre2Pct: indexFor(["Ignition Pre2 %"], 13),
+    ignitionPost1MaxPct: indexFor(["Ignition Post1 Max %"], 14),
+    ignitionPost2MaxPct: indexFor(["Ignition Post2 Max %"], 15),
+    ignitionVol2VsPre15: indexFor(["Ignition Vol2 vs Pre15"], 16),
+    ignitionCheckedAt: indexFor(["Ignition Checked At"], 17),
+    detail: indexFor(["Detail"], 18),
   };
 
   const output: TerminalCandidateRow[] = [];
@@ -422,6 +436,13 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
     const tick3Plus = rowCell(row, idx.tick3Plus);
     const vol3kPlus = rowCell(row, idx.vol3kPlus);
     const room5Plus = rowCell(row, idx.room5Plus);
+    const ignitionStatus = rowCell(row, idx.ignitionStatus);
+    const ignitionType = rowCell(row, idx.ignitionType);
+    const ignitionPre2Pct = rowCell(row, idx.ignitionPre2Pct);
+    const ignitionPost1MaxPct = rowCell(row, idx.ignitionPost1MaxPct);
+    const ignitionPost2MaxPct = rowCell(row, idx.ignitionPost2MaxPct);
+    const ignitionVol2VsPre15 = rowCell(row, idx.ignitionVol2VsPre15);
+    const ignitionCheckedAt = rowCell(row, idx.ignitionCheckedAt);
     const detail = rowCell(row, idx.detail);
 
     if (
@@ -436,6 +457,13 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
       !tick3Plus &&
       !vol3kPlus &&
       !room5Plus &&
+      !ignitionStatus &&
+      !ignitionType &&
+      !ignitionPre2Pct &&
+      !ignitionPost1MaxPct &&
+      !ignitionPost2MaxPct &&
+      !ignitionVol2VsPre15 &&
+      !ignitionCheckedAt &&
       !detail
     ) {
       continue;
@@ -453,6 +481,13 @@ function parseTodayCandidates(rows: GridRow[]): TerminalCandidateRow[] {
       tick3Plus,
       vol3kPlus,
       room5Plus,
+      ignitionStatus,
+      ignitionType,
+      ignitionPre2Pct,
+      ignitionPost1MaxPct,
+      ignitionPost2MaxPct,
+      ignitionVol2VsPre15,
+      ignitionCheckedAt,
       detail,
     });
   }
