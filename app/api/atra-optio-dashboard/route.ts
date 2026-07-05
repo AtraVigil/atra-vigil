@@ -11,12 +11,12 @@ const TAB_NAMES = {
   ranked: "Optio_Ranked",
   selected: "Optio_Selected",
   snapshots: "Optio_Snapshots",
-  outcomes: "Optio_Outcomes",
+  outcomes: "Optio_OptionOutcomes_InvalidProvider",
   dataQuality: "Optio_DataQuality",
   sourceFiles: "Optio_SourceFiles",
 };
 
-const SCHEMA_VERSION = "atra_optio_dashboard_v1";
+const SCHEMA_VERSION = "atra_optio_dashboard_v3_setup_outcomes_underlying_only";
 
 type Row = Record<string, any>;
 
@@ -369,7 +369,7 @@ function unavailablePayload(message: string) {
     },
     display_rules: {},
     disclaimer:
-      "Atra Optio is forward-test research only. Long calls only. No execution. No edge claim.",
+      "Atra Optio is a calls-only learning dashboard. Research only. No execution. Option-chain prices are delayed/reference only; setup follow-up is based on underlying stock movement.",
   };
 }
 
@@ -452,7 +452,7 @@ export async function GET() {
         no_sheet_mutation: true,
       },
       disclaimer:
-        "Atra Optio is forward-test research only. Long calls only. No execution. No edge claim.",
+        "Atra Optio is a calls-only learning dashboard. Research only. No execution. Option-chain prices are delayed/reference only; setup follow-up is based on underlying stock movement.",
     };
 
     return NextResponse.json(payload, {

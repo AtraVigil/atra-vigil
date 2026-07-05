@@ -23,26 +23,36 @@ type DashboardPayload = {
   disclaimer?: string;
 };
 
-const researchDisclaimer =
-  "Atra Optio is forward-test research only. Long calls only. No execution. No edge claim.";
+const acceptedSchemas = new Set([
+  "atra_optio_dashboard_v1",
+  "atra_optio_dashboard_v3_setup_outcomes_underlying_only",
+]);
 
-const signalOrder: Record<string, number> = {
-  CALL_TEST: 1,
-  CALL_WATCH: 2,
-  NO_TRADE: 3,
-  AVOID: 4,
+const fallbackDisclaimer =
+  "Atra Optio is a calls-only learning dashboard. Research only. No execution. Option-chain prices are delayed/reference only; setup follow-up is based on underlying stock movement.";
+
+const stateLabels: Record<string, string> = {
+  CALL_TEST: "Strong Candidate",
+  CALL_WATCH: "Watch Candidate",
+  NO_TRADE: "No Setup",
+  AVOID: "Avoid",
+};
+
+const reasonTranslations: Record<string, string> = {
+  MARKET_RISK_OFF_BLOCKS_CALL_TEST: "Market risk condition reduced confidence.",
+  NO_PREFERRED_DTE_USABLE_CONTRACT_BLOCKS_CALL_TEST: "No preferred-date contract passed rules.",
+  PREFERRED_DTE_HARD_FAIL_FOR_CALL_TEST: "Contract expiration was outside the preferred range.",
+  BELOW_VWAP_AND_LAGGING_GROUP_BLOCKS_CALL_TEST: "Stock was below VWAP and lagging its group.",
+  DTE_OUTSIDE_PREFERRED_RANGE: "Contract expiration was outside the preferred range.",
+  DTE_TOO_LOW: "Contract expires too soon.",
+  CALL_TOO_EXPENSIVE: "Contract was above the preferred price range.",
+  CALL_TOO_FAR_OTM: "Contract was too far out of the money.",
 };
 
 function value(v: any) {
-  if (v === null || v === undefined || v === "") return "not available";
-  if (Array.isArray(v)) return v.length ? v.join(", ") : "none";
+  if (v === null || v === undefined || v === "") return "—";
+  if (Array.isArray(v)) return v.length ? v.join(", ") : "—";
   return String(v);
-}
-
-function pct(v: any) {
-  const n = Number(v);
-  if (!Number.isFinite(n)) return value(v);
-  return `${(n * 100).toFixed(2)}%`;
 }
 
 function num(v: any, digits = 2) {
@@ -51,69 +61,69 @@ function num(v: any, digits = 2) {
   return n.toFixed(digits);
 }
 
+function pct(v: any) {
+  const n = Number(v);
+  if (!Number.isFinite(n)) return value(v);
+  return `${(n * 100).toFixed(2)}%`;
+}
+
 function money(v: any) {
   const n = Number(v);
   if (!Number.isFinite(n)) return value(v);
   return `$${n.toFixed(2)}`;
 }
 
+function labelState(state: any) {
+  const key = String(state || "");
+  return stateLabels[key] || value(key);
+}
+
+function explainReason(raw: any) {
+  const text = value(raw);
+  if (text === "—") return "No reason supplied.";
+
+  const parts = text
+    .split(/[;,|]/)
+    .map((x) => x.trim())
+    .filter(Boolean);
+
+  if (!parts.length) return text;
+
+  const translated = parts.map((part) => reasonTranslations[part] || part.replaceAll("_", " ").toLowerCase());
+  return Array.from(new Set(translated)).join(" ");
+}
+
 function statusFromFeed(data: DashboardPayload) {
-  const runtime = data.runtime || {};
   const dq = data.data_quality || {};
   const errors = Array.isArray(dq.errors) ? dq.errors : [];
   const warnings = Array.isArray(dq.warnings) ? dq.warnings : [];
-  const market = String(runtime.market_window_state || "");
-  const runMode = String(runtime.run_mode || "");
-  const rankedCount = data.ranked_board?.length || 0;
 
-  if (!data.ok || data.schema_version !== "atra_optio_dashboard_v1") {
-    return { label: "FEED ERROR", tone: "red" };
+  if (!data.ok) return { label: "Feed Error", tone: "red" };
+  if (data.schema_version && !acceptedSchemas.has(data.schema_version)) {
+    return { label: "Schema Warning", tone: "yellow" };
   }
-
-  if (errors.length > 0) return { label: "DATA ERROR", tone: "red" };
-
-  if (
-    market === "MARKET_WINDOW_OPEN" &&
-    (dq.missing_snapshot_file === true || rankedCount === 0)
-  ) {
-    return { label: "LIVE WARNING", tone: "red" };
-  }
-
-  if (
-    warnings.length > 0 ||
-    runMode === "TEST_MODE" ||
-    market.includes("CLOSED") ||
-    market.includes("WEEKEND") ||
-    (data.selected_contracts?.length || 0) === 0 ||
-    (data.outcomes?.length || 0) === 0
-  ) {
-    return { label: "INFORMATIONAL", tone: "yellow" };
-  }
-
-  return { label: "LIVE OK", tone: "green" };
+  if (errors.length) return { label: "Data Error", tone: "red" };
+  if (warnings.length) return { label: "Feed Warning", tone: "yellow" };
+  return { label: "Feed OK", tone: "green" };
 }
 
 function toneClass(tone: string) {
   if (tone === "green") return "border-emerald-400/30 bg-emerald-500/10 text-emerald-300";
   if (tone === "red") return "border-red-400/30 bg-red-500/10 text-red-300";
-  if (tone === "yellow") return "border-amber-400/30 bg-amber-500/10 text-amber-300";
-  return "border-blue-400/30 bg-blue-500/10 text-blue-300";
+  return "border-amber-400/30 bg-amber-500/10 text-amber-300";
 }
 
-function signalTone(label: string) {
-  if (label === "CALL_TEST") return "border-emerald-400/30 bg-emerald-500/10 text-emerald-300";
-  if (label === "CALL_WATCH") return "border-blue-400/30 bg-blue-500/10 text-blue-300";
-  if (label === "AVOID") return "border-red-400/20 bg-red-500/5 text-red-300";
+function stateClass(state: string) {
+  if (state === "CALL_TEST") return "border-emerald-400/30 bg-emerald-500/10 text-emerald-300";
+  if (state === "CALL_WATCH") return "border-blue-400/30 bg-blue-500/10 text-blue-300";
   return "border-white/10 bg-white/[0.03] text-zinc-300";
 }
 
-function FieldCard({ title, children }: { title: string; children: React.ReactNode }) {
+function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-zinc-950/75 p-4 shadow-xl shadow-black/25">
-      <div className="text-[10px] font-semibold uppercase tracking-[0.24em] text-zinc-600">
-        {title}
-      </div>
-      <div className="mt-2 text-sm font-medium text-zinc-200">{children}</div>
+    <div className="rounded-2xl border border-white/10 bg-zinc-950/70 p-4">
+      <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500">{title}</div>
+      <div className="mt-2 text-sm text-zinc-100">{children}</div>
     </div>
   );
 }
@@ -128,12 +138,10 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-5 rounded-3xl border border-white/10 bg-zinc-950/65 p-5 shadow-2xl shadow-black/25">
-      <div className="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+    <section className="mt-5 rounded-2xl border border-white/10 bg-zinc-950/70 p-5">
+      <div className="mb-4">
         <h2 className="text-lg font-semibold text-white">{title}</h2>
-        {subtitle ? (
-          <div className="text-xs uppercase tracking-[0.20em] text-zinc-600">{subtitle}</div>
-        ) : null}
+        {subtitle ? <div className="mt-1 text-xs text-zinc-500">{subtitle}</div> : null}
       </div>
       {children}
     </section>
@@ -142,7 +150,7 @@ function Section({
 
 function EmptyState({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-dashed border-white/10 bg-black/20 p-6 text-sm text-zinc-500">
+    <div className="rounded-xl border border-dashed border-white/10 bg-black/20 p-5 text-sm text-zinc-500">
       {children}
     </div>
   );
@@ -157,12 +165,12 @@ function Table({
   rows: AnyRecord[];
   render: (row: AnyRecord, col: string) => React.ReactNode;
 }) {
-  if (!rows.length) return <EmptyState>No rows in current feed.</EmptyState>;
+  if (!rows.length) return <EmptyState>No current rows.</EmptyState>;
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-white/10">
+    <div className="overflow-x-auto rounded-xl border border-white/10">
       <table className="min-w-full border-collapse text-left text-xs">
-        <thead className="bg-white/[0.04] text-[10px] uppercase tracking-[0.18em] text-zinc-500">
+        <thead className="bg-white/[0.04] text-[10px] uppercase tracking-[0.16em] text-zinc-500">
           <tr>
             {columns.map((col) => (
               <th key={col} className="whitespace-nowrap border-b border-white/10 px-3 py-3">
@@ -173,9 +181,9 @@ function Table({
         </thead>
         <tbody>
           {rows.map((row, idx) => (
-            <tr key={`${row.ticker || row.contract || row.selected_contract || "row"}-${idx}`} className="border-b border-white/5 last:border-0">
+            <tr key={`${row.ticker || row.selected_contract || row.contract || "row"}-${idx}`} className="border-b border-white/5 last:border-0">
               {columns.map((col) => (
-                <td key={col} className="max-w-[260px] whitespace-nowrap px-3 py-3 text-zinc-300">
+                <td key={col} className="max-w-[320px] whitespace-nowrap px-3 py-3 text-zinc-300">
                   {render(row, col)}
                 </td>
               ))}
@@ -190,9 +198,6 @@ function Table({
 export default function AtraOptioPage() {
   const [data, setData] = useState<DashboardPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [rankFilter, setRankFilter] = useState("ALL");
-  const [tickerSearch, setTickerSearch] = useState("");
-  const [showAllSnapshots, setShowAllSnapshots] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -225,93 +230,61 @@ export default function AtraOptioPage() {
   const runtime = feed.runtime || {};
   const counts = feed.counts || {};
   const dq = feed.data_quality || {};
-  const sourceFiles = feed.source_files || {};
   const status = statusFromFeed(feed);
 
-  const rankedRows = useMemo(() => {
-    const rows = [...(feed.ranked_board || [])];
+  const candidates = useMemo(() => {
+    const selected = feed.selected_contracts || [];
+    if (selected.length) return selected;
 
-    rows.sort((a, b) => {
-      const ao = signalOrder[a.system_state] || signalOrder[a.signal_label] || 99;
-      const bo = signalOrder[b.system_state] || signalOrder[b.signal_label] || 99;
-      if (ao !== bo) return ao - bo;
-      return Number(b.final_score || b.score || 0) - Number(a.final_score || a.score || 0);
-    });
+    return (feed.ranked_board || []).filter((row) =>
+      ["CALL_TEST", "CALL_WATCH"].includes(row.system_state || row.signal_label),
+    );
+  }, [feed.selected_contracts, feed.ranked_board]);
 
-    return rows.filter((row) => {
-      const label = row.system_state || row.signal_label || "";
-      const ticker = String(row.ticker || "").toLowerCase();
-      const group = String(row.group_name || "").toLowerCase();
-      const query = tickerSearch.trim().toLowerCase();
+  const setupFollowUp = useMemo(() => {
+    return feed.outcomes || [];
+  }, [feed.outcomes]);
 
-      if (rankFilter !== "ALL" && label !== rankFilter && row.group_name !== rankFilter) {
-        return false;
-      }
-
-      if (query && !ticker.includes(query) && !group.includes(query)) {
-        return false;
-      }
-
-      return true;
-    });
-  }, [feed.ranked_board, rankFilter, tickerSearch]);
-
-  const snapshotRows = useMemo(() => {
-    const rows = feed.snapshot_tape_latest || [];
-    if (showAllSnapshots) return rows;
-    return rows.filter((row) => ["CALL_TEST", "CALL_WATCH"].includes(row.signal_label || row.system_state));
-  }, [feed.snapshot_tape_latest, showAllSnapshots]);
-
-  const groupNames = Array.from(
-    new Set((feed.ranked_board || []).map((row) => row.group_name).filter(Boolean)),
-  );
+  const warnings = Array.isArray(dq.warnings) ? dq.warnings : [];
+  const errors = Array.isArray(dq.errors) ? dq.errors : [];
 
   return (
     <main className="min-h-screen bg-[#030407] px-5 py-6 text-white sm:px-8">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_-10%,rgba(37,99,235,0.22),transparent_34%),radial-gradient(circle_at_90%_55%,rgba(59,130,246,0.08),transparent_28%)]" />
-      <div className="relative z-10 mx-auto max-w-[1800px]">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <Link
             href="/"
             prefetch={false}
-            className="inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-blue-200 transition hover:border-blue-400 hover:bg-blue-500/15"
+            className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-400 hover:border-blue-400/40 hover:text-white"
           >
-            ← Back to Market Command
+            ← Back
           </Link>
 
-          <div className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.20em] ${toneClass(status.tone)}`}>
+          <div className={`rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] ${toneClass(status.tone)}`}>
             {status.label}
           </div>
         </div>
 
-        <header className="overflow-hidden rounded-[1.7rem] border border-blue-400/15 bg-zinc-950/70 shadow-2xl shadow-blue-950/20">
-          <div className="relative h-28 sm:h-36">
-            <img
-              src="/header-final.png"
-              alt="Atra Vigil Header"
-              className="absolute inset-0 h-full w-full object-cover opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-black/55" />
+        <header className="rounded-2xl border border-white/10 bg-zinc-950/75 p-5">
+          <div className="text-[11px] font-semibold uppercase tracking-[0.30em] text-blue-300">
+            Atra Optio
           </div>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-white">
+            Calls-Only Learning Dashboard
+          </h1>
+          <p className="mt-3 max-w-4xl text-sm leading-6 text-zinc-400">
+            Atra Optio ranks stocks and identifies possible long-call contracts for research. It does not place trades.
+            It does not show live option P&amp;L. Option-chain bid, ask, and mid values are delayed/reference fields.
+          </p>
 
-          <div className="p-6 sm:p-8">
-            <div className="text-xs font-semibold uppercase tracking-[0.34em] text-blue-400">
-              Protected Terminal
-            </div>
-            <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Atra Optio
-            </h1>
-            <p className="mt-3 text-sm uppercase tracking-[0.22em] text-zinc-500">
-              Long-Call Forward Test Dashboard
-            </p>
-
-            <div className="mt-6 grid gap-3 md:grid-cols-5">
-              <FieldCard title="Session">{value(feed.session_date)}</FieldCard>
-              <FieldCard title="Latest Feed ET">{value(feed.generated_at_market)}</FieldCard>
-              <FieldCard title="Latest Feed UTC">{value(feed.generated_at_utc)}</FieldCard>
-              <FieldCard title="Run Mode">{value(runtime.run_mode)}</FieldCard>
-              <FieldCard title="Market">{value(runtime.market_window_state)}</FieldCard>
-            </div>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            <Card title="Session">{value(feed.session_date)}</Card>
+            <Card title="Last Updated ET">{value(feed.generated_at_market)}</Card>
+            <Card title="Market">{value(runtime.market_window_state)}</Card>
+            <Card title="Mode">{value(runtime.run_mode)}</Card>
+            <Card title="Candidates">
+              Strong: {value(counts.CALL_TEST ?? 0)} · Watch: {value(counts.CALL_WATCH ?? 0)}
+            </Card>
           </div>
         </header>
 
@@ -321,341 +294,112 @@ export default function AtraOptioPage() {
           </Section>
         ) : null}
 
-        <Section title="Runtime Health" subtitle="display only">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
-            <FieldCard title="Market Window">{value(runtime.market_window_state)}</FieldCard>
-            <FieldCard title="Run Mode">{value(runtime.run_mode)}</FieldCard>
-            <FieldCard title="Latest Run ID">{value(runtime.latest_run_id)}</FieldCard>
-            <FieldCard title="Ticker Count">{value(runtime.ticker_count)}</FieldCard>
-            <FieldCard title="Rows Written">{value(runtime.rows_written)}</FieldCard>
-            <FieldCard title="Ledger">{value(runtime.ledger_append_status)}</FieldCard>
-            <FieldCard title="Snapshot Archive">
-              {value(runtime.snapshot_archive_status)}
-              <div className="mt-1 text-xs text-zinc-500">
-                rows: {value(runtime.snapshot_rows_written)}
-              </div>
-            </FieldCard>
-            <FieldCard title="Outcome Capture">
-              {value(runtime.outcome_capture_status)}
-              <div className="mt-1 text-xs text-zinc-500">
-                written: {value(runtime.outcome_rows_written)} | updated: {value(runtime.outcome_rows_updated)}
-              </div>
-            </FieldCard>
-            <FieldCard title="Outcome Pending">{value(runtime.outcome_pending_count)}</FieldCard>
-            <FieldCard title="Artifact Policy">{value(runtime.artifact_policy)}</FieldCard>
-            <FieldCard title="Latest File Time">{value(runtime.latest_file_timestamp_local)}</FieldCard>
+        <Section title="What this means">
+          <div className="grid gap-3 md:grid-cols-3">
+            <Card title="Stock setup">
+              The system first ranks the underlying stock using group strength, relative strength, volume, chart, and market context.
+            </Card>
+            <Card title="Call contract">
+              The contract shown is a research candidate. Strike, expiration, DTE, ask, and spread are context fields, not trade instructions.
+            </Card>
+            <Card title="Follow-up">
+              Current follow-up should be judged on the underlying stock setup. Option P&amp;L is not valid from the current provider.
+            </Card>
           </div>
         </Section>
 
-        <Section title="Signal Counts">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {["CALL_TEST", "CALL_WATCH", "NO_TRADE", "AVOID"].map((label) => (
-              <div key={label} className={`rounded-2xl border p-5 ${signalTone(label)}`}>
-                <div className="text-[10px] font-semibold uppercase tracking-[0.24em] opacity-80">
-                  {label}
-                </div>
-                <div className="mt-2 text-3xl font-semibold">{value(counts[label] ?? 0)}</div>
-              </div>
-            ))}
-          </div>
-        </Section>
-
-        <Section title="Current Ranked Board" subtitle={`${rankedRows.length} rows displayed`}>
-          <div className="mb-4 flex flex-wrap gap-2">
-            {["ALL", "CALL_TEST", "CALL_WATCH", "NO_TRADE", "AVOID", ...groupNames].map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setRankFilter(filter)}
-                className={`rounded-full border px-3 py-1.5 text-xs font-medium transition ${
-                  rankFilter === filter
-                    ? "border-blue-400/50 bg-blue-500/15 text-blue-200"
-                    : "border-white/10 bg-white/[0.03] text-zinc-500 hover:text-white"
-                }`}
-              >
-                {filter}
-              </button>
-            ))}
-
-            <input
-              value={tickerSearch}
-              onChange={(e) => setTickerSearch(e.target.value)}
-              placeholder="Search ticker/group"
-              className="ml-auto min-w-[220px] rounded-full border border-white/10 bg-black/40 px-4 py-1.5 text-xs text-zinc-200 outline-none placeholder:text-zinc-600 focus:border-blue-400/50"
-            />
-          </div>
-
+        <Section title="Current Call Candidates" subtitle="Strong Candidate and Watch Candidate only">
           <Table
-            rows={rankedRows}
+            rows={candidates}
             columns={[
               "rank",
               "ticker",
               "group",
               "state",
               "score",
-              "ticker_ret",
-              "group_ret",
-              "rel_group",
-              "rel_bench",
-              "vwap",
-              "vol",
+              "stock move",
+              "vs group",
               "contract",
-              "dte",
               "strike",
-              "bid",
-              "ask",
-              "mid",
-              "spread",
-              "vol/oi",
-              "reason",
-            ]}
-            render={(row, col) => {
-              if (col === "rank") return value(row.ticker_rank ?? row.rank);
-              if (col === "ticker") return <span className="font-semibold text-white">{value(row.ticker)}</span>;
-              if (col === "group") return value(row.group_name);
-              if (col === "state") return <span className={`rounded-full border px-2 py-1 ${signalTone(row.system_state)}`}>{value(row.system_state)}</span>;
-              if (col === "score") return num(row.final_score);
-              if (col === "ticker_ret") return pct(row.ticker_return);
-              if (col === "group_ret") return pct(row.group_return);
-              if (col === "rel_group") return pct(row.relative_to_group);
-              if (col === "rel_bench") return pct(row.relative_to_benchmark);
-              if (col === "vwap") return `${value(row.vwap_state)} / ${pct(row.distance_from_vwap_pct)}`;
-              if (col === "vol") return value(row.volume_state);
-              if (col === "contract") return value(row.selected_contract);
-              if (col === "dte") return value(row.option_dte);
-              if (col === "strike") return money(row.option_strike);
-              if (col === "bid") return money(row.option_bid);
-              if (col === "ask") return money(row.option_ask);
-              if (col === "mid") return money(row.option_mid);
-              if (col === "spread") return pct(row.option_spread_pct);
-              if (col === "vol/oi") return `${value(row.option_volume)} / ${value(row.option_oi)}`;
-              if (col === "reason") return <span title={value(row.reason_codes)}>{value(row.reason_codes)}</span>;
-              return value(row[col]);
-            }}
-          />
-        </Section>
-
-        <Section title="Selected Contracts" subtitle="CALL_TEST / CALL_WATCH only">
-          {(feed.selected_contracts || []).length ? (
-            <Table
-              rows={feed.selected_contracts || []}
-              columns={[
-                "ticker",
-                "group",
-                "signal",
-                "score",
-                "contract",
-                "expiration",
-                "dte",
-                "strike",
-                "bid",
-                "ask",
-                "mid",
-                "last",
-                "spread",
-                "volume",
-                "oi",
-                "status",
-                "reason",
-                "quality",
-              ]}
-              render={(row, col) => {
-                if (col === "ticker") return <span className="font-semibold text-white">{value(row.ticker)}</span>;
-                if (col === "group") return value(row.group_name);
-                if (col === "signal") return <span className={`rounded-full border px-2 py-1 ${signalTone(row.signal_label)}`}>{value(row.signal_label)}</span>;
-                if (col === "score") return num(row.score);
-                if (col === "contract") return value(row.selected_contract);
-                if (col === "expiration") return value(row.selected_expiration);
-                if (col === "dte") return value(row.selected_dte);
-                if (col === "strike") return money(row.selected_strike);
-                if (col === "bid") return money(row.selected_bid);
-                if (col === "ask") return money(row.selected_ask);
-                if (col === "mid") return money(row.selected_mid);
-                if (col === "last") return money(row.selected_last);
-                if (col === "spread") return pct(row.selected_spread_pct);
-                if (col === "volume") return value(row.selected_volume);
-                if (col === "oi") return value(row.selected_open_interest);
-                if (col === "status") return value(row.selection_status);
-                if (col === "reason") return <span title={value(row.selection_reason)}>{value(row.selection_reason)}</span>;
-                if (col === "quality") return <span title={value(row.data_quality_notes)}>{value(row.data_quality_notes)}</span>;
-                return value(row[col]);
-              }}
-            />
-          ) : (
-            <EmptyState>No CALL_TEST or CALL_WATCH contracts in current feed.</EmptyState>
-          )}
-        </Section>
-
-        <Section title="Snapshot Tape" subtitle={showAllSnapshots ? "all tickers" : "CALL_TEST / CALL_WATCH"}>
-          <div className="mb-4">
-            <button
-              onClick={() => setShowAllSnapshots((x) => !x)}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-400 transition hover:border-blue-400/40 hover:text-white"
-            >
-              {showAllSnapshots ? "Show CALL_TEST / CALL_WATCH" : "Show all tickers"}
-            </button>
-          </div>
-
-          <Table
-            rows={snapshotRows}
-            columns={[
-              "time",
-              "ticker",
-              "group",
-              "signal",
-              "score",
-              "rank",
-              "contract",
               "expiration",
               "dte",
-              "strike",
-              "bid",
-              "ask",
-              "mid",
+              "ask ref",
               "spread",
-              "chain",
-              "eligible",
-              "usable",
-              "rejected",
-              "chain_status",
-              "selection_status",
               "reason",
-              "quality",
             ]}
             render={(row, col) => {
-              if (col === "time") return value(row.timestamp_market_et);
+              const state = row.signal_label || row.system_state;
+              if (col === "rank") return value(row.rank ?? row.ticker_rank);
               if (col === "ticker") return <span className="font-semibold text-white">{value(row.ticker)}</span>;
               if (col === "group") return value(row.group_name);
-              if (col === "signal") return <span className={`rounded-full border px-2 py-1 ${signalTone(row.signal_label)}`}>{value(row.signal_label)}</span>;
-              if (col === "score") return num(row.score);
-              if (col === "rank") return value(row.rank);
+              if (col === "state") return <span className={`rounded-full border px-2 py-1 ${stateClass(state)}`}>{labelState(state)}</span>;
+              if (col === "score") return num(row.score ?? row.final_score);
+              if (col === "stock move") return pct(row.ticker_return);
+              if (col === "vs group") return pct(row.relative_to_group);
               if (col === "contract") return value(row.selected_contract);
-              if (col === "expiration") return value(row.selected_expiration);
-              if (col === "dte") return value(row.selected_dte);
-              if (col === "strike") return money(row.selected_strike);
-              if (col === "bid") return money(row.selected_bid);
-              if (col === "ask") return money(row.selected_ask);
-              if (col === "mid") return money(row.selected_mid);
-              if (col === "spread") return pct(row.selected_spread_pct);
-              if (col === "chain") return value(row.chain_contract_count);
-              if (col === "eligible") return value(row.eligible_contract_count);
-              if (col === "usable") return value(row.usable_contract_count);
-              if (col === "rejected") return value(row.rejected_contract_count);
-              if (col === "chain_status") return value(row.option_chain_status);
-              if (col === "selection_status") return value(row.selection_status);
-              if (col === "reason") return <span title={value(row.selection_reason)}>{value(row.selection_reason)}</span>;
-              if (col === "quality") return <span title={value(row.data_quality_notes)}>{value(row.data_quality_notes)}</span>;
+              if (col === "strike") return money(row.selected_strike ?? row.option_strike);
+              if (col === "expiration") return value(row.selected_expiration ?? row.option_expiration);
+              if (col === "dte") return value(row.selected_dte ?? row.option_dte);
+              if (col === "ask ref") return money(row.selected_ask ?? row.option_ask);
+              if (col === "spread") return pct(row.selected_spread_pct ?? row.option_spread_pct);
+              if (col === "reason") return <span title={value(row.selection_reason ?? row.reason_codes)}>{explainReason(row.selection_reason ?? row.reason_codes)}</span>;
               return value(row[col]);
             }}
           />
         </Section>
 
-        <Section title="Outcome Tracker">
+        <Section title="Setup Follow-Up" subtitle="Underlying-stock follow-up only">
           <Table
-            rows={feed.outcomes || []}
+            rows={setupFollowUp}
             columns={[
-              "signal_time",
+              "ticker",
+              "signal time",
               "checkpoint",
               "due",
-              "timestamp",
-              "ticker",
-              "contract",
-              "signal",
-              "entry_mid",
-              "entry_ask",
-              "entry_bid",
-              "checkpoint_bid",
-              "checkpoint_ask",
-              "checkpoint_last",
-              "checkpoint_mid",
-              "return_mid",
-              "return_ask_bid",
-              "quote_status",
-              "outcome_status",
-              "quality",
+              "status",
+              "underlying entry",
+              "underlying checkpoint",
+              "underlying return",
+              "notes",
             ]}
             render={(row, col) => {
-              if (col === "signal_time") return value(row.signal_timestamp);
-              if (col === "checkpoint") return value(row.checkpoint);
-              if (col === "due") return value(row.checkpoint_due_timestamp);
-              if (col === "timestamp") return value(row.checkpoint_timestamp);
               if (col === "ticker") return <span className="font-semibold text-white">{value(row.ticker)}</span>;
-              if (col === "contract") return value(row.contract);
-              if (col === "signal") return <span className={`rounded-full border px-2 py-1 ${signalTone(row.signal_label)}`}>{value(row.signal_label)}</span>;
-              if (col === "entry_mid") return money(row.entry_mid);
-              if (col === "entry_ask") return money(row.entry_ask);
-              if (col === "entry_bid") return money(row.entry_bid);
-              if (col === "checkpoint_bid") return money(row.checkpoint_bid);
-              if (col === "checkpoint_ask") return money(row.checkpoint_ask);
-              if (col === "checkpoint_last") return money(row.checkpoint_last);
-              if (col === "checkpoint_mid") return money(row.checkpoint_mid);
-              if (col === "return_mid") return pct(row.return_mid);
-              if (col === "return_ask_bid") return pct(row.return_ask_to_bid);
-              if (col === "quote_status") return value(row.quote_status);
-              if (col === "outcome_status") return value(row.outcome_status);
-              if (col === "quality") return <span title={value(row.data_quality_notes)}>{value(row.data_quality_notes)}</span>;
+              if (col === "signal time") return value(row.signal_timestamp || row.timestamp_market_et || row.timestamp_market);
+              if (col === "checkpoint") return value(row.checkpoint);
+              if (col === "due") return value(row.checkpoint_due_timestamp || row.due_timestamp);
+              if (col === "status") return value(row.status || row.outcome_status);
+              if (col === "underlying entry") return money(row.underlying_entry_price || row.entry_underlying_price || row.entry_price);
+              if (col === "underlying checkpoint") return money(row.underlying_checkpoint_price || row.checkpoint_underlying_price || row.checkpoint_price);
+              if (col === "underlying return") return pct(row.underlying_return || row.underlying_return_pct || row.return_pct);
+              if (col === "notes") return <span title={value(row.data_quality_notes)}>{value(row.data_quality_notes)}</span>;
               return value(row[col]);
             }}
           />
+        </Section>
+
+        <details className="mt-5 rounded-2xl border border-white/10 bg-zinc-950/70 p-5">
+          <summary className="cursor-pointer text-sm font-semibold text-white">Data / Feed Notes</summary>
 
           <div className="mt-4 grid gap-3 md:grid-cols-2">
-            <FieldCard title="Quote Status Counts">
-              <pre className="whitespace-pre-wrap text-xs text-zinc-400">
-                {JSON.stringify(feed.outcome_counts?.quote_status || {}, null, 2)}
-              </pre>
-            </FieldCard>
-            <FieldCard title="Outcome Status Counts">
-              <pre className="whitespace-pre-wrap text-xs text-zinc-400">
-                {JSON.stringify(feed.outcome_counts?.outcome_status || {}, null, 2)}
-              </pre>
-            </FieldCard>
-          </div>
-        </Section>
-
-        <Section title="Data Quality">
-          <div className="grid gap-3 lg:grid-cols-3">
-            <FieldCard title="Errors">
+            <Card title="Errors">
               <pre className="whitespace-pre-wrap text-xs text-red-300">
-                {JSON.stringify(dq.errors || [], null, 2)}
+                {JSON.stringify(errors, null, 2)}
               </pre>
-            </FieldCard>
-            <FieldCard title="Warnings">
+            </Card>
+            <Card title="Warnings">
               <pre className="whitespace-pre-wrap text-xs text-amber-300">
-                {JSON.stringify(dq.warnings || [], null, 2)}
+                {JSON.stringify(warnings, null, 2)}
               </pre>
-            </FieldCard>
-            <FieldCard title="Missing / Row Availability">
-              <div className="space-y-1 text-xs text-zinc-400">
-                <div>missing_status_file: {value(dq.missing_status_file)}</div>
-                <div>missing_scores_file: {value(dq.missing_scores_file)}</div>
-                <div>missing_snapshot_file: {value(dq.missing_snapshot_file)}</div>
-                <div>missing_outcome_file: {value(dq.missing_outcome_file)}</div>
-                <div>score_rows_available: {value(dq.score_rows_available)}</div>
-                <div>snapshot_rows_available: {value(dq.snapshot_rows_available)}</div>
-                <div>outcome_rows_available: {value(dq.outcome_rows_available)}</div>
-              </div>
-            </FieldCard>
+            </Card>
           </div>
 
-          {(dq.forbidden_scheduler_files || []).length ? (
-            <div className="mt-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-300">
-              Unexpected scheduler/launchd/cron-like file found. Atra Optio is intended to be manual-run only.
-            </div>
-          ) : null}
-        </Section>
-
-        <details className="mt-5 rounded-3xl border border-white/10 bg-zinc-950/65 p-5">
-          <summary className="cursor-pointer text-lg font-semibold text-white">Source Files / Debug</summary>
-          <pre className="mt-4 overflow-x-auto rounded-2xl border border-white/10 bg-black/35 p-4 text-xs text-zinc-400">
-            {JSON.stringify(sourceFiles, null, 2)}
-          </pre>
+          <div className="mt-4 rounded-xl border border-white/10 bg-black/20 p-4 text-xs leading-6 text-zinc-400">
+            Google Sheet read-only display. No website-side scoring. No broker connection. No execution.
+          </div>
         </details>
 
-        <footer className="mt-6 rounded-3xl border border-blue-400/15 bg-blue-500/5 p-5 text-sm leading-7 text-zinc-400">
-          <div className="font-semibold text-blue-300">Long-call research only.</div>
-          <div>{feed.disclaimer || researchDisclaimer}</div>
-          <div className="mt-2">
-            Display only · No broker connection · No trade execution · No website-side scoring · No Finnhub calls from website · No crypto exposure
-          </div>
+        <footer className="mt-5 rounded-2xl border border-white/10 bg-zinc-950/70 p-4 text-sm leading-6 text-zinc-400">
+          {feed.disclaimer || fallbackDisclaimer}
         </footer>
       </div>
     </main>
