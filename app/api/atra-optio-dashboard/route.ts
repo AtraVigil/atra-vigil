@@ -151,6 +151,67 @@ async function readRange(accessToken: string, tabName: string) {
   return (json.values || []) as any[][];
 }
 
+async function readOptionalRange(accessToken: string, tabName: string) {
+  try {
+    return await readRange(accessToken, tabName);
+  } catch {
+    return [] as any[][];
+  }
+}
+
+function deriveCounts(runtime: Row, selectedContracts: Row[], rankedBoard: Row[], countsParsed: Row[] | Row) {
+  const fromTab = countsToObject(countsParsed);
+  const out: Row = { ...fromTab };
+
+  const labels = ["CALL_TEST", "CALL_WATCH", "NO_TRADE", "AVOID"];
+
+  for (const label of labels) {
+    if (out[label] === undefined || out[label] === null) {
+      const runtimeKey = cleanKey(`${label}_count`);
+      if (runtime[runtimeKey] !== undefined && runtime[runtimeKey] !== null) {
+        out[label] = runtime[runtimeKey];
+      }
+    }
+  }
+
+  if (out.CALL_TEST === undefined || out.CALL_WATCH === undefined) {
+    const selectedCounts: Row = {};
+    for (const row of selectedContracts) {
+      const label = String(row.signal_label || row.system_state || "").trim();
+      if (!label) continue;
+      selectedCounts[label] = (Number(selectedCounts[label] || 0) || 0) + 1;
+    }
+
+    for (const label of labels) {
+      if (out[label] === undefined && selectedCounts[label] !== undefined) {
+        out[label] = selectedCounts[label];
+      }
+    }
+  }
+
+  if (out.NO_TRADE === undefined || out.AVOID === undefined) {
+    const rankedCounts: Row = {};
+    for (const row of rankedBoard) {
+      const label = String(row.system_state || row.signal_label || "").trim();
+      if (!label) continue;
+      rankedCounts[label] = (Number(rankedCounts[label] || 0) || 0) + 1;
+    }
+
+    for (const label of labels) {
+      if (out[label] === undefined && rankedCounts[label] !== undefined) {
+        out[label] = rankedCounts[label];
+      }
+    }
+  }
+
+  for (const label of labels) {
+    if (out[label] === undefined || out[label] === null) out[label] = 0;
+  }
+
+  return out;
+}
+
+
 function cleanKey(key: any) {
   return String(key || "")
     .trim()
@@ -388,13 +449,13 @@ export async function GET() {
       sourceFilesValues,
     ] = await Promise.all([
       readRange(accessToken, TAB_NAMES.runtime),
-      readRange(accessToken, TAB_NAMES.counts),
+      readOptionalRange(accessToken, TAB_NAMES.counts),
       readRange(accessToken, TAB_NAMES.ranked),
       readRange(accessToken, TAB_NAMES.selected),
-      readRange(accessToken, TAB_NAMES.snapshots),
-      readRange(accessToken, TAB_NAMES.outcomes),
-      readRange(accessToken, TAB_NAMES.dataQuality),
-      readRange(accessToken, TAB_NAMES.sourceFiles),
+      readOptionalRange(accessToken, TAB_NAMES.snapshots),
+      readOptionalRange(accessToken, TAB_NAMES.outcomes),
+      readOptionalRange(accessToken, TAB_NAMES.dataQuality),
+      readOptionalRange(accessToken, TAB_NAMES.sourceFiles),
     ]);
 
     const runtimeParsed = parseFlexible(runtimeValues);
@@ -429,7 +490,7 @@ export async function GET() {
         null,
       session_date: runtime.session_date || runtime.date || null,
       runtime,
-      counts: countsToObject(countsParsed),
+      counts: deriveCounts(runtime, selectedContracts, rankedBoard, countsParsed),
       ranked_board: rankedBoard,
       selected_contracts: selectedContracts,
       snapshot_tape_latest: snapshotTapeLatest,
@@ -437,7 +498,11 @@ export async function GET() {
       outcome_counts: {},
       data_quality: {
         errors: [],
-        warnings: [],
+        warnings: [
+          ...(!countsValues.length ? ["Optio_Counts tab is missing; counts derived from runtime/rows."] : []),
+          ...(!snapshotsValues.length ? ["Optio_Snapshots tab is missing; snapshot tape hidden for learning view."] : []),
+          ...(!outcomesValues.length ? ["Optio outcomes tab is missing; setup follow-up is empty."] : []),
+        ],
         forbidden_scheduler_files: [],
         score_rows_available: rankedBoard.length,
         snapshot_rows_available: snapshotTapeLatest.length,

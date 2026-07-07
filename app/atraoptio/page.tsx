@@ -64,7 +64,11 @@ function num(v: any, digits = 2) {
 function pct(v: any) {
   const n = Number(v);
   if (!Number.isFinite(n)) return value(v);
-  return `${(n * 100).toFixed(2)}%`;
+
+  // Optio feed mixes true ratios such as 0.1159 for spread_pct
+  // with percent-point fields such as 5.49 for ticker_return.
+  const shown = Math.abs(n) > 1 ? n : n * 100;
+  return `${shown.toFixed(2)}%`;
 }
 
 function money(v: any) {
