@@ -32,12 +32,6 @@ async function sha256Hex(input: string) {
 }
 
 function routeRealm(pathname: string) {
-  if (pathname.startsWith("/atraprae")) return "Atra Prae";
-  if (
-    pathname.startsWith("/atraoptio") ||
-    pathname.startsWith("/api/atra-optio-dashboard")
-  ) return "Atra Optio";
-
   return "Atra Vigil";
 }
 
@@ -72,8 +66,5 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/atraprae/:path*",
-    "/atraoptio/:path*",
-    "/api/atra-optio-dashboard/:path*",
   ],
 };
