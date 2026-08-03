@@ -41,34 +41,6 @@ const destinations = [
     href: "/us",
     detail: "Primary U.S. index command",
   },
-  {
-    key: "protected",
-    title: "Atra Prae",
-    eyebrow: "Protected Terminal",
-    href: "/atraprae",
-    detail: "Restricted system access",
-  },
-  {
-    key: "optio",
-    title: "Atra Optio",
-    eyebrow: "Protected Terminal",
-    href: "/atraoptio",
-    detail: "Restricted system access",
-  },
-  {
-    key: "lectio",
-    title: "Atra Lectio",
-    eyebrow: "Protected Terminal",
-    href: "/atralectio",
-    detail: "Restricted system access",
-  },
-  {
-    key: "dis",
-    title: "Atra Dis",
-    eyebrow: "Protected Terminal",
-    href: "/atradis",
-    detail: "Restricted system access",
-  },
 ];
 
 function toneText(tone: TapeTone) {
