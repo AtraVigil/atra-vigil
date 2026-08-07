@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:structura-email": "node --test tests/structura-email-contract.test.mjs"
+    "test:structura-email": "node --test tests/structura-email-contract.test.mjs tests/structura-email-recipients.test.mjs"
   },
   "dependencies": {
     "@swc/helpers": "^0.5.21",

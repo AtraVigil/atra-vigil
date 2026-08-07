@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import {
   evaluateDeliveryPreflight,
   idempotencyKey,
+  parseRecipientList,
   renderEmail,
   validateStructuraPayload,
   verifyHmac,
@@ -91,8 +92,9 @@ export async function POST(request: NextRequest) {
   const from = process.env.STRUCTURA_EMAIL_FROM;
   const to = process.env.STRUCTURA_EMAIL_TO;
   const replyTo = process.env.STRUCTURA_EMAIL_REPLY_TO;
+  const recipients = parseRecipientList(to);
 
-  if (!apiKey || !from || !to || !replyTo) {
+  if (!apiKey || !from || recipients.length === 0 || !replyTo) {
     return json(
       {
         ok: false,
@@ -109,7 +111,7 @@ export async function POST(request: NextRequest) {
     const { data, error } = await resend.emails.send(
       {
         from,
-        to: [to],
+        to: recipients,
         replyTo,
         subject: payload.subject,
         text,
