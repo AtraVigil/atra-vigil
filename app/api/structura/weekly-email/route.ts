@@ -45,15 +45,18 @@ function table(headers:string[],rows:string[][]){
 }
 function renderV2(p:any){
   const w=p.weekly_review;
+  const publicSp500=w.index_profile?.us?.find((r:any)=>r?.name==="S&P 500");
+  if(!publicSp500||!Array.isArray(publicSp500.daily_changes)) throw new Error("public_sp500_missing");
+  const publicSp500ByDate=Object.fromEntries(publicSp500.daily_changes.map((x:any)=>[x.session_date,x.change_percent]));
+  const timeEt=(v:any)=>{const x=String(v??"").trim();const m=x.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);return m?`${m[1].padStart(2,"0")}:${m[2]} ${m[3].toUpperCase()}`:x;};
   const dates=w.daily_readings.map((r:any)=>r.session_date);
   const dailyRows=w.daily_readings.map((r:any)=>[
     esc(dmy(r.session_date)),
     esc(`${r.aligned_count}/${r.denominator}`),
-    esc(Number(r.spy_close).toFixed(2)),
-    `<span style="color:${clr(r.spy_daily_change_percent)};font-weight:600">${pct(r.spy_daily_change_percent)}</span>`
+    `<span style="color:${clr(publicSp500ByDate[r.session_date])};font-weight:600">${pct(publicSp500ByDate[r.session_date])}</span>`
   ]);
   const sectorRows=[
-    ["<strong>S&P 500</strong>",...w.daily_readings.map((r:any)=>`<span style="color:${clr(r.spy_daily_change_percent)}">${pct(r.spy_daily_change_percent)}</span>`),`<strong style="color:${clr(w.spy_weekly_change_percent)}">${pct(w.spy_weekly_change_percent)}</strong>`,"—"],
+    ["<strong>S&P 500</strong>",...dates.map((d:string)=>`<span style="color:${clr(publicSp500ByDate[d])}">${pct(publicSp500ByDate[d])}</span>`),`<strong style="color:${clr(publicSp500.weekly_change_percent)}">${pct(publicSp500.weekly_change_percent)}</strong>`,"—"],
     ...w.sector_profile.map((r:any)=>{
       const by=Object.fromEntries(r.daily_changes.map((x:any)=>[x.session_date,x.change_percent]));
       return [esc(r.sector),...dates.map((d:string)=>by[d]===undefined?"—":`<span style="color:${clr(by[d])}">${pct(by[d])}</span>`),`<span style="color:${clr(r.weekly_change_percent)}">${pct(r.weekly_change_percent)}</span>`,Number(r.correlation_30_session).toFixed(2)];
@@ -72,7 +75,7 @@ function renderV2(p:any){
   const fs=fr.series;
   const lm=fr.last_policy_move;
   const fedText=[
-    `Policy Phase: ${fr.policy_phase}`,
+    `Policy Status: ${fr.policy_phase}`,
     `Last Policy Move: ${lm.type} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${lm.date}`,
     `Effective Federal Funds Rate: ${Number(fs.effective_federal_funds_rate.latest_percent).toFixed(2)}% | Weekly ${Number(fs.effective_federal_funds_rate.weekly_change_bp)>=0?"+":""}${Number(fs.effective_federal_funds_rate.weekly_change_bp).toFixed(1)} bp | Observation ${fs.effective_federal_funds_rate.latest_observation_date}`,
     `2-Year Treasury: ${Number(fs["2_year_treasury"].latest_percent).toFixed(2)}% | Weekly ${Number(fs["2_year_treasury"].weekly_change_bp)>=0?"+":""}${Number(fs["2_year_treasury"].weekly_change_bp).toFixed(1)} bp | Observation ${fs["2_year_treasury"].latest_observation_date}`,
@@ -89,11 +92,10 @@ function renderV2(p:any){
     "Atra Structura Weekly Review",
     `Week: ${w.week_start_session} through ${w.week_end_session}`,
     `Observed Sessions: ${w.observed_session_count}`,
-    `S&P 500 Weekly Change: ${pct(w.spy_weekly_change_percent)}`,
-    `S&P 500 Range: High ${Number(w.spy_range.high).toFixed(2)} | Low ${Number(w.spy_range.low).toFixed(2)} | Close ${Number(w.spy_range.close).toFixed(2)}`,
+    `S&P 500 Weekly Change: ${pct(publicSp500.weekly_change_percent)}`,
     "",
     "Daily Sector-Confirmation Readings",
-    ...w.daily_readings.map((r:any)=>`${dmy(r.session_date)} | ${r.aligned_count}/${r.denominator} | ${Number(r.spy_close).toFixed(2)} | ${pct(r.spy_daily_change_percent)}`),
+    ...w.daily_readings.map((r:any)=>`${dmy(r.session_date)} | ${r.aligned_count}/${r.denominator} | ${pct(publicSp500ByDate[r.session_date])}`),
     "",
     "Weekly Sector Profile",
     ...w.sector_profile.map((r:any)=>`${r.sector} | Weekly ${pct(r.weekly_change_percent)} | 30-Session Correlation ${Number(r.correlation_30_session).toFixed(2)}`),
@@ -105,7 +107,7 @@ function renderV2(p:any){
     ...fedText,
     "",
     "Next Week — Economic Calendar",
-    ...cal.events.map((e:any)=>`${e.date} | ${e.time_et} ET | ${e.agency} | ${e.event}`),
+    ...cal.events.map((e:any)=>`${e.date} | ${timeEt(e.time_et)} ET | ${e.agency} | ${e.event}`),
     "",
     w.copyright,
     w.disclosure
@@ -115,11 +117,11 @@ function renderV2(p:any){
     <div style="font-size:14px;line-height:1.6;margin-bottom:18px">
       <strong>Week:</strong> ${esc(dmy(w.week_start_session))} through ${esc(dmy(w.week_end_session))}<br>
       <strong>Observed Sessions:</strong> ${esc(w.observed_session_count)}<br>
-      <strong>S&P 500 Weekly Change:</strong> <span style="color:${clr(w.spy_weekly_change_percent)};font-weight:600">${pct(w.spy_weekly_change_percent)}</span><br>
-      <strong>S&P 500 Range:</strong> High ${Number(w.spy_range.high).toFixed(2)} | Low ${Number(w.spy_range.low).toFixed(2)} | Close ${Number(w.spy_range.close).toFixed(2)}
+      <strong>S&P 500 Weekly Change:</strong> <span style="color:${clr(publicSp500.weekly_change_percent)};font-weight:600">${pct(publicSp500.weekly_change_percent)}</span><br>
+
     </div>
     <h2 style="font-size:17px;margin:20px 0 6px">Daily Sector-Confirmation Readings</h2>
-    ${table(["Session","Alignment","S&P 500 Close","Daily Change"],dailyRows)}
+    ${table(["Session","Alignment","S&P 500 Daily Change"],dailyRows)}
     <h2 style="font-size:17px;margin:20px 0 6px">Weekly Sector Profile</h2>
     ${table(["Sector",...dates.map(dmy),"Weekly","30-Session Correlation"],sectorRows)}
     <h2 style="font-size:17px;margin:20px 0 6px">Weekly Index Profile</h2>
@@ -127,11 +129,11 @@ function renderV2(p:any){
     ${indexTable("Asia",w.index_profile.asia)}
     ${indexTable("Europe",w.index_profile.europe)}
     <h2 style="font-size:17px;margin:20px 0 6px">Federal Reserve & Rates</h2>
-    <div style="font-size:13px;line-height:1.6;margin:0 0 8px"><strong>Policy Phase:</strong> ${esc(fr.policy_phase)}<br><strong>Last Policy Move:</strong> ${esc(lm.type)} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${esc(lm.date)}</div>
+    <div style="font-size:13px;line-height:1.6;margin:0 0 8px"><strong>Policy Status:</strong> ${esc(fr.policy_phase)}<br><strong>Last Policy Move:</strong> ${esc(lm.type)} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${esc(lm.date)}</div>
     ${table(["Series","Latest","Weekly Change","Observation Date"],fedRows)}
     <div style="font-size:11px;color:#666;margin:-10px 0 18px">Sources: Federal Reserve Board H.15 / U.S. Treasury constant-maturity series and Federal Reserve Bank of New York, accessed via FRED. 2s10s calculated by Atra Structura.</div>
     <h2 style="font-size:17px;margin:20px 0 6px">Next Week — Economic Calendar</h2>
-    ${table(["Date","Time ET","Agency","Official Release / Fed Event"],cal.events.map((e:any)=>[esc(e.date),esc(e.time_et),esc(e.agency),esc(e.event)]))}
+    ${table(["Date","Time ET","Agency","Official Release / Fed Event"],cal.events.map((e:any)=>[esc(e.date),esc(timeEt(e.time_et)),esc(e.agency),esc(e.event)]))}
     <div style="font-size:11px;color:#666;margin:-10px 0 18px">Official agency schedules only. No consensus forecasts or expected market-impact labels.</div>
     <div style="font-size:11px;color:#666;border-top:1px solid #ddd;padding-top:14px;margin-top:22px">${esc(w.copyright)}<br>${esc(w.disclosure)}</div>
   </div>`;
