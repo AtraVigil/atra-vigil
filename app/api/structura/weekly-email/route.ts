@@ -149,7 +149,7 @@ export async function POST(req:NextRequest){
   const pre=evaluateDeliveryPreflight({payloadMode:p?.mode,configuredMode:process.env.STRUCTURA_EMAIL_MODE,enabled:process.env.STRUCTURA_EMAIL_ENABLED,suppliedIdempotencyKey:idem,snapshotId:p?.snapshot_id});
   if(pre)return json(pre.body,pre.status);
   const errs=validate(p); if(errs.length)return json({ok:false,error:"invalid_request",validation_errors:errs},400);
-  const apiKey=process.env.RESEND_API_KEY, from=process.env.STRUCTURA_EMAIL_FROM, to=process.env.STRUCTURA_EMAIL_TO, replyTo=process.env.STRUCTURA_EMAIL_REPLY_TO;
+  const apiKey=process.env.RESEND_API_KEY, from=process.env.STRUCTURA_EMAIL_FROM, to=process.env.STRUCTURA_WEEKLY_EMAIL_TO ?? process.env.STRUCTURA_EMAIL_TO, replyTo=process.env.STRUCTURA_EMAIL_REPLY_TO;
   const recipients=parseRecipientList(to);
   if(!apiKey||!from||recipients.length===0||!replyTo)return json({ok:false,error:"server_configuration_error"},500);
   const {text,html}=render(p); const resend=new Resend(apiKey);
