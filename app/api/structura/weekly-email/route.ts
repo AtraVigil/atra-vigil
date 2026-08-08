@@ -31,6 +31,7 @@ function validate(p:any){
     if(!idx||!["us","asia","europe"].every(k=>Array.isArray(idx[k])))e.push("index_profile");
     else if(idx.us.length+idx.asia.length+idx.europe.length!==10)e.push("index_profile_count");
     if(!w.fed_rates||typeof w.fed_rates!=="object")e.push("fed_rates");
+    if(!w.next_week_calendar||typeof w.next_week_calendar!=="object")e.push("next_week_calendar");
     else if(!w.fed_rates.series||typeof w.fed_rates.series!=="object")e.push("fed_rates_series");
     if(typeof w.copyright!=="string"||!w.copyright)e.push("copyright");
   }
@@ -66,6 +67,7 @@ function renderV2(p:any){
     });
     return `<h3 style="margin:16px 0 4px">${esc(title)}</h3>`+table(["Index",...allDates.map(dmy),"Weekly"],rr);
   };
+  const cal=w.next_week_calendar;
   const fr=w.fed_rates;
   const fs=fr.series;
   const lm=fr.last_policy_move;
@@ -102,6 +104,9 @@ function renderV2(p:any){
     "Federal Reserve & Rates",
     ...fedText,
     "",
+    "Next Week — Economic Calendar",
+    ...cal.events.map((e:any)=>`${e.date} | ${e.time_et} ET | ${e.agency} | ${e.event}`),
+    "",
     w.copyright,
     w.disclosure
   ].join("\n");
@@ -125,6 +130,9 @@ function renderV2(p:any){
     <div style="font-size:13px;line-height:1.6;margin:0 0 8px"><strong>Policy Phase:</strong> ${esc(fr.policy_phase)}<br><strong>Last Policy Move:</strong> ${esc(lm.type)} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${esc(lm.date)}</div>
     ${table(["Series","Latest","Weekly Change","Observation Date"],fedRows)}
     <div style="font-size:11px;color:#666;margin:-10px 0 18px">Sources: Federal Reserve Board H.15 / U.S. Treasury constant-maturity series and Federal Reserve Bank of New York, accessed via FRED. 2s10s calculated by Atra Structura.</div>
+    <h2 style="font-size:17px;margin:20px 0 6px">Next Week — Economic Calendar</h2>
+    ${table(["Date","Time ET","Agency","Official Release / Fed Event"],cal.events.map((e:any)=>[esc(e.date),esc(e.time_et),esc(e.agency),esc(e.event)]))}
+    <div style="font-size:11px;color:#666;margin:-10px 0 18px">Official agency schedules only. No consensus forecasts or expected market-impact labels.</div>
     <div style="font-size:11px;color:#666;border-top:1px solid #ddd;padding-top:14px;margin-top:22px">${esc(w.copyright)}<br>${esc(w.disclosure)}</div>
   </div>`;
   return {text,html};
