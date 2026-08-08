@@ -30,6 +30,8 @@ function validate(p:any){
     const idx=w.index_profile;
     if(!idx||!["us","asia","europe"].every(k=>Array.isArray(idx[k])))e.push("index_profile");
     else if(idx.us.length+idx.asia.length+idx.europe.length!==10)e.push("index_profile_count");
+    if(!w.fed_rates||typeof w.fed_rates!=="object")e.push("fed_rates");
+    else if(!w.fed_rates.series||typeof w.fed_rates.series!=="object")e.push("fed_rates_series");
     if(typeof w.copyright!=="string"||!w.copyright)e.push("copyright");
   }
   if(typeof w.disclosure!=="string"||!w.disclosure)e.push("disclosure");
@@ -64,6 +66,23 @@ function renderV2(p:any){
     });
     return `<h3 style="margin:16px 0 4px">${esc(title)}</h3>`+table(["Index",...allDates.map(dmy),"Weekly"],rr);
   };
+  const fr=w.fed_rates;
+  const fs=fr.series;
+  const lm=fr.last_policy_move;
+  const fedText=[
+    `Policy Phase: ${fr.policy_phase}`,
+    `Last Policy Move: ${lm.type} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${lm.date}`,
+    `Effective Federal Funds Rate: ${Number(fs.effective_federal_funds_rate.latest_percent).toFixed(2)}% | Weekly ${Number(fs.effective_federal_funds_rate.weekly_change_bp)>=0?"+":""}${Number(fs.effective_federal_funds_rate.weekly_change_bp).toFixed(1)} bp | Observation ${fs.effective_federal_funds_rate.latest_observation_date}`,
+    `2-Year Treasury: ${Number(fs["2_year_treasury"].latest_percent).toFixed(2)}% | Weekly ${Number(fs["2_year_treasury"].weekly_change_bp)>=0?"+":""}${Number(fs["2_year_treasury"].weekly_change_bp).toFixed(1)} bp | Observation ${fs["2_year_treasury"].latest_observation_date}`,
+    `10-Year Treasury: ${Number(fs["10_year_treasury"].latest_percent).toFixed(2)}% | Weekly ${Number(fs["10_year_treasury"].weekly_change_bp)>=0?"+":""}${Number(fs["10_year_treasury"].weekly_change_bp).toFixed(1)} bp | Observation ${fs["10_year_treasury"].latest_observation_date}`,
+    `2s10s Spread: ${Number(fs["2s10s_spread"].latest_bp)>=0?"+":""}${Number(fs["2s10s_spread"].latest_bp).toFixed(1)} bp | Weekly ${Number(fs["2s10s_spread"].weekly_change_bp)>=0?"+":""}${Number(fs["2s10s_spread"].weekly_change_bp).toFixed(1)} bp | Observation ${fs["2s10s_spread"].latest_observation_date}`
+  ];
+  const fedRows=[
+    ["Effective Federal Funds Rate",`${Number(fs.effective_federal_funds_rate.latest_percent).toFixed(2)}%`,`${Number(fs.effective_federal_funds_rate.weekly_change_bp)>=0?"+":""}${Number(fs.effective_federal_funds_rate.weekly_change_bp).toFixed(1)} bp`,esc(fs.effective_federal_funds_rate.latest_observation_date)],
+    ["2-Year Treasury",`${Number(fs["2_year_treasury"].latest_percent).toFixed(2)}%`,`${Number(fs["2_year_treasury"].weekly_change_bp)>=0?"+":""}${Number(fs["2_year_treasury"].weekly_change_bp).toFixed(1)} bp`,esc(fs["2_year_treasury"].latest_observation_date)],
+    ["10-Year Treasury",`${Number(fs["10_year_treasury"].latest_percent).toFixed(2)}%`,`${Number(fs["10_year_treasury"].weekly_change_bp)>=0?"+":""}${Number(fs["10_year_treasury"].weekly_change_bp).toFixed(1)} bp`,esc(fs["10_year_treasury"].latest_observation_date)],
+    ["2s10s Spread",`${Number(fs["2s10s_spread"].latest_bp)>=0?"+":""}${Number(fs["2s10s_spread"].latest_bp).toFixed(1)} bp`,`${Number(fs["2s10s_spread"].weekly_change_bp)>=0?"+":""}${Number(fs["2s10s_spread"].weekly_change_bp).toFixed(1)} bp`,esc(fs["2s10s_spread"].latest_observation_date)]
+  ];
   const text=[
     "Atra Structura Weekly Review",
     `Week: ${w.week_start_session} through ${w.week_end_session}`,
@@ -79,6 +98,9 @@ function renderV2(p:any){
     "",
     "Weekly Index Profile",
     ...["us","asia","europe"].flatMap(k=>w.index_profile[k].map((r:any)=>`${r.name} | Weekly ${pct(r.weekly_change_percent)}`)),
+    "",
+    "Federal Reserve & Rates",
+    ...fedText,
     "",
     w.copyright,
     w.disclosure
@@ -99,6 +121,10 @@ function renderV2(p:any){
     ${indexTable("U.S. Indexes",w.index_profile.us)}
     ${indexTable("Asia",w.index_profile.asia)}
     ${indexTable("Europe",w.index_profile.europe)}
+    <h2 style="font-size:17px;margin:20px 0 6px">Federal Reserve & Rates</h2>
+    <div style="font-size:13px;line-height:1.6;margin:0 0 8px"><strong>Policy Phase:</strong> ${esc(fr.policy_phase)}<br><strong>Last Policy Move:</strong> ${esc(lm.type)} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${esc(lm.date)}</div>
+    ${table(["Series","Latest","Weekly Change","Observation Date"],fedRows)}
+    <div style="font-size:11px;color:#666;margin:-10px 0 18px">Sources: Federal Reserve Board H.15 / U.S. Treasury constant-maturity series and Federal Reserve Bank of New York, accessed via FRED. 2s10s calculated by Atra Structura.</div>
     <div style="font-size:11px;color:#666;border-top:1px solid #ddd;padding-top:14px;margin-top:22px">${esc(w.copyright)}<br>${esc(w.disclosure)}</div>
   </div>`;
   return {text,html};
