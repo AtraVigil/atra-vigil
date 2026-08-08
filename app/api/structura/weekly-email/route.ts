@@ -149,7 +149,7 @@ export async function POST(req:NextRequest){
   const sig=req.headers.get("x-structura-signature")||"";
   const ts=req.headers.get("x-structura-timestamp")||"";
   const idem=req.headers.get("x-structura-idempotency-key")||"";
-  const secret=process.env.STRUCTURA_EMAIL_HMAC_SECRET||"";
+  const secret=process.env.STRUCTURA_EMAIL_AUTH_SECRET||"";
   const skew=Number(process.env.STRUCTURA_EMAIL_MAX_CLOCK_SKEW_SECONDS||"300");
   const auth=verifyHmac({secret,timestamp:ts,rawBody:raw,suppliedSignature:sig,maxClockSkewSeconds:skew});
   if(!auth)return json({ok:false,error:"unauthorized"},401);
