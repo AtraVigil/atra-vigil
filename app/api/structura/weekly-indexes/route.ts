@@ -44,7 +44,10 @@ async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"
     close:q.close?.[i] ?? null,
   })).filter((x:any)=>[x.open,x.high,x.low,x.close].every((v:any)=>typeof v==="number"&&Number.isFinite(v)));
   if(rows.length<10) throw new Error(`insufficient_rows_${m.symbol}`);
-  return {group:m.group,name:m.name,symbol:m.symbol,exchange_timezone:m.tz,rows};
+  const outputRows = requestedRange === "2021_2026H1"
+    ? rows.filter((row:any) => row.date >= "2021-01-01" && row.date <= "2026-06-30")
+    : rows;
+  return {group:m.group,name:m.name,symbol:m.symbol,exchange_timezone:m.tz,rows:outputRows};
 }
 
 export async function GET(req:NextRequest){
