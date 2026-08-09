@@ -24,8 +24,11 @@ function localDate(epoch:number,tz:string){
   const g=(t:string)=>parts.find(p=>p.type===t)?.value||"";
   return `${g("year")}-${g("month")}-${g("day")}`;
 }
-async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"="2mo"){
-  const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(m.symbol)}?interval=1d&range=${requestedRange}&events=history`;
+async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"|"2021_2026H1"="2mo"){
+  const historyQuery = requestedRange === "2021_2026H1"
+    ? `period1=${Math.floor(Date.UTC(2021,0,1)/1000)}&period2=${Math.floor(Date.UTC(2026,6,1)/1000)}`
+    : `range=${requestedRange}`;
+  const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(m.symbol)}?interval=1d&${historyQuery}&events=history`;
   const r=await fetch(url,{cache:"no-store",headers:{"User-Agent":"Mozilla/5.0"}});
   if(!r.ok) throw new Error(`chart_http_${r.status}_${m.symbol}`);
   const j=await r.json();
@@ -45,7 +48,10 @@ async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"
 }
 
 export async function GET(req:NextRequest){
-  const requestedRange:"2mo"|"5y" = new URL(req.url).searchParams.get("history_range") === "5y" ? "5y" : "2mo";
+  const params = new URL(req.url).searchParams;
+  const requestedRange:"2mo"|"5y"|"2021_2026H1" =
+    params.get("history_window") === "2021_2026H1" ? "2021_2026H1" :
+    params.get("history_range") === "5y" ? "5y" : "2mo";
   if(req.nextUrl.searchParams.get("mode")!=="PARALLEL") return json({ok:false,error:"parallel_mode_required"},403);
   if(process.env.STRUCTURA_EMAIL_MODE && process.env.STRUCTURA_EMAIL_MODE!=="PARALLEL") return json({ok:false,error:"environment_not_parallel"},403);
   try{
