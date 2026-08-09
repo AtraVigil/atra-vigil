@@ -24,8 +24,10 @@ function localDate(epoch:number,tz:string){
   const g=(t:string)=>parts.find(p=>p.type===t)?.value||"";
   return `${g("year")}-${g("month")}-${g("day")}`;
 }
-async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"|"2021_2026H1"="2mo"){
-  const historyQuery = requestedRange === "2021_2026H1"
+async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"|"2021_2026H1"|"2020Q4_2026H1"="2mo"){
+  const historyQuery = requestedRange === "2020Q4_2026H1"
+    ? `period1=${Math.floor(Date.UTC(2020,11,1)/1000)}&period2=${Math.floor(Date.UTC(2026,6,1)/1000)}`
+    : requestedRange === "2021_2026H1"
     ? `period1=${Math.floor(Date.UTC(2021,0,1)/1000)}&period2=${Math.floor(Date.UTC(2026,6,1)/1000)}`
     : `range=${requestedRange}`;
   const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(m.symbol)}?interval=1d&${historyQuery}&events=history`;
@@ -44,7 +46,9 @@ async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"
     close:q.close?.[i] ?? null,
   })).filter((x:any)=>[x.open,x.high,x.low,x.close].every((v:any)=>typeof v==="number"&&Number.isFinite(v)));
   if(rows.length<10) throw new Error(`insufficient_rows_${m.symbol}`);
-  const outputRows = requestedRange === "2021_2026H1"
+  const outputRows = requestedRange === "2020Q4_2026H1"
+    ? rows.filter((row:any) => row.date >= "2020-12-01" && row.date <= "2026-06-30")
+    : requestedRange === "2021_2026H1"
     ? rows.filter((row:any) => row.date >= "2021-01-01" && row.date <= "2026-06-30")
     : rows;
   return {group:m.group,name:m.name,symbol:m.symbol,exchange_timezone:m.tz,rows:outputRows};
@@ -52,7 +56,8 @@ async function fetchMarket(m:(typeof MARKETS)[number], requestedRange:"2mo"|"5y"
 
 export async function GET(req:NextRequest){
   const params = new URL(req.url).searchParams;
-  const requestedRange:"2mo"|"5y"|"2021_2026H1" =
+  const requestedRange:"2mo"|"5y"|"2021_2026H1"|"2020Q4_2026H1" =
+    params.get("history_window") === "2020Q4_2026H1" ? "2020Q4_2026H1" :
     params.get("history_window") === "2021_2026H1" ? "2021_2026H1" :
     params.get("history_range") === "5y" ? "5y" : "2mo";
   if(req.nextUrl.searchParams.get("mode")!=="PARALLEL") return json({ok:false,error:"parallel_mode_required"},403);
