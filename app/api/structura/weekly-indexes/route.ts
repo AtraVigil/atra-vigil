@@ -25,7 +25,8 @@ function localDate(epoch:number,tz:string){
   return `${g("year")}-${g("month")}-${g("day")}`;
 }
 async function fetchMarket(m:(typeof MARKETS)[number]){
-  const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(m.symbol)}?interval=1d&range=2mo&events=history`;
+  const requestedRange = new URL(req.url).searchParams.get("history_range") === "5y" ? "5y" : "2mo";
+  const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(m.symbol)}?interval=1d&range=${requestedRange}&events=history`;
   const r=await fetch(url,{cache:"no-store",headers:{"User-Agent":"Mozilla/5.0"}});
   if(!r.ok) throw new Error(`chart_http_${r.status}_${m.symbol}`);
   const j=await r.json();
