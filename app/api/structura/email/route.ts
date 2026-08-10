@@ -18,6 +18,7 @@ function json(body: Record<string, unknown>, status: number) {
     status,
     headers: {
       "Cache-Control": "no-store",
+      "X-Atra-Social-Version": "morning-social-v1",
     },
   });
 }
@@ -105,6 +106,11 @@ export async function POST(request: NextRequest) {
   }
 
   const { text, html } = renderEmail(payload);
+  const social = payload?.brief?.morning_social_v1;
+  const attachments = social?.image_base64 && social?.image_filename ? [{ filename: social.image_filename, content: Buffer.from(social.image_base64, "base64") }] : undefined;
+  const textWithSocial = social?.text_post ? `${text}\n\nAtra Vigil — X Post Draft\n${social.text_post}` : text;
+  const safeSocial = social?.text_post ? String(social.text_post).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;") : "";
+  const htmlWithSocial = social?.text_post ? `${html}<hr/><h2>Atra Vigil — X Post Draft</h2><pre style="white-space:pre-wrap;font-family:inherit">${safeSocial}</pre>` : html;
   const resend = new Resend(apiKey);
 
   try {
@@ -114,8 +120,9 @@ export async function POST(request: NextRequest) {
         to: recipients,
         replyTo,
         subject: payload.subject,
-        text,
-        html,
+        text: textWithSocial,
+        html: htmlWithSocial,
+        ...(attachments ? { attachments } : {}),
       },
       {
         idempotencyKey: idempotencyKey(payload.snapshot_id),
@@ -142,6 +149,7 @@ export async function POST(request: NextRequest) {
         delivery_status: "sent",
         snapshot_id: payload.snapshot_id,
         provider_message_id: data.id,
+        social_attachment_included: Boolean(attachments),
         accepted_at: new Date().toISOString(),
       },
       202,
