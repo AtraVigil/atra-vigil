@@ -37,12 +37,12 @@ function boolFromCell(value: unknown) {
 }
 
 function privateKey() {
-  return (process.env.ATRA_PRAE_GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+  return (process.env.OPTIO_GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n");
 }
 
 export async function GET() {
   try {
-    const clientEmail = process.env.ATRA_PRAE_GOOGLE_CLIENT_EMAIL || "";
+    const clientEmail = process.env.OPTIO_GOOGLE_CLIENT_EMAIL || "";
     const key = privateKey();
 
     if (!clientEmail || !key) {
