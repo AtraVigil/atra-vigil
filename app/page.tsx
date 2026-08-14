@@ -41,6 +41,13 @@ const destinations = [
     href: "/us",
     detail: "Primary U.S. index command",
   },
+  {
+    key: "optio",
+    title: "Atra Optio",
+    eyebrow: "🔒 Protected Research",
+    href: "/optio",
+    detail: "Live options research monitor",
+  },
 ];
 
 function toneText(tone: TapeTone) {
