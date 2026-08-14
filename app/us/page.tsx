@@ -229,9 +229,6 @@ export default function UsMarketPage() {
           <Link href="/overnight" className="hover:text-zinc-300">
             Overnight Markets
           </Link>
-          <Link href="/atraprae" className="hover:text-zinc-300">
-            Atra Prae V2
-          </Link>
         </footer>
       </div>
     </main>

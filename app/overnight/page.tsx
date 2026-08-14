@@ -173,9 +173,6 @@ export default function Home() {
             </div>
 
             <nav className="flex flex-wrap gap-2 text-sm">
-              <a className="rounded-lg border border-blue-900/70 bg-blue-950/30 px-3 py-2 text-blue-300 hover:text-white" href="/atraprae">
-                AtraPrae
-              </a>
             </nav>
           </div>
         </header>
