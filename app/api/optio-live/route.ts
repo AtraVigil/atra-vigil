@@ -89,8 +89,24 @@ export async function GET() {
       putIvMin: numberOrNull(row[10]),
       putIvMedian: numberOrNull(row[11]),
       putIvMax: numberOrNull(row[12]),
-      dataStatus: String(row[13] || "MISSING"),
-      minutesSinceCapture: numberOrNull(row[14]),
+      dataStatus: (() => {
+        const manifestAvailable = boolFromCell(row[15]);
+        const putContextAvailable = boolFromCell(row[16]);
+        if (!manifestAvailable && !putContextAvailable) return "MISSING";
+        if (!manifestAvailable || !putContextAvailable) return "PARTIAL";
+
+        const captureMs = Date.parse(String(row[1] || ""));
+        if (!Number.isFinite(captureMs)) return "MISSING";
+
+        const ageMinutes = Math.max(0, (Date.now() - captureMs) / 60_000);
+        return ageMinutes > 20 ? "STALE" : "CURRENT";
+      })(),
+      minutesSinceCapture: (() => {
+        const captureMs = Date.parse(String(row[1] || ""));
+        return Number.isFinite(captureMs)
+          ? Math.max(0, (Date.now() - captureMs) / 60_000)
+          : null;
+      })(),
       manifestAvailable: boolFromCell(row[15]),
       putContextAvailable: boolFromCell(row[16]),
     }));

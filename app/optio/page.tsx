@@ -27,6 +27,7 @@ type Payload = {
   ok: boolean;
   updatedAt?: string;
   sessionDate?: string | null;
+  captureTimestampUtc?: string | null;
   captureTimestampCt?: string | null;
   rows?: OptioRow[];
   error?: string;
@@ -53,6 +54,22 @@ function fmt(value: number | null, digits = 0) {
 function pct(value: number | null) {
   if (value === null || Number.isNaN(value)) return "—";
   return `${(value * 100).toFixed(1)}%`;
+}
+
+function formatLastUpdate(value?: string | null) {
+  if (!value) return "Loading";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Unavailable";
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Chicago",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    timeZoneName: "short",
+  }).format(date);
 }
 
 function statusClass(status: string) {
@@ -86,7 +103,7 @@ export default function OptioPage() {
 
   useEffect(() => {
     load();
-    const id = window.setInterval(load, 60_000);
+    const id = window.setInterval(load, 900_000);
     return () => window.clearInterval(id);
   }, []);
 
@@ -149,9 +166,9 @@ export default function OptioPage() {
 
           <div className="mt-5 flex flex-wrap gap-4 text-xs text-zinc-500">
             <span>
-              Capture: {data?.captureTimestampCt ? new Date(data.captureTimestampCt).toLocaleString() : "Loading"}
+              Last update: {formatLastUpdate(data?.captureTimestampUtc)}
             </span>
-            <span>Page refresh: 60 seconds</span>
+            <span>Page refresh: 15 minutes</span>
             <span>Publication target: ~15 minutes</span>
           </div>
         </header>
