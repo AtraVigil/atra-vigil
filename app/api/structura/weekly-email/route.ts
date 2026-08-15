@@ -19,6 +19,10 @@ function validate(p:any){
   if(p?.delivery_type!=="weekly_review")e.push("delivery_type");
   if(typeof p?.snapshot_id!=="string"||!p.snapshot_id.startsWith("AV3-PARALLEL-WEEKLY-"))e.push("snapshot_id");
   if(typeof p?.subject!=="string"||!p.subject)e.push("subject");
+  if(p?.recipients!==undefined&&(!Array.isArray(p.recipients)||p.recipients.some((x:any)=>typeof x!=="string"||!x.includes("@"))))e.push("recipients");
+  if(p?.attachment!==undefined){
+    if(!p.attachment||typeof p.attachment!=="object"||typeof p.attachment.filename!=="string"||typeof p.attachment.content_base64!=="string"||p.attachment.content_type!=="application/pdf")e.push("attachment");
+  }
   const w=p?.weekly_review;
   if(!w||typeof w!=="object"){e.push("weekly_review");return e;}
   if(!Number.isInteger(w.observed_session_count)||w.observed_session_count<1||w.observed_session_count>5)e.push("observed_session_count");
@@ -66,7 +70,8 @@ function renderV2(p:any){
     const allDates=Array.from(new Set(rows.flatMap((r:any)=>r.daily_changes.map((x:any)=>x.session_date)))).sort() as string[];
     const rr=rows.map((r:any)=>{
       const by=Object.fromEntries(r.daily_changes.map((x:any)=>[x.session_date,x.change_percent]));
-      return [esc(r.name),...allDates.map(d=>by[d]===undefined?"—":`<span style="color:${clr(by[d])}">${pct(by[d])}</span>`),`<span style="color:${clr(r.weekly_change_percent)}">${pct(r.weekly_change_percent)}</span>`];
+      const holidays=new Set((r.market_holidays??[]).map((x:any)=>x.session_date));
+      return [esc(r.name),...allDates.map(d=>by[d]===undefined?(holidays.has(d)?'<span style="color:#666">Market Holiday</span>':"—"):`<span style="color:${clr(by[d])}">${pct(by[d])}</span>`),`<span style="color:${clr(r.weekly_change_percent)}">${pct(r.weekly_change_percent)}</span>`];
     });
     return `<h3 style="margin:16px 0 4px">${esc(title)}</h3>`+table(["Index",...allDates.map(dmy),"Weekly"],rr);
   };
@@ -94,14 +99,17 @@ function renderV2(p:any){
     `Observed Sessions: ${w.observed_session_count}`,
     `S&P 500 Weekly Change: ${pct(publicSp500.weekly_change_percent)}`,
     "",
-    "Daily Sector-Confirmation Readings",
+    "Daily Sector ETF Confirmation",
     ...w.daily_readings.map((r:any)=>`${dmy(r.session_date)} | ${r.aligned_count}/${r.denominator} | ${pct(publicSp500ByDate[r.session_date])}`),
     "",
-    "Weekly Sector Profile",
+    "Weekly Sector ETF Profile",
     ...w.sector_profile.map((r:any)=>`${r.sector} | Weekly ${pct(r.weekly_change_percent)} | 30-Session Correlation ${Number(r.correlation_30_session).toFixed(2)}`),
     "",
     "Weekly Index Profile",
-    ...["us","asia","europe"].flatMap(k=>w.index_profile[k].map((r:any)=>`${r.name} | Weekly ${pct(r.weekly_change_percent)}`)),
+    ...["us","asia","europe"].flatMap(k=>w.index_profile[k].flatMap((r:any)=>[
+      `${r.name} | Weekly ${pct(r.weekly_change_percent)}`,
+      ...(r.market_holidays??[]).map((h:any)=>`${r.name} | ${dmy(h.session_date)} | Market Holiday`)
+    ])),
     "",
     "Federal Reserve & Rates",
     ...fedText,
@@ -120,10 +128,10 @@ function renderV2(p:any){
       <strong>S&P 500 Weekly Change:</strong> <span style="color:${clr(publicSp500.weekly_change_percent)};font-weight:600">${pct(publicSp500.weekly_change_percent)}</span><br>
 
     </div>
-    <h2 style="font-size:17px;margin:20px 0 6px">Daily Sector-Confirmation Readings</h2>
+    <h2 style="font-size:17px;margin:20px 0 6px">Daily Sector ETF Confirmation</h2>
     ${table(["Session","Alignment","S&P 500 Daily Change"],dailyRows)}
-    <h2 style="font-size:17px;margin:20px 0 6px">Weekly Sector Profile</h2>
-    ${table(["Sector",...dates.map(dmy),"Weekly","30-Session Correlation"],sectorRows)}
+    <h2 style="font-size:17px;margin:20px 0 6px">Weekly Sector ETF Profile</h2>
+    ${table(["Sector ETF",...dates.map(dmy),"Weekly","30-Session Correlation"],sectorRows)}
     <h2 style="font-size:17px;margin:20px 0 6px">Weekly Index Profile</h2>
     ${indexTable("U.S. Indexes",w.index_profile.us)}
     ${indexTable("Asia",w.index_profile.asia)}
@@ -160,16 +168,19 @@ export async function POST(req:NextRequest){
   if(pre)return json(pre.body,pre.status);
   const errs=validate(p); if(errs.length)return json({ok:false,error:"invalid_request",validation_errors:errs},400);
   const apiKey=process.env.RESEND_API_KEY, from=process.env.STRUCTURA_EMAIL_FROM, to=process.env.STRUCTURA_WEEKLY_EMAIL_TO ?? process.env.STRUCTURA_EMAIL_TO, replyTo=process.env.STRUCTURA_EMAIL_REPLY_TO;
-  const recipients=parseRecipientList(to);
+  const configuredRecipients=parseRecipientList(to);
+  const payloadRecipients=Array.isArray(p.recipients)?p.recipients.map((x:any)=>String(x).trim()).filter(Boolean):[];
+  const recipients=Array.from(new Set([...configuredRecipients,...payloadRecipients]));
   if(!apiKey||!from||recipients.length===0||!replyTo)return json({ok:false,error:"server_configuration_error"},500);
   const {text,html}=render(p); const resend=new Resend(apiKey);
   try{
-    const {data,error}=await resend.emails.send({from,to:recipients,replyTo,subject:p.subject,text,html},{idempotencyKey:idempotencyKey(p.snapshot_id)});
+    const attachments=p.attachment?[{filename:p.attachment.filename,content:Buffer.from(p.attachment.content_base64,"base64")}]:undefined;
+    const {data,error}=await resend.emails.send({from,to:recipients,replyTo,subject:p.subject,text,html,attachments},{idempotencyKey:idempotencyKey(p.snapshot_id)});
     if(error||!data?.id)return json({ok:false,error:"provider_failure",snapshot_id:p.snapshot_id,retryable:true},502);
     return json({ok:true,accepted:true,duplicate:false,delivery_status:"sent",snapshot_id:p.snapshot_id,provider_message_id:data.id,accepted_at:new Date().toISOString()},202);
   }catch{return json({ok:false,error:"provider_failure",snapshot_id:p.snapshot_id,retryable:true},502);}
 }
-export function GET(){return json({ok:false,error:"method_not_allowed"},405);}
+export function GET(){return json({ok:false,error:"method_not_allowed",weekly_route_version:"2026-08-15-weekly-v3"},405);}
 export function PUT(){return json({ok:false,error:"method_not_allowed"},405);}
 export function PATCH(){return json({ok:false,error:"method_not_allowed"},405);}
 export function DELETE(){return json({ok:false,error:"method_not_allowed"},405);}
