@@ -1,0 +1,21 @@
+{
+  "authority": "Atra Structura",
+  "change": 17.0498046875,
+  "changePercent": 0.3006007538520767,
+  "currency": "SGD",
+  "firstSeenBatch": "20260823T222447Z",
+  "latestRawSha256": "9f3e0f93a6513e980fbc5a3cacc7eb35f48258fd85defdc4e271ebb23cda5fcd",
+  "market": "Singapore",
+  "name": "Straits Times Index",
+  "observationDate": "2026-08-21",
+  "ok": true,
+  "previousClose": 5671.91015625,
+  "previousObservationDate": "2026-08-20",
+  "price": 5688.9599609375,
+  "publicationStatus": "validated_completed_session",
+  "region": "Asia",
+  "sourceTimestamp": 1787274000,
+  "sourceTimestampIso": "2026-08-21T01:00:00Z",
+  "symbol": "^STI",
+  "timeZone": "Asia/Singapore"
+}

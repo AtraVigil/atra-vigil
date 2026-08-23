@@ -41,6 +41,26 @@ type OvernightResponse = {
   markets: OvernightMarket[];
 };
 
+type StructuraSti = {
+  ok: boolean;
+  authority: string;
+  market: string;
+  region: string;
+  name: string;
+  symbol: string;
+  currency: string;
+  timeZone: string;
+  observationDate: string;
+  price: number;
+  previousObservationDate: string;
+  previousClose: number;
+  change: number;
+  changePercent: number;
+  sourceTimestamp: number;
+  sourceTimestampIso: string;
+  publicationStatus: "validated_completed_session";
+};
+
 const EMPTY_DATA: OvernightResponse = {
   ok: false,
   updatedAt: new Date().toISOString(),
@@ -98,6 +118,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [lastClientRefresh, setLastClientRefresh] = useState<string | null>(null);
   const [clientError, setClientError] = useState<string | null>(null);
+  const [sti, setSti] = useState<StructuraSti | null>(null);
 
   async function loadOvernightMarkets() {
     try {
@@ -118,9 +139,29 @@ export default function Home() {
     }
   }
 
+  async function loadStructuraSti() {
+    try {
+      const res = await fetch(`/data/structura/sti-latest.json?v=${Date.now()}`, {
+        cache: "no-store",
+      });
+      if (!res.ok) {
+        setSti(null);
+        return;
+      }
+      const json = (await res.json()) as StructuraSti;
+      setSti(json.ok && json.publicationStatus === "validated_completed_session" ? json : null);
+    } catch {
+      setSti(null);
+    }
+  }
+
   useEffect(() => {
     loadOvernightMarkets();
-    const interval = window.setInterval(loadOvernightMarkets, 60_000);
+    loadStructuraSti();
+    const interval = window.setInterval(() => {
+      loadOvernightMarkets();
+      loadStructuraSti();
+    }, 60_000);
     return () => window.clearInterval(interval);
   }, []);
 
@@ -300,6 +341,77 @@ export default function Home() {
                 </div>
               </article>
             ))}
+
+            {sti ? (
+              <article
+                key="singapore-sti"
+                className="flex h-full min-h-[520px] flex-col rounded-xl border border-zinc-800 bg-zinc-950/80 p-5"
+              >
+                <div className="mb-6 flex min-h-[82px] items-start justify-between gap-3">
+                  <div>
+                    <p className="whitespace-nowrap text-xs uppercase tracking-[0.22em] text-zinc-500">
+                      <span className="mr-2">SG</span>
+                      Singapore
+                    </p>
+                    <h3 className="mt-2 whitespace-nowrap text-xl font-semibold text-white">
+                      Straits Times Index
+                    </h3>
+                    <p className="mt-1 text-xs text-zinc-500">Atra Structura validated close</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="ml-auto h-2.5 w-2.5 rounded-full bg-blue-400 shadow-[0_0_14px_rgba(96,165,250,0.35)]" />
+                    <p className="mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-300">
+                      Validated
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-4xl font-semibold tracking-tight">{numberFmt(sti.price)}</p>
+
+                <div className="mt-3 flex items-baseline gap-3">
+                  <p className={`text-lg font-semibold ${toneClass(sti.changePercent)}`}>
+                    {percentFmt(sti.changePercent)}
+                  </p>
+                  <p className={`text-sm ${toneClass(sti.change)}`}>
+                    {signedFmt(sti.change)}
+                  </p>
+                </div>
+
+                <div className="mt-5 grid grid-cols-2 gap-3 border-t border-zinc-800 pt-4 text-sm">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">Session</p>
+                    <p className="mt-1 text-zinc-300">{sti.observationDate}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">Prev Close</p>
+                    <p className="mt-1 text-zinc-300">{numberFmt(sti.previousClose)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">Prior Session</p>
+                    <p className="mt-1 text-zinc-300">{sti.previousObservationDate}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">Currency</p>
+                    <p className="mt-1 text-zinc-300">{sti.currency}</p>
+                  </div>
+                </div>
+
+                <div className="mt-auto border-t border-zinc-800 pt-4 text-xs">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-zinc-500">Data status</span>
+                    <span className="text-blue-300">Completed session</span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <span className="text-zinc-500">Source timestamp</span>
+                    <span className="text-zinc-400">{sti.sourceTimestampIso}</span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <span className="text-zinc-500">Authority</span>
+                    <span className="text-zinc-400">{sti.authority}</span>
+                  </div>
+                </div>
+              </article>
+            ) : null}
 
             {!isLoading && data.markets.length === 0 ? (
               <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 p-5 text-sm text-zinc-400">
