@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 type TapeTone = "green" | "red" | "orange" | "blue";
 
 type OvernightMarket = {
+  key: string;
   changePercent: number | null;
 };
 
@@ -171,7 +172,7 @@ export default function Home() {
 
   const cardTones = useMemo(() => {
     return {
-      global: calcGlobalTone(overnightData?.markets || []),
+      global: calcGlobalTone((overnightData?.markets || []).filter((market) => market.key !== "sti")),
       domestic: calcDomesticTone(usData?.assets || []),
       protected: "blue" as TapeTone,
       optio: "blue" as TapeTone,

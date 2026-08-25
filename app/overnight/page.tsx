@@ -41,47 +41,6 @@ type OvernightResponse = {
   markets: OvernightMarket[];
 };
 
-type StructuraSti = {
-  ok: boolean;
-  authority: string;
-  market: string;
-  region: string;
-  name: string;
-  symbol: string;
-  currency: string;
-  timeZone: string;
-  observationDate: string;
-  price: number;
-  previousObservationDate: string;
-  previousClose: number;
-  change: number;
-  changePercent: number;
-  sourceTimestamp: number;
-  sourceTimestampIso: string;
-  publicationStatus: "validated_completed_session";
-};
-
-type DisplayDetail = {
-  label: string;
-  value: string;
-};
-
-type DisplayMarket = {
-  key: string;
-  flag: string;
-  regionLabel: string;
-  name: string;
-  symbol: string;
-  price: number | null;
-  change: number | null;
-  changePercent: number | null;
-  dotClass: string;
-  statusClass: string;
-  statusLabel: string;
-  details: DisplayDetail[];
-  footer: DisplayDetail[];
-};
-
 const EMPTY_DATA: OvernightResponse = {
   ok: false,
   updatedAt: new Date().toISOString(),
@@ -139,7 +98,6 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [lastClientRefresh, setLastClientRefresh] = useState<string | null>(null);
   const [clientError, setClientError] = useState<string | null>(null);
-  const [sti, setSti] = useState<StructuraSti | null>(null);
 
   async function loadOvernightMarkets() {
     try {
@@ -160,90 +118,16 @@ export default function Home() {
     }
   }
 
-  async function loadStructuraSti() {
-    try {
-      const res = await fetch(`/data/structura/sti-latest.json?v=${Date.now()}`, {
-        cache: "no-store",
-      });
-      if (!res.ok) {
-        setSti(null);
-        return;
-      }
-      const json = (await res.json()) as StructuraSti;
-      setSti(json.ok && json.publicationStatus === "validated_completed_session" ? json : null);
-    } catch {
-      setSti(null);
-    }
-  }
-
   useEffect(() => {
     loadOvernightMarkets();
-    loadStructuraSti();
-    const interval = window.setInterval(() => {
-      loadOvernightMarkets();
-      loadStructuraSti();
-    }, 60_000);
+    const interval = window.setInterval(loadOvernightMarkets, 60_000);
     return () => window.clearInterval(interval);
   }, []);
 
-  const displayMarkets: DisplayMarket[] = [
-    ...data.markets.map((market) => ({
-      key: market.key,
-      flag: market.flag,
-      regionLabel: market.region,
-      name: market.name,
-      symbol: market.symbol,
-      price: market.price,
-      change: market.change,
-      changePercent: market.changePercent,
-      dotClass: dotToneClass(market.marketTone),
-      statusClass: statusToneClass(market.dataTone),
-      statusLabel: market.marketStatusLabel,
-      details: [
-        { label: "Open", value: numberFmt(market.open) },
-        { label: "Prev Close", value: numberFmt(market.previousClose) },
-        { label: "High", value: numberFmt(market.high) },
-        { label: "Low", value: numberFmt(market.low) },
-      ],
-      footer: [
-        { label: "Data status", value: market.dataStatusLabel },
-        { label: "Quote age", value: ageFmt(market.quoteAgeMinutes) },
-        { label: "Local time", value: market.localClock },
-      ],
-    })),
-    ...(sti
-      ? [
-          {
-            key: "singapore-sti",
-            flag: "SG",
-            regionLabel: sti.market,
-            name: sti.name,
-            symbol: sti.symbol,
-            price: sti.price,
-            change: sti.change,
-            changePercent: sti.changePercent,
-            dotClass: "bg-blue-400 shadow-[0_0_14px_rgba(96,165,250,0.35)]",
-            statusClass: "text-blue-300",
-            statusLabel: "Validated",
-            details: [
-              { label: "Session", value: sti.observationDate },
-              { label: "Prev Close", value: numberFmt(sti.previousClose) },
-              { label: "Prior Session", value: sti.previousObservationDate },
-              { label: "Currency", value: sti.currency },
-            ],
-            footer: [
-              { label: "Data status", value: "Completed session" },
-              { label: "Source timestamp", value: sti.sourceTimestampIso },
-              { label: "Authority", value: sti.authority },
-            ],
-          },
-        ]
-      : []),
-  ];
-
   const { positive, negative, tapeState } = useMemo(() => {
-    const pos = data.markets.filter((m) => (m.changePercent ?? 0) > 0).length;
-    const neg = data.markets.filter((m) => (m.changePercent ?? 0) < 0).length;
+    const tapeMarkets = data.markets.filter((m) => m.key !== "sti");
+    const pos = tapeMarkets.filter((m) => (m.changePercent ?? 0) > 0).length;
+    const neg = tapeMarkets.filter((m) => (m.changePercent ?? 0) < 0).length;
 
     let state = "Mixed";
     if (pos >= 3) state = "Risk-On";
@@ -339,7 +223,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
-            {displayMarkets.map((market) => (
+            {data.markets.map((market) => (
               <article
                 key={market.key}
                 className="flex h-full min-h-[520px] flex-col rounded-xl border border-zinc-800 bg-zinc-950/80 p-5"
@@ -348,7 +232,7 @@ export default function Home() {
                   <div>
                     <p className="whitespace-nowrap text-xs uppercase tracking-[0.22em] text-zinc-500">
                       <span className="mr-2">{market.flag}</span>
-                      {market.regionLabel}
+                      {market.region}
                     </p>
                     <h3 className="mt-2 whitespace-nowrap text-xl font-semibold text-white">
                       {market.name}
@@ -357,9 +241,9 @@ export default function Home() {
                   </div>
 
                   <div className="text-right">
-                    <div className={`ml-auto h-2.5 w-2.5 rounded-full ${market.dotClass}`} />
-                    <p className={`mt-3 text-xs font-semibold uppercase tracking-[0.2em] ${market.statusClass}`}>
-                      {market.statusLabel}
+                    <div className={`ml-auto h-2.5 w-2.5 rounded-full ${dotToneClass(market.marketTone)}`} />
+                    <p className={`mt-3 text-xs font-semibold uppercase tracking-[0.2em] ${statusToneClass(market.dataTone)}`}>
+                      {market.marketStatusLabel}
                     </p>
                   </div>
                 </div>
@@ -376,24 +260,44 @@ export default function Home() {
                 </div>
 
                 <div className="mt-5 grid grid-cols-2 gap-3 border-t border-zinc-800 pt-4 text-sm">
-                  {market.details.map((detail) => (
-                    <div key={`${market.key}-${detail.label}`}>
-                      <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">{detail.label}</p>
-                      <p className="mt-1 text-zinc-300">{detail.value}</p>
-                    </div>
-                  ))}
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">Open</p>
+                    <p className="mt-1 text-zinc-300">{numberFmt(market.open)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">Prev Close</p>
+                    <p className="mt-1 text-zinc-300">{numberFmt(market.previousClose)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">High</p>
+                    <p className="mt-1 text-zinc-300">{numberFmt(market.high)}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.18em] text-zinc-600">Low</p>
+                    <p className="mt-1 text-zinc-300">{numberFmt(market.low)}</p>
+                  </div>
                 </div>
 
                 <div className="mt-auto border-t border-zinc-800 pt-4 text-xs">
-                  {market.footer.map((detail, index) => (
-                    <div
-                      key={`${market.key}-footer-${detail.label}`}
-                      className={`${index === 0 ? "" : "mt-2 "}flex items-center justify-between gap-3`}
-                    >
-                      <span className="text-zinc-500">{detail.label}</span>
-                      <span className={index === 0 ? market.statusClass : "text-zinc-400"}>{detail.value}</span>
-                    </div>
-                  ))}
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-zinc-500">Data status</span>
+                    <span className={statusToneClass(market.dataTone)}>{market.dataStatusLabel}</span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <span className="text-zinc-500">Quote age</span>
+                    <span className="text-zinc-400">{ageFmt(market.quoteAgeMinutes)}</span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <span className="text-zinc-500">Quote timestamp</span>
+                    <span className="text-zinc-400">{market.exchangeTime ?? "--"}</span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <span className="text-zinc-500">Local time</span>
+                    <span className="text-zinc-400">{market.localClock}</span>
+                  </div>
+                  {!market.ok ? (
+                    <p className="mt-3 text-red-300">{market.error ?? "Unavailable"}</p>
+                  ) : null}
                 </div>
               </article>
             ))}

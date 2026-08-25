@@ -26,6 +26,18 @@ const MARKETS: MarketConfig[] = [
     ],
   },
   {
+    key: "sti",
+    name: "Straits Times Index",
+    symbol: "^STI",
+    region: "Singapore",
+    flag: "SG",
+    exchangeTimeZone: "Asia/Singapore",
+    sessions: [
+      [9 * 60, 12 * 60],
+      [13 * 60, 17 * 60],
+    ],
+  },
+  {
     key: "ftse",
     name: "FTSE 100",
     symbol: "^FTSE",
@@ -138,7 +150,11 @@ function marketStatus(market: MarketConfig) {
     };
   }
 
-  if (market.key === "nikkei" && minute >= 11 * 60 + 30 && minute < 12 * 60 + 30) {
+  const isLunchBreak =
+    (market.key === "nikkei" && minute >= 11 * 60 + 30 && minute < 12 * 60 + 30) ||
+    (market.key === "sti" && minute >= 12 * 60 && minute < 13 * 60);
+
+  if (isLunchBreak) {
     return {
       isMarketOpen: false,
       marketStatusLabel: "Lunch Break",
