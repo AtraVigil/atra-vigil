@@ -77,6 +77,29 @@ test("valid PARALLEL contract passes", () => {
   assert.deepEqual(validateStructuraPayload(payload()), []);
 });
 
+test("valid PARALLEL contract accepts optional Singapore STI", () => {
+  const value = payload();
+  value.brief.overseas.indexes.splice(2, 0, {
+    name: "Straits Times Index",
+    region: "Asia",
+    change_percent: "-0.25%",
+  });
+  assert.deepEqual(validateStructuraPayload(value), []);
+  const rendered = renderEmail(value);
+  assert.match(rendered.text, /Straits Times Index -0.25%/);
+  assert.match(rendered.html, /Straits Times Index -0.25%/);
+});
+
+test("unexpected seventh overseas index is rejected", () => {
+  const value = payload();
+  value.brief.overseas.indexes.push({
+    name: "Unexpected Index",
+    region: "Asia",
+    change_percent: "+0.01%",
+  });
+  assert.match(validateStructuraPayload(value).join("\n"), /unexpected index/);
+});
+
 test("PRODUCTION contract is rejected", () => {
   const value = payload();
   value.mode = "PRODUCTION";
