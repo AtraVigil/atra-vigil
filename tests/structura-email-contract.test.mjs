@@ -57,12 +57,21 @@ function payload() {
         asia_status: "CLOSED",
         europe_status: "LIVE",
         indexes: [
-          { name: "ASX 200", region: "Asia", change_percent: "+0.34%" },
           { name: "Nikkei 225", region: "Asia", change_percent: "-0.18%" },
+          { name: "Hang Seng", region: "Asia", change_percent: "+0.11%" },
+          { name: "KOSPI", region: "Asia", change_percent: "-0.22%" },
+          { name: "TAIEX", region: "Asia", change_percent: "+0.33%" },
+          { name: "Straits Times Index", region: "Asia", change_percent: "+0.12%" },
+          { name: "Nifty 50", region: "Asia", change_percent: "-0.14%" },
+          { name: "ASX 200", region: "Asia", change_percent: "+0.34%" },
           { name: "FTSE 100", region: "Europe", change_percent: "+0.21%" },
           { name: "DAX", region: "Europe", change_percent: "+0.46%" },
           { name: "CAC 40", region: "Europe", change_percent: "+0.29%" },
           { name: "EURO STOXX 50", region: "Europe", change_percent: "+0.38%" },
+          { name: "FTSE MIB", region: "Europe", change_percent: "+0.17%" },
+          { name: "IBEX 35", region: "Europe", change_percent: "+0.09%" },
+          { name: "SMI", region: "Europe", change_percent: "-0.08%" },
+          { name: "AEX", region: "Europe", change_percent: "+0.15%" },
         ],
       },
       x_ready_post: x,
@@ -77,27 +86,34 @@ test("valid PARALLEL contract passes", () => {
   assert.deepEqual(validateStructuraPayload(payload()), []);
 });
 
-test("valid PARALLEL contract accepts optional Singapore STI", () => {
+test("15-index morning contract renders every regional index", () => {
   const value = payload();
-  value.brief.overseas.indexes.splice(2, 0, {
-    name: "Straits Times Index",
-    region: "Asia",
-    change_percent: "-0.25%",
-  });
-  assert.deepEqual(validateStructuraPayload(value), []);
   const rendered = renderEmail(value);
-  assert.match(rendered.text, /Straits Times Index -0.25%/);
-  assert.match(rendered.html, /Straits Times Index -0.25%/);
+  for (const name of ["Nikkei 225","Hang Seng","KOSPI","TAIEX","Straits Times Index","Nifty 50","ASX 200","FTSE 100","DAX","CAC 40","EURO STOXX 50","FTSE MIB","IBEX 35","SMI","AEX"]) {
+    assert.ok(rendered.text.includes(name), `rendered text missing ${name}`);
+    assert.ok(rendered.html.includes(name), `rendered html missing ${name}`);
+  }
 });
 
-test("unexpected seventh overseas index is rejected", () => {
+test("15-index contract requires Singapore STI", () => {
+  const value = payload();
+  value.brief.overseas.indexes = value.brief.overseas.indexes.filter(
+    (row) => row.name !== "Straits Times Index"
+  );
+  const errors = validateStructuraPayload(value).join("\n");
+  assert.match(errors, /Straits Times Index exactly once/);
+  assert.match(errors, /exactly 15 indexes/);
+});
+
+test("unexpected sixteenth overseas index is rejected", () => {
   const value = payload();
   value.brief.overseas.indexes.push({
     name: "Unexpected Index",
-    region: "Asia",
+    region: "Europe",
     change_percent: "+0.01%",
   });
-  assert.match(validateStructuraPayload(value).join("\n"), /unexpected index/);
+  const errors = validateStructuraPayload(value).join("\n");
+  assert.match(errors, /exactly 15 indexes/);
 });
 
 test("PRODUCTION contract is rejected", () => {
@@ -106,10 +122,14 @@ test("PRODUCTION contract is rejected", () => {
   assert.match(validateStructuraPayload(value).join("\n"), /PARALLEL/);
 });
 
-test("missing overseas index is rejected", () => {
+test("missing required overseas index is rejected", () => {
   const value = payload();
-  value.brief.overseas.indexes.pop();
-  assert.match(validateStructuraPayload(value).join("\n"), /EURO STOXX 50/);
+  value.brief.overseas.indexes = value.brief.overseas.indexes.filter(
+    (row) => row.name !== "FTSE MIB"
+  );
+  const errors = validateStructuraPayload(value).join("\n");
+  assert.match(errors, /FTSE MIB exactly once/);
+  assert.match(errors, /exactly 15 indexes/);
 });
 
 test("Asia and Europe states are enforced", () => {
@@ -121,11 +141,11 @@ test("Asia and Europe states are enforced", () => {
   assert.match(errors, /europe_status/);
 });
 
-test("X-ready post over 280 characters is rejected", () => {
+test("X-ready post over 280 characters is accepted when count matches", () => {
   const value = payload();
-  value.brief.x_ready_post = "x".repeat(281);
-  value.brief.x_character_count = 281;
-  assert.match(validateStructuraPayload(value).join("\n"), /exceeds 280/);
+  value.brief.x_ready_post = "x".repeat(337);
+  value.brief.x_character_count = 337;
+  assert.deepEqual(validateStructuraPayload(value), []);
 });
 
 test("non-canonical sector name is rejected", () => {
