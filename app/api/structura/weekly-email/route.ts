@@ -58,6 +58,26 @@ function table(headers:string[],rows:string[][]){
   const body=rows.map(r=>`<tr>${r.map((c,i)=>`<td style="padding:7px 8px;border-bottom:1px solid #eee;text-align:${i===0?"left":"right"};font-size:13px;white-space:nowrap">${c}</td>`).join("")}</tr>`).join("");
   return `<table style="border-collapse:collapse;width:100%;margin:8px 0 22px"><thead><tr>${th}</tr></thead><tbody>${body}</tbody></table>`;
 }
+function publicIndexLabel(r:any){
+  const bySymbol:Record<string,string>={
+    "^N225":"Nikkei 225 (Japan)",
+    "^HSI":"Hang Seng (Hong Kong)",
+    "^KS11":"KOSPI (South Korea)",
+    "^TWII":"TAIEX (Taiwan)",
+    "^STI":"Straits Times Index (Singapore)",
+    "^NSEI":"Nifty 50 (India)",
+    "^AXJO":"ASX 200 (Australia)",
+    "^FTSE":"FTSE 100 (United Kingdom)",
+    "^GDAXI":"DAX (Germany)",
+    "^FCHI":"CAC 40 (France)",
+    "^STOXX50E":"EURO STOXX 50 (Eurozone)",
+    "FTSEMIB.MI":"FTSE MIB (Italy)",
+    "^IBEX":"IBEX 35 (Spain)",
+    "^SSMI":"SMI (Switzerland)",
+    "^AEX":"AEX (Netherlands)",
+  };
+  return bySymbol[String(r?.symbol??"")] ?? String(r?.name??"");
+}
 function renderV2(p:any){
   const w=p.weekly_review;
   const publicSp500=w.index_profile?.us?.find((r:any)=>r?.name==="S&P 500");
@@ -82,7 +102,7 @@ function renderV2(p:any){
     const rr=rows.map((r:any)=>{
       const by=Object.fromEntries(r.daily_changes.map((x:any)=>[x.session_date,x.change_percent]));
       const holidays=new Set((r.market_holidays??[]).map((x:any)=>x.session_date));
-      return [esc(r.name),...allDates.map(d=>by[d]===undefined?(holidays.has(d)?'<span style="color:#666">Market Holiday</span>':"—"):`<span style="color:${clr(by[d])}">${pct(by[d])}</span>`),`<span style="color:${clr(r.weekly_change_percent)}">${pct(r.weekly_change_percent)}</span>`];
+      return [esc(publicIndexLabel(r)),...allDates.map(d=>by[d]===undefined?(holidays.has(d)?'<span style="color:#666">Market Holiday</span>':"—"):`<span style="color:${clr(by[d])}">${pct(by[d])}</span>`),`<span style="color:${clr(r.weekly_change_percent)}">${pct(r.weekly_change_percent)}</span>`];
     });
     return `<h3 style="margin:16px 0 4px">${esc(title)}</h3>`+table(["Index",...allDates.map(dmy),"Weekly"],rr);
   };
@@ -118,8 +138,8 @@ function renderV2(p:any){
     "",
     "Weekly Index Profile",
     ...["us","asia","europe"].flatMap(k=>w.index_profile[k].flatMap((r:any)=>[
-      `${r.name} | Weekly ${pct(r.weekly_change_percent)}`,
-      ...(r.market_holidays??[]).map((h:any)=>`${r.name} | ${dmy(h.session_date)} | Market Holiday`)
+      `${publicIndexLabel(r)} | Weekly ${pct(r.weekly_change_percent)}`,
+      ...(r.market_holidays??[]).map((h:any)=>`${publicIndexLabel(r)} | ${dmy(h.session_date)} | Market Holiday`)
     ])),
     "",
     "Federal Reserve & Rates",
@@ -145,7 +165,7 @@ function renderV2(p:any){
     ${table(["Sector ETF",...dates.map(dmy),"Weekly","30-Session Correlation"],sectorRows)}
     <h2 style="font-size:17px;margin:20px 0 6px">Weekly Index Profile</h2>
     ${indexTable("U.S. Indexes",w.index_profile.us)}
-    ${indexTable("Asia",w.index_profile.asia)}
+    ${indexTable("Asia-Pacific",w.index_profile.asia)}
     ${indexTable("Europe",w.index_profile.europe)}
     <h2 style="font-size:17px;margin:20px 0 6px">Federal Reserve & Rates</h2>
     <div style="font-size:13px;line-height:1.6;margin:0 0 8px"><strong>Policy Status:</strong> ${esc(fr.policy_phase)}<br><strong>Last Policy Move:</strong> ${esc(lm.type)} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${esc(lm.date)}</div>
