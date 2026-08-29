@@ -8,12 +8,21 @@ const MARKETS = [
   { group:"us", name:"Nasdaq Composite", symbol:"^IXIC", tz:"America/New_York" },
   { group:"us", name:"Dow Jones Industrial Average", symbol:"^DJI", tz:"America/New_York" },
   { group:"us", name:"Russell 2000", symbol:"^RUT", tz:"America/New_York" },
-  { group:"asia", name:"ASX 200", symbol:"^AXJO", tz:"Australia/Sydney" },
   { group:"asia", name:"Nikkei 225", symbol:"^N225", tz:"Asia/Tokyo" },
+  { group:"asia", name:"Hang Seng", symbol:"^HSI", tz:"Asia/Hong_Kong" },
+  { group:"asia", name:"KOSPI", symbol:"^KS11", tz:"Asia/Seoul" },
+  { group:"asia", name:"TAIEX", symbol:"^TWII", tz:"Asia/Taipei" },
+  { group:"asia", name:"Straits Times Index", symbol:"^STI", tz:"Asia/Singapore" },
+  { group:"asia", name:"Nifty 50", symbol:"^NSEI", tz:"Asia/Kolkata" },
+  { group:"asia", name:"ASX 200", symbol:"^AXJO", tz:"Australia/Sydney" },
   { group:"europe", name:"FTSE 100", symbol:"^FTSE", tz:"Europe/London" },
   { group:"europe", name:"DAX", symbol:"^GDAXI", tz:"Europe/Berlin" },
   { group:"europe", name:"CAC 40", symbol:"^FCHI", tz:"Europe/Paris" },
   { group:"europe", name:"EURO STOXX 50", symbol:"^STOXX50E", tz:"Europe/Zurich" },
+  { group:"europe", name:"FTSE MIB", symbol:"FTSEMIB.MI", tz:"Europe/Rome" },
+  { group:"europe", name:"IBEX 35", symbol:"^IBEX", tz:"Europe/Madrid" },
+  { group:"europe", name:"SMI", symbol:"^SSMI", tz:"Europe/Zurich" },
+  { group:"europe", name:"AEX", symbol:"^AEX", tz:"Europe/Amsterdam" },
 ] as const;
 
 function json(body:unknown,status=200){

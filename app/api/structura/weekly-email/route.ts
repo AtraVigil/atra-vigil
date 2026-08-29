@@ -20,6 +20,8 @@ function validate(p:any){
   if(typeof p?.snapshot_id!=="string"||!p.snapshot_id.startsWith("AV3-PARALLEL-WEEKLY-"))e.push("snapshot_id");
   if(typeof p?.subject!=="string"||!p.subject)e.push("subject");
   if(p?.recipients!==undefined&&(!Array.isArray(p.recipients)||p.recipients.some((x:any)=>typeof x!=="string"||!x.includes("@"))))e.push("recipients");
+  if(p?.recipient_mode!==undefined&&p.recipient_mode!=="PAYLOAD_ONLY_TEST")e.push("recipient_mode");
+  if(p?.recipient_mode==="PAYLOAD_ONLY_TEST"&&(!Array.isArray(p.recipients)||p.recipients.length!==1))e.push("payload_only_test_recipient");
   if(p?.attachment!==undefined){
     if(!p.attachment||typeof p.attachment!=="object"||typeof p.attachment.filename!=="string"||typeof p.attachment.content_base64!=="string"||p.attachment.content_type!=="application/pdf")e.push("attachment");
   }
@@ -33,7 +35,16 @@ function validate(p:any){
     if(w.correlation_window_sessions!==30)e.push("correlation_window_sessions");
     const idx=w.index_profile;
     if(!idx||!["us","asia","europe"].every(k=>Array.isArray(idx[k])))e.push("index_profile");
-    else if(idx.us.length+idx.asia.length+idx.europe.length!==10)e.push("index_profile_count");
+    else {
+      const required:any={us:new Set(["^GSPC","^IXIC","^DJI","^RUT"]),asia:new Set(["^N225","^HSI","^KS11","^TWII","^STI","^NSEI","^AXJO"]),europe:new Set(["^FTSE","^GDAXI","^FCHI","^STOXX50E","FTSEMIB.MI","^IBEX","^SSMI","^AEX"])};
+      const seen=new Set<string>();
+      for(const k of ["us","asia","europe"]){
+        const symbols=idx[k].map((r:any)=>r?.symbol);
+        if(symbols.some((x:any)=>typeof x!=="string"||!x||seen.has(x)))e.push("index_profile_identity");
+        symbols.forEach((x:string)=>seen.add(x));
+        for(const symbol of required[k]) if(!symbols.includes(symbol)) e.push(`index_profile_missing_${symbol}`);
+      }
+    }
     if(!w.fed_rates||typeof w.fed_rates!=="object")e.push("fed_rates");
     if(!w.next_week_calendar||typeof w.next_week_calendar!=="object")e.push("next_week_calendar");
     else if(!w.fed_rates.series||typeof w.fed_rates.series!=="object")e.push("fed_rates_series");
@@ -170,7 +181,7 @@ export async function POST(req:NextRequest){
   const apiKey=process.env.RESEND_API_KEY, from=process.env.STRUCTURA_EMAIL_FROM, to=process.env.STRUCTURA_WEEKLY_EMAIL_TO ?? process.env.STRUCTURA_EMAIL_TO, replyTo=process.env.STRUCTURA_EMAIL_REPLY_TO;
   const configuredRecipients=parseRecipientList(to);
   const payloadRecipients=Array.isArray(p.recipients)?p.recipients.map((x:any)=>String(x).trim()).filter(Boolean):[];
-  const recipients=Array.from(new Set([...configuredRecipients,...payloadRecipients]));
+  const recipients=p.recipient_mode==="PAYLOAD_ONLY_TEST" ? Array.from(new Set(payloadRecipients)) : Array.from(new Set([...configuredRecipients,...payloadRecipients]));
   if(!apiKey||!from||recipients.length===0||!replyTo)return json({ok:false,error:"server_configuration_error"},500);
   const {text,html}=render(p); const resend=new Resend(apiKey);
   try{
