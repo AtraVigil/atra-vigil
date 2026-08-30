@@ -1,47 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 
 function unauthorized() {
-  return new NextResponse("Authentication required", {
+  return new NextResponse("Authentication required.", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="Atra Optio", charset="UTF-8"',
+      "WWW-Authenticate": 'Basic realm="Atra Vigil", charset="UTF-8"',
       "Cache-Control": "no-store",
     },
   });
 }
 
-function safeEqual(a: string, b: string) {
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i += 1) {
-    diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-  return diff === 0;
-}
-
-export function proxy(req: NextRequest) {
-  const expectedUser = process.env.OPTIO_BASIC_USER || "";
-  const expectedPassword = process.env.OPTIO_BASIC_PASSWORD || "";
+export function proxy(request: NextRequest) {
+  const expectedUser = process.env.ATRA_SITE_USER;
+  const expectedPassword = process.env.ATRA_SITE_PASSWORD;
 
   if (!expectedUser || !expectedPassword) {
-    return new NextResponse("Optio authentication is not configured", {
-      status: 503,
-      headers: { "Cache-Control": "no-store" },
-    });
+    return unauthorized();
   }
 
-  const auth = req.headers.get("authorization") || "";
-  if (!auth.startsWith("Basic ")) return unauthorized();
+  const authorization = request.headers.get("authorization");
+
+  if (!authorization?.startsWith("Basic ")) {
+    return unauthorized();
+  }
 
   try {
-    const decoded = Buffer.from(auth.slice(6), "base64").toString("utf8");
-    const split = decoded.indexOf(":");
-    if (split < 0) return unauthorized();
+    const decoded = atob(authorization.slice(6).trim());
+    const separator = decoded.indexOf(":");
 
-    const user = decoded.slice(0, split);
-    const password = decoded.slice(split + 1);
+    if (separator < 0) {
+      return unauthorized();
+    }
 
-    if (!safeEqual(user, expectedUser) || !safeEqual(password, expectedPassword)) {
+    const username = decoded.slice(0, separator);
+    const password = decoded.slice(separator + 1);
+
+    if (username !== expectedUser || password !== expectedPassword) {
       return unauthorized();
     }
 
@@ -52,5 +46,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/optio/:path*", "/api/optio-live/:path*"],
+  matcher: ["/((?!_next/static|_next/image).*)"],
 };
