@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -138,7 +139,7 @@ export default function Home() {
                 {
                   number: "01",
                   title: "Asia-Pacific Markets",
-                  description: "Indexes, rates, currencies, and regional reference data.",
+                  description: "Asia-Pacific equity index coverage.",
                   href: "/overnight",
                   link: "Explore Asia-Pacific",
                   accent: "blue",
@@ -149,7 +150,7 @@ export default function Home() {
                 {
                   number: "02",
                   title: "European Markets",
-                  description: "Regional indexes, rates, and market reference data.",
+                  description: "European equity index coverage.",
                   href: "/overnight",
                   link: "Explore Europe",
                   accent: "blue",
@@ -160,7 +161,7 @@ export default function Home() {
                 {
                   number: "03",
                   title: "United States",
-                  description: "U.S. markets, policy, and economic reference data.",
+                  description: "U.S. equity index coverage.",
                   href: "/us",
                   link: "Explore United States",
                   accent: "blue",
@@ -225,11 +226,12 @@ export default function Home() {
                     <div className="relative mt-3 h-44 overflow-hidden border-y border-white/[0.06] bg-[#07101a]">
                       {card.scene === "asia" ? (
                         <>
-                          <img
-                            src="/global-digital-network-map.png"
-                            alt=""
-                            aria-hidden="true"
-                            className="absolute inset-0 h-full w-full scale-[1.75] object-cover object-[88%_52%] opacity-[0.92]"
+                          <Image
+                            src="/asia-pacific-network.png"
+                            alt="Asia-Pacific market network"
+                            fill
+                            sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 20vw"
+                            className="object-cover object-center opacity-[0.94]"
                           />
                           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,8,15,0.08),rgba(3,8,15,0.18)_58%,rgba(3,8,15,0.74)_100%)]" />
                           <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_58%,rgba(8,124,255,0.14),transparent_42%)]" />
