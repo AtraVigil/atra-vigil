@@ -143,7 +143,7 @@ export default function Home() {
                   link: "Explore Asia-Pacific",
                   accent: "blue",
                   icon: "AP",
-                  capabilities: ["Equity indexes", "Interest rates", "Currencies", "Reference data"],
+                  capabilities: ["Equity Indexes"],
                   scene: "asia",
                 },
                 {
@@ -154,7 +154,7 @@ export default function Home() {
                   link: "Explore Europe",
                   accent: "blue",
                   icon: "EU",
-                  capabilities: ["Equity indexes", "Interest rates", "Currencies", "Reference data"],
+                  capabilities: ["Equity Indexes"],
                   scene: "europe",
                 },
                 {
@@ -165,7 +165,7 @@ export default function Home() {
                   link: "Explore United States",
                   accent: "blue",
                   icon: "US",
-                  capabilities: ["Equity indexes", "Interest rates", "Economic indicators", "Reference data"],
+                  capabilities: ["Equity Indexes"],
                   scene: "us",
                 },
                 {
@@ -202,7 +202,7 @@ export default function Home() {
                     key={card.number}
                     href={card.href}
                     prefetch={false}
-                    className="group flex min-h-[620px] flex-col overflow-hidden rounded-[13px] border border-[#203044] bg-[#050a10] shadow-[0_22px_60px_rgba(0,0,0,0.28)] transition duration-200 hover:-translate-y-0.5 hover:border-[#31506f]"
+                    className="group flex min-h-[500px] flex-col overflow-hidden rounded-[13px] border border-[#203044] bg-[#050a10] shadow-[0_22px_60px_rgba(0,0,0,0.28)] transition duration-200 hover:-translate-y-0.5 hover:border-[#31506f]"
                   >
                     <div className="flex items-center gap-3 px-4 pb-3 pt-4">
                       <div className={`inline-flex h-7 min-w-9 items-center justify-center rounded border px-2 font-mono text-[10px] tracking-[0.18em] ${accentBorder} ${accentBg} ${accentText}`}>
@@ -214,16 +214,27 @@ export default function Home() {
                     </div>
 
                     <div className="px-4">
-                      <h3 className="min-h-[64px] font-serif text-[22px] leading-[1.08] tracking-[-0.02em] text-[#f0f3f6]">
+                      <h3 className="min-h-[52px] font-serif text-[22px] leading-[1.08] tracking-[-0.02em] text-[#f0f3f6]">
                         {card.title}
                       </h3>
-                      <p className="mt-3 min-h-[62px] text-[12px] leading-5 text-[#78879a]">
+                      <p className="mt-2 min-h-[48px] text-[12px] leading-5 text-[#78879a]">
                         {card.description}
                       </p>
                     </div>
 
-                    <div className="relative mt-4 h-40 overflow-hidden border-y border-white/[0.06] bg-[#07101a]">
-                      {card.scene === "tools" ? (
+                    <div className="relative mt-3 h-44 overflow-hidden border-y border-white/[0.06] bg-[#07101a]">
+                      {card.scene === "asia" ? (
+                        <>
+                          <img
+                            src="/global-digital-network-map.png"
+                            alt=""
+                            aria-hidden="true"
+                            className="absolute inset-0 h-full w-full scale-[1.75] object-cover object-[88%_52%] opacity-[0.92]"
+                          />
+                          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(3,8,15,0.08),rgba(3,8,15,0.18)_58%,rgba(3,8,15,0.74)_100%)]" />
+                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_58%,rgba(8,124,255,0.14),transparent_42%)]" />
+                        </>
+                      ) : card.scene === "tools" ? (
                         <div className="absolute inset-0 p-4">
                           <div className="grid h-full grid-cols-[1.3fr_.7fr] gap-2">
                             <div className="rounded border border-blue-400/15 bg-black/20 p-2">
