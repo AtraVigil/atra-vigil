@@ -119,54 +119,101 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="relative min-h-[250px] overflow-hidden sm:min-h-[290px] lg:min-h-[330px]">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_42%,rgba(8,124,255,0.16),transparent_30%),radial-gradient(circle_at_42%_58%,rgba(10,132,255,0.10),transparent_35%)]" />
+              <div className="relative min-h-[250px] overflow-hidden sm:min-h-[300px] lg:min-h-[340px]">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_64%_38%,rgba(8,124,255,0.18),transparent_28%),radial-gradient(circle_at_78%_46%,rgba(10,132,255,0.10),transparent_28%),radial-gradient(circle_at_34%_62%,rgba(14,165,233,0.08),transparent_30%)]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,7,13,0.04),rgba(2,7,13,0.42)_58%,rgba(2,7,13,0.82)_100%)]" />
                 <svg
-                  viewBox="0 0 900 420"
+                  viewBox="0 0 960 420"
                   role="img"
-                  aria-label="Abstract global market connectivity map"
+                  aria-label="World map showing continents connected by digital transmission paths"
                   className="absolute inset-0 h-full w-full"
                 >
                   <defs>
-                    <linearGradient id="mapFade" x1="0" x2="1">
+                    <linearGradient id="oceanFade" x1="0" x2="1">
                       <stop offset="0%" stopColor="#02070d" stopOpacity="0" />
-                      <stop offset="28%" stopColor="#07111f" stopOpacity=".55" />
-                      <stop offset="100%" stopColor="#07111f" stopOpacity=".95" />
+                      <stop offset="18%" stopColor="#04101d" stopOpacity=".30" />
+                      <stop offset="42%" stopColor="#05111f" stopOpacity=".68" />
+                      <stop offset="100%" stopColor="#07131f" stopOpacity=".96" />
                     </linearGradient>
-                    <filter id="softBlue">
-                      <feGaussianBlur stdDeviation="4" result="blur" />
+                    <linearGradient id="landFill" x1="0" x2="1">
+                      <stop offset="0%" stopColor="#0b1624" />
+                      <stop offset="50%" stopColor="#0d2238" />
+                      <stop offset="100%" stopColor="#102942" />
+                    </linearGradient>
+                    <linearGradient id="arcGlow" x1="0" x2="1">
+                      <stop offset="0%" stopColor="#0a84ff" stopOpacity=".10" />
+                      <stop offset="48%" stopColor="#39a0ff" stopOpacity=".88" />
+                      <stop offset="100%" stopColor="#0a84ff" stopOpacity=".18" />
+                    </linearGradient>
+                    <filter id="signalGlow">
+                      <feGaussianBlur stdDeviation="3.6" result="blur" />
                       <feMerge>
                         <feMergeNode in="blur" />
                         <feMergeNode in="SourceGraphic" />
                       </feMerge>
                     </filter>
+                    <pattern id="microGrid" width="18" height="18" patternUnits="userSpaceOnUse">
+                      <path d="M 18 0 L 0 0 0 18" fill="none" stroke="rgba(121,160,203,0.08)" strokeWidth="0.8" />
+                    </pattern>
                   </defs>
-                  <rect width="900" height="420" fill="url(#mapFade)" />
-                  <g fill="#0b1f34" stroke="#173554" strokeWidth="1.1" opacity=".9">
-                    <path d="M96 132l46-34 69 4 39 28 54 8 27 40-27 31-57 8-31 40-62-9-23-32-44-10-31-36z" />
-                    <path d="M333 116l34-28 39 8 18 29-11 37 25 28-28 21-48-11-22-32z" />
-                    <path d="M408 210l44-12 37 24 8 44-17 53-26 54-32-17-13-54-29-33z" />
-                    <path d="M486 112l41-18 54 12 36-9 52 19 48-3 42 29-7 39-48 20-24 43-53 5-42 36-47-10-17-47-39-18-12-38z" />
-                    <path d="M680 278l45-8 37 16 35-4 29 21-17 26-61 9-52-12-25-26z" />
+
+                  <rect width="960" height="420" fill="url(#oceanFade)" />
+                  <rect width="960" height="420" fill="url(#microGrid)" opacity=".30" />
+
+                  <g fill="url(#landFill)" stroke="#15314d" strokeWidth="1.15" opacity=".96">
+                    <path d="M118 143l26-27 46-24 54-10 46 8 22 14 24 3 18 18-8 21-28 11-24 21-31 8-27 31-41-4-13-25-38-6-26-26z" />
+                    <path d="M253 231l21-11 26 8 18 18-8 23-29 3-23-13z" />
+                    <path d="M374 121l26-17 31 5 18 18-4 23 12 17-20 11-36-7-14-22z" />
+                    <path d="M408 188l24-9 30 12 20 24-8 38-24 51-16 35-24-12-10-36-20-23 4-30z" />
+                    <path d="M442 121l34-15 47 5 20-8 32 12 17-5 25 9 12 15 20-5 32 7 25-10 36 9 36-4 24 18-4 25-24 8-15 22-25 12-21 27-43 0-20 19-32 3-26 12-41-8-23-23-18-29-3-23-16-16 4-19z" />
+                    <path d="M700 255l22-3 15 11 18 0 20 14-11 20-33 5-30-6-11-16z" />
                   </g>
-                  <g fill="none" stroke="#0a84ff" strokeWidth="1.5" opacity=".48" filter="url(#softBlue)">
-                    <path d="M183 173Q350 72 527 151" />
-                    <path d="M183 173Q438 251 720 301" />
-                    <path d="M386 139Q518 97 665 166" />
-                    <path d="M462 250Q545 172 665 166" />
-                    <path d="M527 151Q638 214 720 301" />
+
+                  <g opacity=".16">
+                    <circle cx="205" cy="150" r="58" fill="#0a84ff" />
+                    <circle cx="468" cy="162" r="48" fill="#0a84ff" />
+                    <circle cx="657" cy="154" r="52" fill="#0a84ff" />
+                    <circle cx="788" cy="182" r="42" fill="#0a84ff" />
                   </g>
-                  <g fill="#0a84ff" filter="url(#softBlue)">
-                    <circle cx="183" cy="173" r="4.8" />
-                    <circle cx="386" cy="139" r="4.2" />
-                    <circle cx="462" cy="250" r="4.5" />
-                    <circle cx="527" cy="151" r="4.8" />
-                    <circle cx="665" cy="166" r="5.2" />
-                    <circle cx="720" cy="301" r="4.4" />
+
+                  <g fill="none" stroke="url(#arcGlow)" strokeWidth="1.7" filter="url(#signalGlow)">
+                    <path d="M198 156 Q 330 82 472 138" />
+                    <path d="M198 156 Q 430 236 794 204" />
+                    <path d="M430 138 Q 578 86 658 148" />
+                    <path d="M430 138 Q 604 244 812 258" />
+                    <path d="M658 148 Q 742 128 794 204" />
+                    <path d="M472 214 Q 630 180 812 258" />
+                  </g>
+
+                  <g stroke="#0a84ff" strokeOpacity=".40" strokeWidth="1">
+                    <path d="M198 156 L 430 138" />
+                    <path d="M430 138 L 658 148" />
+                    <path d="M658 148 L 794 204" />
+                    <path d="M472 214 L 812 258" />
+                  </g>
+
+                  <g fill="#58afff" filter="url(#signalGlow)">
+                    <circle cx="198" cy="156" r="4.4" />
+                    <circle cx="430" cy="138" r="4.2" />
+                    <circle cx="472" cy="214" r="4.0" />
+                    <circle cx="658" cy="148" r="4.8" />
+                    <circle cx="794" cy="204" r="4.5" />
+                    <circle cx="812" cy="258" r="4.2" />
+                  </g>
+
+                  <g fill="#93c5fd" opacity=".70">
+                    <circle cx="239" cy="128" r="1.6" />
+                    <circle cx="285" cy="146" r="1.6" />
+                    <circle cx="389" cy="126" r="1.6" />
+                    <circle cx="520" cy="122" r="1.6" />
+                    <circle cx="563" cy="145" r="1.6" />
+                    <circle cx="618" cy="131" r="1.6" />
+                    <circle cx="721" cy="160" r="1.6" />
+                    <circle cx="760" cy="214" r="1.6" />
                   </g>
                 </svg>
-                <div className="absolute inset-y-0 left-0 w-[32%] bg-gradient-to-r from-[#030407] via-[#030407]/65 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#030407] to-transparent" />
+                <div className="absolute inset-y-0 left-0 w-[35%] bg-gradient-to-r from-[#030407] via-[#030407]/72 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-[34%] bg-gradient-to-t from-[#030407] to-transparent" />
               </div>
             </div>
           </section>
