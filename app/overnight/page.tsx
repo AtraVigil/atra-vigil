@@ -47,6 +47,27 @@ const EMPTY_DATA: OvernightResponse = {
   markets: [],
 };
 
+const ASIA_PACIFIC_SYMBOLS = new Set([
+  "^N225",
+  "^HSI",
+  "^KS11",
+  "^TWII",
+  "^STI",
+  "^NSEI",
+  "^AXJO",
+]);
+
+const EUROPE_SYMBOLS = new Set([
+  "^FTSE",
+  "^GDAXI",
+  "^FCHI",
+  "^STOXX50E",
+  "FTSEMIB.MI",
+  "^IBEX",
+  "^SSMI",
+  "^AEX",
+]);
+
 function numberFmt(value: number | null) {
   if (value === null || Number.isNaN(value)) return "--";
   return new Intl.NumberFormat("en-US", {
@@ -95,6 +116,7 @@ function ageFmt(minutes: number | null) {
 
 export default function Home() {
   const [data, setData] = useState<OvernightResponse>(EMPTY_DATA);
+  const [regionView, setRegionView] = useState<"asia-pacific" | "europe" | "combined">("combined");
   const [isLoading, setIsLoading] = useState(true);
   const [lastClientRefresh, setLastClientRefresh] = useState<string | null>(null);
   const [clientError, setClientError] = useState<string | null>(null);
@@ -119,19 +141,34 @@ export default function Home() {
   }
 
   useEffect(() => {
+
+    const region = new URLSearchParams(window.location.search).get("region");
+
+    if (region === "asia-pacific" || region === "europe") {
+
+      setRegionView(region);
+
+    } else {
+
+      setRegionView("combined");
+
+    }
+
+  }, []);
+
+
+  useEffect(() => {
     loadOvernightMarkets();
     const interval = window.setInterval(loadOvernightMarkets, 60_000);
     return () => window.clearInterval(interval);
   }, []);
 
   const { positive, negative, tapeState } = useMemo(() => {
-    const tapeMarkets = data.markets.filter((m) => m.key !== "sti");
-    const pos = tapeMarkets.filter((m) => (m.changePercent ?? 0) > 0).length;
-    const neg = tapeMarkets.filter((m) => (m.changePercent ?? 0) < 0).length;
-
+    const pos = data.markets.filter((m) => (m.changePercent ?? 0) > 0).length;
+    const neg = data.markets.filter((m) => (m.changePercent ?? 0) < 0).length;
     let state = "Mixed";
-    if (pos >= 3) state = "Risk-On";
-    if (neg >= 3) state = "Risk-Off";
+    if (pos >= 8) state = "Risk-On";
+    if (neg >= 8) state = "Risk-Off";
 
     return { positive: pos, negative: neg, tapeState: state };
   }, [data.markets]);
@@ -222,8 +259,33 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
-            {data.markets.map((market) => (
+          <div className="space-y-10">
+            {[
+              {
+                id: "asia-pacific",
+                title: "Asia-Pacific",
+                subtitle: "7 tracked equity indexes",
+                markets: data.markets.filter((market) => ASIA_PACIFIC_SYMBOLS.has(market.symbol)),
+              },
+              {
+                id: "europe",
+                title: "European",
+                subtitle: "8 tracked equity indexes",
+                markets: data.markets.filter((market) => EUROPE_SYMBOLS.has(market.symbol)),
+              },
+            ]
+              .filter((section) => regionView === "combined" || section.id === regionView)
+              .map((section) => (
+              <section key={section.id} id={section.id} className="scroll-mt-6">
+                <div className="mb-4 flex items-end justify-between gap-4 border-b border-zinc-800 pb-3">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.3em] text-blue-300">Regional Coverage</p>
+                    <h3 className="mt-1 text-xl font-semibold text-white">{section.title}</h3>
+                  </div>
+                  <p className="text-xs text-zinc-500">{section.subtitle}</p>
+                </div>
+                <div className="grid grid-cols-1 items-stretch gap-4 lg:grid-cols-3">
+{section.markets.map((market) => (
               <article
                 key={market.key}
                 className="flex h-full min-h-[520px] flex-col rounded-xl border border-zinc-800 bg-zinc-950/80 p-5"
@@ -301,7 +363,9 @@ export default function Home() {
                 </div>
               </article>
             ))}
-
+                </div>
+              </section>
+            ))}
             {!isLoading && data.markets.length === 0 ? (
               <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 p-5 text-sm text-zinc-400">
                 No overnight market data returned.

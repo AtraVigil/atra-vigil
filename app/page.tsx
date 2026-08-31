@@ -1,130 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-
-type TapeTone = "green" | "red" | "orange" | "blue";
-
-type OvernightMarket = {
-  key: string;
-  changePercent: number | null;
-};
-
-type OvernightPayload = {
-  ok: boolean;
-  markets: OvernightMarket[];
-};
-
-type UsAsset = {
-  key?: string;
-  name: string;
-  symbol: string;
-  changePercent: number | null;
-};
-
-type UsPayload = {
-  ok: boolean;
-  assets: UsAsset[];
-};
-
-const destinations = [
-  {
-    key: "global",
-    title: "Overnight Markets",
-    eyebrow: "🌐 Global",
-    href: "/overnight",
-    detail: "International session monitor",
-  },
-  {
-    key: "domestic",
-    title: "U.S. Markets",
-    eyebrow: "🇺🇸 United States",
-    href: "/us",
-    detail: "Primary U.S. index command",
-  },
-  {
-    key: "optio",
-    title: "Atra Optio",
-    eyebrow: "🔒 Protected Research",
-    href: "/optio",
-    detail: "Live options research monitor",
-  },
-];
-
-function toneText(tone: TapeTone) {
-  if (tone === "green") return "text-emerald-300";
-  if (tone === "red") return "text-red-300";
-  if (tone === "orange") return "text-amber-300";
-  return "text-blue-400";
-}
-
-function toneBorder(tone: TapeTone) {
-  if (tone === "green") return "group-hover:border-emerald-400/45";
-  if (tone === "red") return "group-hover:border-red-400/45";
-  if (tone === "orange") return "group-hover:border-amber-400/45";
-  return "group-hover:border-blue-500/50";
-}
-
-function toneDot(tone: TapeTone) {
-  if (tone === "green") return "bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.45)]";
-  if (tone === "red") return "bg-red-400 shadow-[0_0_18px_rgba(248,113,113,0.42)]";
-  if (tone === "orange") return "bg-amber-400 shadow-[0_0_18px_rgba(251,191,36,0.36)]";
-  return "bg-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.55)]";
-}
-
-function statusLabel(tone: TapeTone) {
-  if (tone === "green") return "Positive";
-  if (tone === "red") return "Negative";
-  if (tone === "orange") return "Mixed";
-  return "Secured";
-}
-
-function calcGlobalTone(markets: OvernightMarket[]): TapeTone {
-  let up = 0;
-  let down = 0;
-
-  for (const market of markets || []) {
-    const value = market.changePercent;
-    if (value === null || Number.isNaN(value)) continue;
-    if (value > 0) up += 1;
-    if (value < 0) down += 1;
-  }
-
-  if (up > down) return "green";
-  if (down > up) return "red";
-  return "orange";
-}
-
-function calcDomesticTone(assets: UsAsset[]): TapeTone {
-  const sp = assets.find((asset) => {
-    const name = asset.name.toLowerCase();
-    const symbol = asset.symbol.toUpperCase();
-    return name.includes("s&p") || symbol.includes("SPX") || symbol.includes("GSPC");
-  });
-
-  const nasdaq = assets.find((asset) => {
-    const name = asset.name.toLowerCase();
-    const symbol = asset.symbol.toUpperCase();
-    return name.includes("nasdaq") || symbol.includes("NDX") || symbol.includes("IXIC");
-  });
-
-  const values = [sp?.changePercent, nasdaq?.changePercent].filter(
-    (value): value is number => value !== null && value !== undefined && !Number.isNaN(value),
-  );
-
-  if (values.length < 2) return "orange";
-
-  const up = values.filter((value) => value > 0).length;
-  const down = values.filter((value) => value < 0).length;
-
-  if (up === 2) return "green";
-  if (down === 2) return "red";
-  return "orange";
-}
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [overnightData, setOvernightData] = useState<OvernightPayload | null>(null);
-  const [usData, setUsData] = useState<UsPayload | null>(null);
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
@@ -135,51 +15,6 @@ export default function Home() {
     return () => window.clearTimeout(splashId);
   }, []);
 
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadToneData() {
-      try {
-        const [overnightRes, usRes] = await Promise.all([
-          fetch(`/api/overnight?v=${Date.now()}`, { cache: "no-store" }),
-          fetch(`/api/us-market?v=${Date.now()}`, { cache: "no-store" }),
-        ]);
-
-        const [overnightJson, usJson] = await Promise.all([
-          overnightRes.json(),
-          usRes.json(),
-        ]);
-
-        if (!isMounted) return;
-
-        setOvernightData(overnightJson);
-        setUsData(usJson);
-      } catch {
-        if (!isMounted) return;
-        setOvernightData(null);
-        setUsData(null);
-      }
-    }
-
-    loadToneData();
-    const id = window.setInterval(loadToneData, 60_000);
-
-    return () => {
-      isMounted = false;
-      window.clearInterval(id);
-    };
-  }, []);
-
-  const cardTones = useMemo(() => {
-    return {
-      global: calcGlobalTone((overnightData?.markets || []).filter((market) => market.key !== "sti")),
-      domestic: calcDomesticTone(usData?.assets || []),
-      protected: "blue" as TapeTone,
-      optio: "blue" as TapeTone,
-      lectio: "blue" as TapeTone,
-      dis: "blue" as TapeTone,
-    };
-  }, [overnightData, usData]);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#030407] text-white">
@@ -271,46 +106,165 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {destinations.map((item) => {
-              const tone = cardTones[item.key as keyof typeof cardTones];
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  prefetch={false}
-                  className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/78 p-6 shadow-xl shadow-black/35 backdrop-blur transition duration-200 hover:-translate-y-0.5 hover:bg-zinc-900/85 ${toneBorder(tone)}`}
-                >
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/18 to-transparent" />
-                  <div className="mb-7 flex items-center justify-between gap-4">
-                    <div className={`text-[11px] font-semibold uppercase tracking-[0.34em] ${toneText(tone)}`}>
-                      {item.eyebrow}
+
+          <section className="mt-8 pb-4">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+              {[
+                {
+                  number: "01",
+                  short: "AP",
+                  title: "Asia-Pacific",
+                  description: "Asia-Pacific equity index coverage.",
+                  capability: "Equity Indexes",
+                  href: "/overnight?region=asia-pacific",
+                  link: "Explore Asia-Pacific",
+                  protected: false,
+                },
+                {
+                  number: "02",
+                  short: "EU",
+                  title: "Europe",
+                  description: "European equity index coverage.",
+                  capability: "Equity Indexes",
+                  href: "/overnight?region=europe",
+                  link: "Explore Europe",
+                  protected: false,
+                },
+                {
+                  number: "03",
+                  short: "US",
+                  title: "United States",
+                  description: "U.S. equity index coverage.",
+                  capability: "Equity Indexes",
+                  href: "/us",
+                  link: "Explore United States",
+                  protected: false,
+                },
+                {
+                  number: "04",
+                  short: "RT",
+                  title: "Economic Research",
+                  description: "Trackers, workbooks, and reference materials.",
+                  capability: "Research Tools",
+                  href: "/research",
+                  link: "Explore Economic Research",
+                  protected: false,
+                },
+                {
+                  number: "05",
+                  short: "AO",
+                  title: "Atra Optio",
+                  description: "Protected research environment, datasets, and reports.",
+                  capability: "Protected Research",
+                  href: "/optio",
+                  link: "Learn About Atra Optio",
+                  protected: true,
+                },
+              ].map((card) => {
+                const isPrimaryRegionalCard = ["01", "02", "03"].includes(card.number);
+                const accent = card.protected ? "violet" : "blue";
+                const badge = accent === "violet"
+                  ? "border-violet-400/35 bg-violet-500/[0.07] text-violet-300"
+                  : "border-blue-400/30 bg-blue-500/[0.06] text-blue-300";
+                const capability = accent === "violet"
+                  ? "border-violet-400/30 text-violet-200"
+                  : "border-blue-400/30 text-blue-200";
+                const link = accent === "violet"
+                  ? "text-violet-300 group-hover:text-violet-200"
+                  : "text-blue-300 group-hover:text-blue-200";
+
+                return (
+                  <Link
+                    key={card.number}
+                    href={card.href}
+                    prefetch={false}
+                    className="group flex min-h-[470px] flex-col overflow-hidden rounded-[14px] border border-[#203044] bg-[#050a10] shadow-[0_18px_50px_rgba(0,0,0,0.24)] transition duration-200 hover:-translate-y-0.5 hover:border-[#345574]"
+                  >
+                    {!isPrimaryRegionalCard ? (
+                      <div className="flex items-center gap-3 px-4 pb-4 pt-4">
+                        <div className={`inline-flex h-8 min-w-10 items-center justify-center rounded border px-2 font-mono text-[10px] tracking-[0.18em] ${badge}`}>
+                          {card.number}
+                        </div>
+                        <div className={`inline-flex h-10 w-10 items-center justify-center rounded-full border font-mono text-[10px] tracking-[0.12em] ${badge}`}>
+                          {card.short}
+                        </div>
+                      </div>
+                    ) : null}
+
+                    <div className="px-4">
+                      <h3 className={`${isPrimaryRegionalCard ? "min-h-0 py-4" : "min-h-[54px]"} font-serif text-[22px] leading-[1.08] tracking-[-0.02em] text-[#f0f3f6]`}>
+                        {card.title}
+                      </h3>
+                      {!isPrimaryRegionalCard ? (
+                        <p className="mt-2 min-h-[48px] text-[12px] leading-5 text-[#78879a]">
+                          {card.description}
+                        </p>
+                      ) : null}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] uppercase tracking-[0.22em] text-zinc-600">
-                        {statusLabel(tone)}
-                      </span>
-                      <span className={`h-2.5 w-2.5 rounded-full ${toneDot(tone)}`} />
+
+                    {card.number === "01" ? (
+                      <div className="relative mt-3 h-36 overflow-hidden border-y border-white/[0.06] bg-[#07101a]">
+                        <Image
+                          src="/asia-pacific-card-network.png"
+                          alt="Asia-Pacific market network"
+                          fill
+                          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 20vw"
+                          className="object-cover object-center brightness-[1.08]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-transparent to-black/15" />
+                      </div>
+                    ) : card.number === "02" ? (
+                      <div className="relative mt-3 h-36 overflow-hidden border-y border-white/[0.06] bg-[#07101a]">
+                        <Image
+                          src="/europe-card-network.png"
+                          alt="Europe market network"
+                          fill
+                          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 20vw"
+                          className="object-cover object-center brightness-[1.04]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-transparent to-black/15" />
+                      </div>
+                    ) : card.number === "03" ? (
+                      <div className="relative mt-3 h-36 overflow-hidden border-y border-white/[0.06] bg-[#07101a]">
+                        <Image
+                          src="/us-card-network.png"
+                          alt="United States market network"
+                          fill
+                          sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 20vw"
+                          className="object-cover object-center brightness-[1.02]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-b from-black/0 via-transparent to-black/15" />
+                      </div>
+                    ) : (
+                      <div className="relative mt-3 h-36 border-y border-white/[0.06] bg-[#07101a]">
+                        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] bg-[size:28px_28px]" />
+                        <div className="absolute bottom-3 left-4 font-mono text-[8px] uppercase tracking-[0.22em] text-[#33465a]">
+                          Visual reserved
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-1 flex-col px-4 pb-4 pt-5">
+                      <div className="flex items-center gap-2.5">
+                        <span className={`inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-[10px] ${capability}`}>
+                          ✓
+                        </span>
+                        <span className="text-[12px] leading-5 text-[#a7b3c2]">
+                          {card.capability}
+                        </span>
+                      </div>
+
+                      <div className={`mt-auto flex items-center justify-between border-t border-white/[0.07] pt-4 text-[12px] font-medium ${link}`}>
+                        <span>{card.link}</span>
+                        <span aria-hidden="true" className="transition group-hover:translate-x-1">→</span>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="text-2xl font-semibold tracking-tight text-white">
-                    {item.title}
-                  </div>
-
-                  <div className="mt-2 text-sm text-zinc-500">
-                    {item.detail}
-                  </div>
-
-                  <div className="mt-8 flex items-center justify-between border-t border-white/10 pt-4 text-sm text-zinc-400 transition group-hover:text-white">
-                    <span>Open interface</span>
-                    <span aria-hidden="true" className="transition group-hover:translate-x-1">→</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
         </div>
       </section>
 
