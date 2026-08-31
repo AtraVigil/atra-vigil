@@ -1,3 +1,4 @@
+// Production auth deployment trigger: GitHub/Vercel
 import { NextRequest, NextResponse } from "next/server";
 
 function unauthorized() {
