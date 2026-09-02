@@ -120,6 +120,12 @@ export default function OptioPage() {
 
   return (
     <main className="min-h-screen bg-black px-5 py-6 text-white sm:px-8">
+      <div style={{ maxWidth: "1440px", margin: "0 auto 18px", padding: "0 20px" }}>
+        <a href="/optio/forward-validation" style={{display:"inline-flex",padding:"10px 14px",border:"1px solid #3a3f52",borderRadius:"8px",background:"#151722",color:"#eceef5",textDecoration:"none",fontSize:"13px",fontWeight:600}}>
+          Ata Optio Test 1
+        </a>
+      </div>
+
       <div className="mx-auto max-w-7xl">
         <div className="mb-6">
           <Link
