@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const PUBLIC_EXACT_PATHS = new Set([
   "/",
+  "/public",
   "/logo.png",
   "/header-final.png",
   "/asia-pacific-card-network.png",
