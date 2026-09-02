@@ -1,5 +1,15 @@
-// Production auth deployment trigger: GitHub/Vercel
+// Selective public/private Basic Auth.
+// Public surface is deliberately minimal. Everything not explicitly allowed is private.
 import { NextRequest, NextResponse } from "next/server";
+
+const PUBLIC_EXACT_PATHS = new Set([
+  "/",
+  "/logo.png",
+  "/header-final.png",
+  "/asia-pacific-card-network.png",
+  "/europe-card-network.png",
+  "/us-card-network.png",
+]);
 
 function unauthorized() {
   return new NextResponse("Authentication required.", {
@@ -12,6 +22,12 @@ function unauthorized() {
 }
 
 export function proxy(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  if (PUBLIC_EXACT_PATHS.has(pathname)) {
+    return NextResponse.next();
+  }
+
   const expectedUser = process.env.ATRA_SITE_USER;
   const expectedPassword = process.env.ATRA_SITE_PASSWORD;
 

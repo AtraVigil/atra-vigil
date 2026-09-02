@@ -9,7 +9,7 @@ export default function ResearchPage() {
       <section className="relative z-10 mx-auto w-full max-w-6xl px-5 py-10 sm:px-8">
         <div className="mb-10 border-b border-white/10 pb-6">
           <Link
-            href="/"
+            href="/private"
             className="text-[11px] uppercase tracking-[0.22em] text-blue-300 transition hover:text-blue-200"
           >
             ← Atra Vigil

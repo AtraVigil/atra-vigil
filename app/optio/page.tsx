@@ -129,7 +129,7 @@ export default function OptioPage() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-6">
           <Link
-            href="/"
+            href="/private"
             className="inline-flex items-center rounded-full border border-blue-400/30 bg-blue-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-blue-200 transition hover:border-blue-300 hover:bg-blue-400/15"
           >
             ← Back to Market Command

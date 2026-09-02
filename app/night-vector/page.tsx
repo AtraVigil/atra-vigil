@@ -60,7 +60,7 @@ export default function NightVectorPage() {
 
         {/* BACK LINK */}
         <div>
-          <a href="/" className="text-sm text-zinc-400 hover:text-white">
+          <a href="/private" className="text-sm text-zinc-400 hover:text-white">
             ← Dashboard
           </a>
         </div>

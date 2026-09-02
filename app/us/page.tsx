@@ -108,7 +108,7 @@ export default function UsMarketPage() {
 
         <div className="mb-6">
           <Link
-            href="/"
+            href="/private"
             className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200 transition hover:border-cyan-300 hover:bg-cyan-400/15"
           >
             ← Back to Market Command
@@ -129,7 +129,7 @@ export default function UsMarketPage() {
         <header className="mb-8 flex flex-col gap-4 rounded-3xl border border-white/10 bg-zinc-950/80 p-6 shadow-2xl shadow-black/30 md:flex-row md:items-end md:justify-between">
           <div>
             <div className="mb-3 flex flex-wrap gap-3 text-xs uppercase tracking-[0.24em] text-zinc-500">
-              <Link href="/" className="hover:text-white">
+              <Link href="/private" className="hover:text-white">
                 Atra Vigil
               </Link>
               <span>/</span>

@@ -52,7 +52,7 @@ export default function NightStalkerPage() {
       <div className="max-w-3xl mx-auto space-y-6">
 
         <div>
-          <a href="/" className="text-sm text-zinc-400 hover:text-white">
+          <a href="/private" className="text-sm text-zinc-400 hover:text-white">
             ← Dashboard
           </a>
         </div>

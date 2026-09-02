@@ -6,7 +6,7 @@ export default function Page() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-6">
           <Link
-            href="/"
+            href="/private"
             className="inline-flex items-center rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-blue-200 transition hover:border-blue-400 hover:bg-blue-500/15"
           >
             ← Back to Market Command

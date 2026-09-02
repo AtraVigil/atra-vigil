@@ -182,7 +182,7 @@ export default function Home() {
 
         <div className="mb-6">
           <Link
-            href="/"
+            href="/private"
             className="inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200 transition hover:border-cyan-300 hover:bg-cyan-400/15"
           >
             ← Back to Market Command

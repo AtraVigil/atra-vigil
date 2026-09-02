@@ -57,7 +57,7 @@ export default function SectorsPage() {
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-3xl font-semibold">Sectors</h1>
-          <a href="/" className="text-sm text-zinc-400 hover:text-zinc-100">
+          <a href="/private" className="text-sm text-zinc-400 hover:text-zinc-100">
             ← Dashboard
           </a>
         </div>
