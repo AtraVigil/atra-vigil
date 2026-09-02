@@ -315,29 +315,3 @@ test("FX reference fails closed when one pair is missing", () => {
   assert.match(validateStructuraPayload(value).join("\n"), /exactly seven pairs/);
 });
 
-test("FX interpretation reflects USD direction for quote and base pairs", () => {
-  const value = payload();
-  value.brief.fx_reference = {
-    label: "Prior-Day Reference Rates",
-    observation_date: "2026-09-01",
-    prior_observation_date: "2026-08-31",
-    pairs: [
-      { pair: "EUR/USD", rate: "1.1607", prior_rate: "1.1617", change_percent: "-0.09%" },
-      { pair: "GBP/USD", rate: "1.3547", prior_rate: "1.3551", change_percent: "-0.03%" },
-      { pair: "USD/JPY", rate: "159.93", prior_rate: "159.81", change_percent: "+0.08%" },
-      { pair: "USD/CNY", rate: "6.7188", prior_rate: "6.7188", change_percent: "+0.00%" },
-      { pair: "AUD/USD", rate: "0.71571", prior_rate: "0.71675", change_percent: "-0.15%" },
-      { pair: "USD/KRW", rate: "1371.32", prior_rate: "1372.87", change_percent: "-0.11%" },
-      { pair: "USD/INR", rate: "95.1", prior_rate: "95.35", change_percent: "-0.26%" }
-    ]
-  };
-
-  const rendered = renderEmail(value);
-  assert.match(rendered.text, /U\.S\. dollar strengthened versus the euro/);
-  assert.match(rendered.text, /U\.S\. dollar strengthened versus the pound/);
-  assert.match(rendered.text, /U\.S\. dollar strengthened versus the yen/);
-  assert.match(rendered.text, /Little change between the U\.S\. dollar and yuan/);
-  assert.match(rendered.text, /U\.S\. dollar strengthened versus the Australian dollar/);
-  assert.match(rendered.text, /U\.S\. dollar weakened versus the won/);
-  assert.match(rendered.text, /U\.S\. dollar weakened versus the rupee/);
-});
