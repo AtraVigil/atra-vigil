@@ -1,12 +1,19 @@
 {
   "H1": {
-    "bottom20_mean": null,
-    "completed_signal_dates": 0,
+    "bottom20_mean": 0.019934313187967186,
+    "completed_signal_dates": 1,
     "horizon": 1,
-    "session_win_rate": null,
-    "sessions": [],
-    "spread_mean": null,
-    "top20_mean": null
+    "session_win_rate": 0.0,
+    "sessions": [
+      {
+        "bottom20_mean": 0.019934313187967186,
+        "signal_date": "2026-09-02",
+        "spread": -0.01010335375908476,
+        "top20_mean": 0.009830959428882426
+      }
+    ],
+    "spread_mean": -0.01010335375908476,
+    "top20_mean": 0.009830959428882426
   },
   "H3": {
     "bottom20_mean": null,
@@ -27,7 +34,7 @@
     "top20_mean": null
   },
   "formula_version": "THREE_FACTOR_V1_FROZEN",
-  "generated_at": "2026-09-02T18:08:20.286228-05:00",
+  "generated_at": "2026-09-03T18:40:19.209901-05:00",
   "label": "Research / Forward Validation \u2014 Not Production",
   "latest_signal_date": "2026-09-02",
   "signal_date_count": 1

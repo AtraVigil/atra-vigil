@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T18:08:20.285415-05:00",
+  "generated_at": "2026-09-03T18:40:19.208265-05:00",
   "signals": [
     {
       "rankings": [
@@ -10,17 +10,53 @@
           "call_oi_total": 371101.0,
           "call_volume_total": 16187.0,
           "group_name": "QUANTUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 16.82,
+            "fetched_at": "2026-09-03T18:40:18.280652-05:00",
+            "high": 16.95,
+            "low": 16.52,
+            "open": 16.58,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "QBTS"
+          },
           "options_activity_rank": 0.676470588235294,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 16.58,
+              "exit_close": 16.82,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940398-05:00",
+              "return_value": 0.014475271411338975,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "QBTS"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 16.58,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "QBTS"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 16.58,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "QBTS"
             }
           },
           "percentile_score": 85.29411764705883,
@@ -38,17 +74,53 @@
           "call_oi_total": 263895.0,
           "call_volume_total": 8081.0,
           "group_name": "QUANTUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 7.96,
+            "fetched_at": "2026-09-03T18:40:18.297946-05:00",
+            "high": 8.07,
+            "low": 7.87,
+            "open": 7.89,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "QUBT"
+          },
           "options_activity_rank": 0.5392156862745098,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 7.89,
+              "exit_close": 7.96,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940449-05:00",
+              "return_value": 0.00887198986058313,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "QUBT"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 7.89,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "QUBT"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 7.89,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "QUBT"
             }
           },
           "percentile_score": 80.718954248366,
@@ -66,17 +138,53 @@
           "call_oi_total": 388628.0,
           "call_volume_total": 25110.0,
           "group_name": "QUANTUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 39.02,
+            "fetched_at": "2026-09-03T18:40:18.297977-05:00",
+            "high": 39.78,
+            "low": 37.84,
+            "open": 38.13,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "IONQ"
+          },
           "options_activity_rank": 0.7450980392156863,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 38.13,
+              "exit_close": 39.02,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940296-05:00",
+              "return_value": 0.02334120115394711,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "IONQ"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 38.13,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "IONQ"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 38.13,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "IONQ"
             }
           },
           "percentile_score": 76.79738562091502,
@@ -94,17 +202,53 @@
           "call_oi_total": 378234.0,
           "call_volume_total": 19095.0,
           "group_name": "QUANTUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 15.18,
+            "fetched_at": "2026-09-03T18:40:18.297994-05:00",
+            "high": 15.32,
+            "low": 14.83,
+            "open": 14.84,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "RGTI"
+          },
           "options_activity_rank": 0.715686274509804,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 14.84,
+              "exit_close": 15.18,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940347-05:00",
+              "return_value": 0.022911051212938016,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "RGTI"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 14.84,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "RGTI"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 14.84,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "RGTI"
             }
           },
           "percentile_score": 75.81699346405229,
@@ -122,17 +266,53 @@
           "call_oi_total": 1586838.0,
           "call_volume_total": 568276.0,
           "group_name": "SEMIS",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 958.16,
+            "fetched_at": "2026-09-03T18:40:18.298009-05:00",
+            "high": 959.76,
+            "low": 918.88,
+            "open": 956.91,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "MU"
+          },
           "options_activity_rank": 0.9509803921568628,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 956.91,
+              "exit_close": 958.16,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941394-05:00",
+              "return_value": 0.0013062879476648526,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "MU"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 956.91,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "MU"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 956.91,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "MU"
             }
           },
           "percentile_score": 70.91503267973856,
@@ -150,17 +330,53 @@
           "call_oi_total": 649286.0,
           "call_volume_total": 67956.0,
           "group_name": "SPACE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 63.81,
+            "fetched_at": "2026-09-03T18:40:18.298024-05:00",
+            "high": 64.9,
+            "low": 62.36,
+            "open": 64.64,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "RKLB"
+          },
           "options_activity_rank": 0.823529411764706,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 64.64,
+              "exit_close": 63.81,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940606-05:00",
+              "return_value": -0.01284034653465349,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "RKLB"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 64.64,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "RKLB"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 64.64,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "RKLB"
             }
           },
           "percentile_score": 68.62745098039214,
@@ -178,17 +394,53 @@
           "call_oi_total": 8191680.0,
           "call_volume_total": 3378344.0,
           "group_name": "SEMIS",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 228.45,
+            "fetched_at": "2026-09-03T18:40:18.298038-05:00",
+            "high": 230.4,
+            "low": 224.75,
+            "open": 226.02,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "NVDA"
+          },
           "options_activity_rank": 1.0,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 226.02,
+              "exit_close": 228.45,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941343-05:00",
+              "return_value": 0.010751260950358388,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "NVDA"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 226.02,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "NVDA"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 226.02,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "NVDA"
             }
           },
           "percentile_score": 66.66666666666666,
@@ -206,17 +458,53 @@
           "call_oi_total": 1208473.0,
           "call_volume_total": 103738.0,
           "group_name": "AI_DC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 37.87,
+            "fetched_at": "2026-09-03T18:40:18.298052-05:00",
+            "high": 38.22,
+            "low": 35.75,
+            "open": 36.5,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "SMCI"
+          },
           "options_activity_rank": 0.892156862745098,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 36.5,
+              "exit_close": 37.87,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940190-05:00",
+              "return_value": 0.03753424657534232,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "SMCI"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 36.5,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "SMCI"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 36.5,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "SMCI"
             }
           },
           "percentile_score": 66.01307189542483,
@@ -234,17 +522,53 @@
           "call_oi_total": 3109699.0,
           "call_volume_total": 363282.0,
           "group_name": "SEMIS",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 91.67,
+            "fetched_at": "2026-09-03T18:40:18.298066-05:00",
+            "high": 92.37,
+            "low": 87.73,
+            "open": 89.35,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "INTC"
+          },
           "options_activity_rank": 0.9607843137254902,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 89.35,
+              "exit_close": 91.67,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941554-05:00",
+              "return_value": 0.025965304980414272,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "INTC"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 89.35,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "INTC"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 89.35,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "INTC"
             }
           },
           "percentile_score": 65.359477124183,
@@ -262,17 +586,53 @@
           "call_oi_total": 189598.0,
           "call_volume_total": 11514.0,
           "group_name": "SPACE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 14.7,
+            "fetched_at": "2026-09-03T18:40:18.298081-05:00",
+            "high": 15.18,
+            "low": 14.33,
+            "open": 15.18,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "LUNR"
+          },
           "options_activity_rank": 0.5,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 15.18,
+              "exit_close": 14.7,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940657-05:00",
+              "return_value": -0.031620553359683834,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "LUNR"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 15.18,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "LUNR"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 15.18,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "LUNR"
             }
           },
           "percentile_score": 61.76470588235294,
@@ -290,17 +650,53 @@
           "call_oi_total": 326158.0,
           "call_volume_total": 9496.0,
           "group_name": "URANIUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 14.35,
+            "fetched_at": "2026-09-03T18:40:18.298095-05:00",
+            "high": 14.72,
+            "low": 14.02,
+            "open": 14.67,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "UUUU"
+          },
           "options_activity_rank": 0.5588235294117647,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 14.67,
+              "exit_close": 14.35,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940918-05:00",
+              "return_value": -0.021813224267211995,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "UUUU"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 14.67,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "UUUU"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 14.67,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "UUUU"
             }
           },
           "percentile_score": 60.78431372549019,
@@ -318,17 +714,53 @@
           "call_oi_total": 6203.0,
           "call_volume_total": 1172.0,
           "group_name": "IEC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 66.83,
+            "fetched_at": "2026-09-03T18:40:18.298109-05:00",
+            "high": 68.19,
+            "low": 65.85,
+            "open": 67.32,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "ACM"
+          },
           "options_activity_rank": 0.06862745098039215,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 67.32,
+              "exit_close": 66.83,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941238-05:00",
+              "return_value": -0.007278669043374819,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "ACM"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 67.32,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ACM"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 67.32,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ACM"
             }
           },
           "percentile_score": 58.16993464052288,
@@ -346,17 +778,53 @@
           "call_oi_total": 735528.0,
           "call_volume_total": 116677.0,
           "group_name": "SPACE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 62.13,
+            "fetched_at": "2026-09-03T18:40:18.298124-05:00",
+            "high": 63.95,
+            "low": 61.07,
+            "open": 62.91,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "ASTS"
+          },
           "options_activity_rank": 0.8333333333333334,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 62.91,
+              "exit_close": 62.13,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940554-05:00",
+              "return_value": -0.012398664759179723,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "ASTS"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 62.91,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ASTS"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 62.91,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ASTS"
             }
           },
           "percentile_score": 58.16993464052288,
@@ -374,17 +842,53 @@
           "call_oi_total": 134654.0,
           "call_volume_total": 7694.0,
           "group_name": "URANIUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 10.67,
+            "fetched_at": "2026-09-03T18:40:18.298138-05:00",
+            "high": 10.76,
+            "low": 10.51,
+            "open": 10.51,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "NXE"
+          },
           "options_activity_rank": 0.392156862745098,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 10.51,
+              "exit_close": 10.67,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940970-05:00",
+              "return_value": 0.015223596574690745,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "NXE"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 10.51,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "NXE"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 10.51,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "NXE"
             }
           },
           "percentile_score": 58.16993464052288,
@@ -402,17 +906,53 @@
           "call_oi_total": 17215.0,
           "call_volume_total": 1900.0,
           "group_name": "AERO_DEFENSE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 262.14,
+            "fetched_at": "2026-09-03T18:40:18.298153-05:00",
+            "high": 265.0,
+            "low": 259.14,
+            "open": 264.24,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "LHX"
+          },
           "options_activity_rank": 0.17647058823529413,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 264.24,
+              "exit_close": 262.14,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941656-05:00",
+              "return_value": -0.00794732061762038,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "LHX"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 264.24,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "LHX"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 264.24,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "LHX"
             }
           },
           "percentile_score": 54.90196078431372,
@@ -430,17 +970,53 @@
           "call_oi_total": 129207.0,
           "call_volume_total": 4482.0,
           "group_name": "URANIUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 11.51,
+            "fetched_at": "2026-09-03T18:40:18.298167-05:00",
+            "high": 11.92,
+            "low": 11.34,
+            "open": 11.75,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "UEC"
+          },
           "options_activity_rank": 0.3235294117647059,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 11.75,
+              "exit_close": 11.51,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940865-05:00",
+              "return_value": -0.020425531914893602,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "UEC"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 11.75,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "UEC"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 11.75,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "UEC"
             }
           },
           "percentile_score": 51.9607843137255,
@@ -458,17 +1034,53 @@
           "call_oi_total": 67279.0,
           "call_volume_total": 6546.0,
           "group_name": "AERO_DEFENSE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 48.1,
+            "fetched_at": "2026-09-03T18:40:18.298182-05:00",
+            "high": 49.16,
+            "low": 46.92,
+            "open": 48.76,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "KTOS"
+          },
           "options_activity_rank": 0.29411764705882354,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 48.76,
+              "exit_close": 48.1,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941710-05:00",
+              "return_value": -0.013535684987694752,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "KTOS"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 48.76,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "KTOS"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 48.76,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "KTOS"
             }
           },
           "percentile_score": 49.01960784313726,
@@ -486,17 +1098,53 @@
           "call_oi_total": 247963.0,
           "call_volume_total": 16015.0,
           "group_name": "SPACE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 18.35,
+            "fetched_at": "2026-09-03T18:40:18.298196-05:00",
+            "high": 20.1,
+            "low": 17.83,
+            "open": 19.93,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "PL"
+          },
           "options_activity_rank": 0.5196078431372549,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 19.93,
+              "exit_close": 18.35,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940709-05:00",
+              "return_value": -0.0792774711490215,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "PL"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 19.93,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "PL"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 19.93,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "PL"
             }
           },
           "percentile_score": 47.712418300653596,
@@ -514,17 +1162,53 @@
           "call_oi_total": 7003.0,
           "call_volume_total": 1291.0,
           "group_name": "IEC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 460.03,
+            "fetched_at": "2026-09-03T18:40:18.298211-05:00",
+            "high": 469.5,
+            "low": 447.32,
+            "open": 455.82,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "STRL"
+          },
           "options_activity_rank": 0.11764705882352942,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 455.82,
+              "exit_close": 460.03,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941137-05:00",
+              "return_value": 0.00923610197007596,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "STRL"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 455.82,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "STRL"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 455.82,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "STRL"
             }
           },
           "percentile_score": 43.13725490196079,
@@ -542,17 +1226,53 @@
           "call_oi_total": 8906.0,
           "call_volume_total": 579.0,
           "group_name": "QUANTUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 20.66,
+            "fetched_at": "2026-09-03T18:40:18.298225-05:00",
+            "high": 21.36,
+            "low": 20.2,
+            "open": 20.54,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "ARQQ"
+          },
           "options_activity_rank": 0.08823529411764706,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 20.54,
+              "exit_close": 20.66,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940500-05:00",
+              "return_value": 0.0058422590068161195,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "ARQQ"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 20.54,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ARQQ"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 20.54,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ARQQ"
             }
           },
           "percentile_score": 43.13725490196078,
@@ -570,17 +1290,53 @@
           "call_oi_total": 137562.0,
           "call_volume_total": 14091.0,
           "group_name": "IEC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 800.14,
+            "fetched_at": "2026-09-03T18:40:18.298239-05:00",
+            "high": 803.92,
+            "low": 781.49,
+            "open": 796.9,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "CAT"
+          },
           "options_activity_rank": 0.5196078431372549,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 796.9,
+              "exit_close": 800.14,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941188-05:00",
+              "return_value": 0.004065754799849497,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "CAT"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 796.9,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "CAT"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 796.9,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "CAT"
             }
           },
           "percentile_score": 42.81045751633987,
@@ -598,17 +1354,53 @@
           "call_oi_total": 321920.0,
           "call_volume_total": 320646.0,
           "group_name": "AI_DC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 516.39,
+            "fetched_at": "2026-09-03T18:40:18.298254-05:00",
+            "high": 530.78,
+            "low": 478.31,
+            "open": 486.31,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "DELL"
+          },
           "options_activity_rank": 0.7941176470588235,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 486.31,
+              "exit_close": 516.39,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940131-05:00",
+              "return_value": 0.06185355020460204,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "DELL"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 486.31,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "DELL"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 486.31,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "DELL"
             }
           },
           "percentile_score": 42.15686274509804,
@@ -626,17 +1418,53 @@
           "call_oi_total": 31973.0,
           "call_volume_total": 1178.0,
           "group_name": "SPACE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 20.63,
+            "fetched_at": "2026-09-03T18:40:18.298268-05:00",
+            "high": 22.11,
+            "low": 20.15,
+            "open": 22.0,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "BKSY"
+          },
           "options_activity_rank": 0.16666666666666666,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 22.0,
+              "exit_close": 20.63,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940761-05:00",
+              "return_value": -0.06227272727272737,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "BKSY"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 22.0,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "BKSY"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 22.0,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "BKSY"
             }
           },
           "percentile_score": 41.830065359477125,
@@ -654,17 +1482,53 @@
           "call_oi_total": 894171.0,
           "call_volume_total": 35463.0,
           "group_name": "SEMIS",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 417.01,
+            "fetched_at": "2026-09-03T18:40:18.298283-05:00",
+            "high": 417.3,
+            "low": 407.82,
+            "open": 413.29,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "TSM"
+          },
           "options_activity_rank": 0.8431372549019608,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 413.29,
+              "exit_close": 417.01,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941444-05:00",
+              "return_value": 0.009000943647317738,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "TSM"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 413.29,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "TSM"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 413.29,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "TSM"
             }
           },
           "percentile_score": 41.830065359477125,
@@ -682,17 +1546,53 @@
           "call_oi_total": 216578.0,
           "call_volume_total": 6400.0,
           "group_name": "AI_DC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 268.83,
+            "fetched_at": "2026-09-03T18:40:18.298298-05:00",
+            "high": 270.99,
+            "low": 254.5,
+            "open": 256.49,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "VRT"
+          },
           "options_activity_rank": 0.4901960784313726,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 256.49,
+              "exit_close": 268.83,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.939911-05:00",
+              "return_value": 0.04811103746734746,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "VRT"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 256.49,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "VRT"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 256.49,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "VRT"
             }
           },
           "percentile_score": 40.84967320261438,
@@ -710,17 +1610,53 @@
           "call_oi_total": 478925.0,
           "call_volume_total": 73429.0,
           "group_name": "SEMIS",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 168.57,
+            "fetched_at": "2026-09-03T18:40:18.298312-05:00",
+            "high": 170.03,
+            "low": 164.88,
+            "open": 168.5,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "QCOM"
+          },
           "options_activity_rank": 0.8039215686274509,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 168.5,
+              "exit_close": 168.57,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941501-05:00",
+              "return_value": 0.0004154302670622556,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "QCOM"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 168.5,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "QCOM"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 168.5,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "QCOM"
             }
           },
           "percentile_score": 39.54248366013071,
@@ -738,17 +1674,53 @@
           "call_oi_total": 197320.0,
           "call_volume_total": 7734.0,
           "group_name": "URANIUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 100.62,
+            "fetched_at": "2026-09-03T18:40:18.298326-05:00",
+            "high": 101.53,
+            "low": 98.69,
+            "open": 98.99,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "CCJ"
+          },
           "options_activity_rank": 0.5196078431372549,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 98.99,
+              "exit_close": 100.62,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940813-05:00",
+              "return_value": 0.01646630972825558,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "CCJ"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 98.99,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "CCJ"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 98.99,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "CCJ"
             }
           },
           "percentile_score": 36.9281045751634,
@@ -766,17 +1738,53 @@
           "call_oi_total": 51752.0,
           "call_volume_total": 16806.0,
           "group_name": "AERO_DEFENSE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 532.95,
+            "fetched_at": "2026-09-03T18:40:18.298340-05:00",
+            "high": 537.92,
+            "low": 527.28,
+            "open": 536.0,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "LMT"
+          },
           "options_activity_rank": 0.40196078431372556,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 536.0,
+              "exit_close": 532.95,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941605-05:00",
+              "return_value": -0.00569029850746261,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "LMT"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 536.0,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "LMT"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 536.0,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "LMT"
             }
           },
           "percentile_score": 35.94771241830066,
@@ -794,17 +1802,53 @@
           "call_oi_total": 6196.0,
           "call_volume_total": 879.0,
           "group_name": "IEC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 77.98,
+            "fetched_at": "2026-09-03T18:40:18.298355-05:00",
+            "high": 78.49,
+            "low": 73.5,
+            "open": 74.7,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "AAON"
+          },
           "options_activity_rank": 0.0392156862745098,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 74.7,
+              "exit_close": 77.98,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941291-05:00",
+              "return_value": 0.043908969210173954,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "AAON"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 74.7,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "AAON"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 74.7,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "AAON"
             }
           },
           "percentile_score": 34.640522875816984,
@@ -822,17 +1866,53 @@
           "call_oi_total": 163880.0,
           "call_volume_total": 10093.0,
           "group_name": "AI_DC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 191.44,
+            "fetched_at": "2026-09-03T18:40:18.298369-05:00",
+            "high": 192.0,
+            "low": 181.27,
+            "open": 185.25,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "ANET"
+          },
           "options_activity_rank": 0.5,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 185.25,
+              "exit_close": 191.44,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940068-05:00",
+              "return_value": 0.033414304993252264,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "ANET"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 185.25,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ANET"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 185.25,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ANET"
             }
           },
           "percentile_score": 32.35294117647059,
@@ -850,17 +1930,53 @@
           "call_oi_total": 279644.0,
           "call_volume_total": 4331.0,
           "group_name": "URANIUM",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 3.41,
+            "fetched_at": "2026-09-03T18:40:18.298384-05:00",
+            "high": 3.41,
+            "low": 3.31,
+            "open": 3.31,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "DNN"
+          },
           "options_activity_rank": 0.38235294117647056,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 3.31,
+              "exit_close": 3.41,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941029-05:00",
+              "return_value": 0.030211480362537735,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "DNN"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 3.31,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "DNN"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 3.31,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "DNN"
             }
           },
           "percentile_score": 28.431372549019606,
@@ -878,17 +1994,53 @@
           "call_oi_total": 116537.0,
           "call_volume_total": 8266.0,
           "group_name": "AERO_DEFENSE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 333.48,
+            "fetched_at": "2026-09-03T18:40:18.298398-05:00",
+            "high": 334.44,
+            "low": 329.32,
+            "open": 331.55,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "GE"
+          },
           "options_activity_rank": 0.411764705882353,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 331.55,
+              "exit_close": 333.48,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941761-05:00",
+              "return_value": 0.0058211431156689475,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "GE"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 331.55,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "GE"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 331.55,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "GE"
             }
           },
           "percentile_score": 27.450980392156865,
@@ -906,17 +2058,53 @@
           "call_oi_total": 50354.0,
           "call_volume_total": 4859.0,
           "group_name": "AI_DC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 397.12,
+            "fetched_at": "2026-09-03T18:40:18.298413-05:00",
+            "high": 397.87,
+            "low": 384.77,
+            "open": 390.03,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "ETN"
+          },
           "options_activity_rank": 0.2843137254901961,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 390.03,
+              "exit_close": 397.12,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.940244-05:00",
+              "return_value": 0.018178088864959197,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "ETN"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 390.03,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ETN"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 390.03,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "ETN"
             }
           },
           "percentile_score": 23.202614379084967,
@@ -934,17 +2122,53 @@
           "call_oi_total": 3672.0,
           "call_volume_total": 301.0,
           "group_name": "AERO_DEFENSE",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 37.04,
+            "fetched_at": "2026-09-03T18:40:18.298428-05:00",
+            "high": 38.0,
+            "low": 36.56,
+            "open": 37.33,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "DRS"
+          },
           "options_activity_rank": 0.0,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 37.33,
+              "exit_close": 37.04,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941812-05:00",
+              "return_value": -0.007768550763460946,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "DRS"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 37.33,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "DRS"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 37.33,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "DRS"
             }
           },
           "percentile_score": 21.568627450980394,
@@ -962,17 +2186,53 @@
           "call_oi_total": 8180.0,
           "call_volume_total": 1408.0,
           "group_name": "IEC",
-          "latest_price_context": null,
+          "latest_price_context": {
+            "close": 1580.19,
+            "fetched_at": "2026-09-03T18:40:18.298455-05:00",
+            "high": 1609.44,
+            "low": 1539.11,
+            "open": 1555.65,
+            "session_date": "2026-09-03",
+            "source": "GOOGLEFINANCE_HISTORICAL_BRIDGE",
+            "ticker": "FIX"
+          },
           "options_activity_rank": 0.16666666666666666,
           "outcomes": {
             "H1": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 1555.65,
+              "exit_close": 1580.19,
+              "exit_date": "2026-09-03",
+              "horizon": 1,
+              "resolved_at": "2026-09-03T18:40:18.941085-05:00",
+              "return_value": 0.015774756532639156,
+              "signal_date": "2026-09-02",
+              "status": "COMPLETE",
+              "ticker": "FIX"
             },
             "H3": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 1555.65,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 3,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "FIX"
             },
             "H5": {
-              "status": "PENDING"
+              "entry_date": "2026-09-03",
+              "entry_open": 1555.65,
+              "exit_close": null,
+              "exit_date": null,
+              "horizon": 5,
+              "resolved_at": null,
+              "return_value": null,
+              "signal_date": "2026-09-02",
+              "status": "PENDING",
+              "ticker": "FIX"
             }
           },
           "percentile_score": 17.320261437908492,
