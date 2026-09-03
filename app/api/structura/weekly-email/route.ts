@@ -33,6 +33,8 @@ function validate(p:any){
   if(p.schema_version==="2.0"){
     if(!w.spy_range||![w.spy_range.high,w.spy_range.low,w.spy_range.close].every((x:any)=>Number.isFinite(Number(x))))e.push("spy_range");
     if(w.correlation_window_sessions!==30)e.push("correlation_window_sessions");
+    const fx=w.foreign_exchange;
+    if(!fx||typeof fx!=="object"||!Array.isArray(fx.pairs)||fx.pairs.length!==7)e.push("foreign_exchange");
     const idx=w.index_profile;
     if(!idx||!["us","asia","europe"].every(k=>Array.isArray(idx[k])))e.push("index_profile");
     else {
@@ -142,6 +144,10 @@ function renderV2(p:any){
       ...(r.market_holidays??[]).map((h:any)=>`${publicIndexLabel(r)} | ${dmy(h.session_date)} | Market Holiday`)
     ])),
     "",
+    "Foreign Exchange",
+    `Observation Boundary: ${w.foreign_exchange.start_observation_date} -> ${w.foreign_exchange.end_observation_date}`,
+    ...w.foreign_exchange.pairs.map((r:any)=>`${r.pair}: ${Number(r.start_rate).toPrecision(6)} -> ${Number(r.end_rate).toPrecision(6)} | ${pct(r.change_percent)}`),
+    "",
     "Federal Reserve & Rates",
     ...fedText,
     "",
@@ -167,6 +173,9 @@ function renderV2(p:any){
     ${indexTable("U.S. Indexes",w.index_profile.us)}
     ${indexTable("Asia-Pacific",w.index_profile.asia)}
     ${indexTable("Europe",w.index_profile.europe)}
+    <h2 style="font-size:17px;margin:20px 0 6px">Foreign Exchange</h2>
+    <div style="font-size:12px;color:#666;margin-bottom:8px">Observation Boundary: ${esc(w.foreign_exchange.start_observation_date)} -> ${esc(w.foreign_exchange.end_observation_date)}</div>
+    ${table(["Pair","Start","End","Change"],w.foreign_exchange.pairs.map((r:any)=>[esc(r.pair),esc(Number(r.start_rate).toPrecision(6)),esc(Number(r.end_rate).toPrecision(6)),`<span style="color:${clr(r.change_percent)}">${pct(r.change_percent)}</span>`]))}
     <h2 style="font-size:17px;margin:20px 0 6px">Federal Reserve & Rates</h2>
     <div style="font-size:13px;line-height:1.6;margin:0 0 8px"><strong>Policy Status:</strong> ${esc(fr.policy_phase)}<br><strong>Last Policy Move:</strong> ${esc(lm.type)} ${Number(lm.change_bp)>=0?"+":""}${Number(lm.change_bp).toFixed(0)} bp on ${esc(lm.date)}</div>
     ${table(["Series","Latest","Weekly Change","Observation Date"],fedRows)}
