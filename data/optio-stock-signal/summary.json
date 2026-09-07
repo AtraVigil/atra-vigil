@@ -1,7 +1,7 @@
 {
   "H1": {
-    "bottom20_mean": 0.019934313187967186,
-    "completed_signal_dates": 1,
+    "bottom20_mean": 0.016952170037578873,
+    "completed_signal_dates": 2,
     "horizon": 1,
     "session_win_rate": 0.0,
     "sessions": [
@@ -10,10 +10,16 @@
         "signal_date": "2026-09-02",
         "spread": -0.01010335375908476,
         "top20_mean": 0.009830959428882426
+      },
+      {
+        "bottom20_mean": 0.013970026887190559,
+        "signal_date": "2026-09-03",
+        "spread": -0.00130080723290249,
+        "top20_mean": 0.012669219654288069
       }
     ],
-    "spread_mean": -0.01010335375908476,
-    "top20_mean": 0.009830959428882426
+    "spread_mean": -0.005702080495993625,
+    "top20_mean": 0.011250089541585247
   },
   "H3": {
     "bottom20_mean": null,
@@ -34,8 +40,8 @@
     "top20_mean": null
   },
   "formula_version": "THREE_FACTOR_V1_FROZEN",
-  "generated_at": "2026-09-03T20:23:11.987178-05:00",
+  "generated_at": "2026-09-05T20:40:35.709817-05:00",
   "label": "Research / Forward Validation \u2014 Not Production",
-  "latest_signal_date": "2026-09-03",
-  "signal_date_count": 2
+  "latest_signal_date": "2026-09-04",
+  "signal_date_count": 3
 }
