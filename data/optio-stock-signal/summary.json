@@ -40,8 +40,8 @@
     "top20_mean": null
   },
   "formula_version": "THREE_FACTOR_V1_FROZEN",
-  "generated_at": "2026-09-05T20:40:35.709817-05:00",
+  "generated_at": "2026-09-08T18:45:29.413690-05:00",
   "label": "Research / Forward Validation \u2014 Not Production",
-  "latest_signal_date": "2026-09-04",
-  "signal_date_count": 3
+  "latest_signal_date": "2026-09-08",
+  "signal_date_count": 4
 }
