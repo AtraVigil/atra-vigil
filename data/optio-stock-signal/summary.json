@@ -1,7 +1,7 @@
 {
   "H1": {
-    "bottom20_mean": 0.00669122865667351,
-    "completed_signal_dates": 4,
+    "bottom20_mean": 0.00561836592762899,
+    "completed_signal_dates": 5,
     "horizon": 1,
     "session_win_rate": 0.0,
     "sessions": [
@@ -28,16 +28,22 @@
         "signal_date": "2026-09-08",
         "spread": -0.007758194251030619,
         "top20_mean": -0.021048380873766908
+      },
+      {
+        "bottom20_mean": 0.0013269150114509115,
+        "signal_date": "2026-09-09",
+        "spread": -0.01117303215159309,
+        "top20_mean": -0.009846117140142179
       }
     ],
-    "spread_mean": -0.011722733073863383,
-    "top20_mean": -0.005031504417189874
+    "spread_mean": -0.011612792889409324,
+    "top20_mean": -0.005994426961780335
   },
   "H3": {
-    "bottom20_mean": 0.025962082328826155,
-    "completed_signal_dates": 2,
+    "bottom20_mean": 0.007679187802040424,
+    "completed_signal_dates": 3,
     "horizon": 3,
-    "session_win_rate": 0.5,
+    "session_win_rate": 0.3333333333333333,
     "sessions": [
       {
         "bottom20_mean": 0.038439025431595705,
@@ -50,23 +56,36 @@
         "signal_date": "2026-09-03",
         "spread": -0.005313554394912356,
         "top20_mean": 0.00817158483114425
+      },
+      {
+        "bottom20_mean": -0.028886601251531037,
+        "signal_date": "2026-09-04",
+        "spread": -0.04184770676012748,
+        "top20_mean": -0.07073430801165852
       }
     ],
-    "spread_mean": -0.0006371880196150695,
-    "top20_mean": 0.025324894309211088
+    "spread_mean": -0.014374027599785873,
+    "top20_mean": -0.006694839797745448
   },
   "H5": {
-    "bottom20_mean": null,
-    "completed_signal_dates": 0,
+    "bottom20_mean": 0.006051997370908351,
+    "completed_signal_dates": 1,
     "horizon": 5,
-    "session_win_rate": null,
-    "sessions": [],
-    "spread_mean": null,
-    "top20_mean": null
+    "session_win_rate": 0.0,
+    "sessions": [
+      {
+        "bottom20_mean": 0.006051997370908351,
+        "signal_date": "2026-09-02",
+        "spread": -0.01608675434044379,
+        "top20_mean": -0.010034756969535439
+      }
+    ],
+    "spread_mean": -0.01608675434044379,
+    "top20_mean": -0.010034756969535439
   },
   "formula_version": "THREE_FACTOR_V1_FROZEN",
-  "generated_at": "2026-09-09T18:45:12.737127-05:00",
+  "generated_at": "2026-09-10T18:45:18.985214-05:00",
   "label": "Research / Forward Validation \u2014 Not Production",
-  "latest_signal_date": "2026-09-09",
-  "signal_date_count": 5
+  "latest_signal_date": "2026-09-10",
+  "signal_date_count": 6
 }
