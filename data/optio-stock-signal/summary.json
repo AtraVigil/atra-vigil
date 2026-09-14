@@ -45,6 +45,33 @@
     "spread_mean": -0.009932357743915743,
     "top20_mean": -0.0043588360137032005
   },
+  "H10": {
+    "bottom20_mean": null,
+    "completed_signal_dates": 0,
+    "horizon": 10,
+    "session_win_rate": null,
+    "sessions": [],
+    "spread_mean": null,
+    "top20_mean": null
+  },
+  "H15": {
+    "bottom20_mean": null,
+    "completed_signal_dates": 0,
+    "horizon": 15,
+    "session_win_rate": null,
+    "sessions": [],
+    "spread_mean": null,
+    "top20_mean": null
+  },
+  "H20": {
+    "bottom20_mean": null,
+    "completed_signal_dates": 0,
+    "horizon": 20,
+    "session_win_rate": null,
+    "sessions": [],
+    "spread_mean": null,
+    "top20_mean": null
+  },
   "H3": {
     "bottom20_mean": 0.005681937023218795,
     "completed_signal_dates": 4,
@@ -102,7 +129,7 @@
     "top20_mean": -0.00847803510175192
   },
   "formula_version": "THREE_FACTOR_V1_FROZEN",
-  "generated_at": "2026-09-12T18:45:11.081790-05:00",
+  "generated_at": "2026-09-14T16:43:16.181382-05:00",
   "label": "Research / Forward Validation \u2014 Not Production",
   "latest_signal_date": "2026-09-11",
   "signal_date_count": 7
