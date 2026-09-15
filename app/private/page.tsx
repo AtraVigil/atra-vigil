@@ -96,10 +96,10 @@ export default function Home() {
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-right">
                   <div className="text-[10px] uppercase tracking-[0.24em] text-zinc-600">
-                    Refresh
+                    Overnight
                   </div>
                   <div className="mt-1 text-sm font-medium text-zinc-300">
-                    60 seconds
+                    3 daily snapshots
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function Home() {
 
 
           <section className="mt-8 pb-4">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {[
                 {
                   number: "01",
@@ -129,16 +129,6 @@ export default function Home() {
                   capability: "Equity Indexes",
                   href: "/overnight?region=europe",
                   link: "Explore Europe",
-                  protected: false,
-                },
-                {
-                  number: "03",
-                  short: "US",
-                  title: "United States",
-                  description: "U.S. equity index coverage.",
-                  capability: "Equity Indexes",
-                  href: "/us",
-                  link: "Explore United States",
                   protected: false,
                 },
                 {

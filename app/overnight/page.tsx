@@ -118,7 +118,6 @@ export default function Home() {
   const [data, setData] = useState<OvernightResponse>(EMPTY_DATA);
   const [regionView, setRegionView] = useState<"asia-pacific" | "europe" | "combined">("combined");
   const [isLoading, setIsLoading] = useState(true);
-  const [lastClientRefresh, setLastClientRefresh] = useState<string | null>(null);
   const [clientError, setClientError] = useState<string | null>(null);
 
   async function loadOvernightMarkets() {
@@ -132,7 +131,6 @@ export default function Home() {
       const json = (await res.json()) as OvernightResponse;
       setData(json);
       setClientError(null);
-      setLastClientRefresh(new Date().toISOString());
     } catch (err) {
       setClientError(err instanceof Error ? err.message : "Unknown overnight market error.");
     } finally {
@@ -159,8 +157,6 @@ export default function Home() {
 
   useEffect(() => {
     loadOvernightMarkets();
-    const interval = window.setInterval(loadOvernightMarkets, 60_000);
-    return () => window.clearInterval(interval);
   }, []);
 
   const { positive, negative, tapeState } = useMemo(() => {
@@ -173,8 +169,8 @@ export default function Home() {
     return { positive: pos, negative: neg, tapeState: state };
   }, [data.markets]);
 
-  const updatedDisplay = lastClientRefresh
-    ? new Date(lastClientRefresh).toLocaleString("en-US")
+  const updatedDisplay = data.updatedAt
+    ? new Date(data.updatedAt).toLocaleString("en-US")
     : "--";
 
   return (
@@ -206,7 +202,7 @@ export default function Home() {
                 Global Overnight Command
               </h1>
               <p className="mt-2 max-w-3xl text-sm text-zinc-400">
-                Live overseas index tape. Refreshes every 60 seconds while this page is open.
+                Scheduled overseas index snapshots captured after regional market closes.
               </p>
             </div>
 
@@ -249,13 +245,13 @@ export default function Home() {
           <div className="mb-5 flex flex-col justify-between gap-2 border-b border-zinc-800 pb-4 md:flex-row md:items-end">
             <div>
               <p className="text-xs uppercase tracking-[0.35em] text-blue-300">
-                Live Overnight Markets
+                Overnight Market Snapshot
               </p>
               <h2 className="mt-2 text-2xl font-semibold">Overseas Market Tape</h2>
             </div>
             <div className="text-xs text-zinc-500 md:text-right">
-              <p>Refresh cadence: 60 seconds</p>
-              <p>Last refresh: {updatedDisplay}</p>
+              <p>Capture schedule: 1:45 AM · 5:40 AM · 11:45 AM CT</p>
+              <p>Snapshot updated: {updatedDisplay}</p>
             </div>
           </div>
 

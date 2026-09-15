@@ -9,7 +9,6 @@ const PUBLIC_EXACT_PATHS = new Set([
   "/header-final.png",
   "/asia-pacific-card-network.png",
   "/europe-card-network.png",
-  "/us-card-network.png",
 ]);
 
 function unauthorized() {
