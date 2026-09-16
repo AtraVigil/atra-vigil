@@ -94,14 +94,6 @@ export default function Home() {
                     Central access layer for active market views and protected Atra systems.
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-right">
-                  <div className="text-[10px] uppercase tracking-[0.24em] text-zinc-600">
-                    Overnight
-                  </div>
-                  <div className="mt-1 text-sm font-medium text-zinc-300">
-                    3 daily snapshots
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -109,28 +101,8 @@ export default function Home() {
 
 
           <section className="mt-8 pb-4">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-4 md:grid-cols-2">
               {[
-                {
-                  number: "01",
-                  short: "AP",
-                  title: "Asia-Pacific",
-                  description: "Asia-Pacific equity index coverage.",
-                  capability: "Equity Indexes",
-                  href: "/overnight?region=asia-pacific",
-                  link: "Explore Asia-Pacific",
-                  protected: false,
-                },
-                {
-                  number: "02",
-                  short: "EU",
-                  title: "Europe",
-                  description: "European equity index coverage.",
-                  capability: "Equity Indexes",
-                  href: "/overnight?region=europe",
-                  link: "Explore Europe",
-                  protected: false,
-                },
                 {
                   number: "04",
                   short: "RT",
