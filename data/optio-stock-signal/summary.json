@@ -1,9 +1,9 @@
 {
   "H1": {
-    "bottom20_mean": 0.003472245591163312,
-    "completed_signal_dates": 11,
+    "bottom20_mean": 0.005505656515728025,
+    "completed_signal_dates": 12,
     "horizon": 1,
-    "session_win_rate": 0.18181818181818182,
+    "session_win_rate": 0.16666666666666666,
     "sessions": [
       {
         "bottom20_mean": 0.019934313187967186,
@@ -70,16 +70,22 @@
         "signal_date": "2026-09-17",
         "spread": -0.022706428665645113,
         "top20_mean": -0.019142596075952003
+      },
+      {
+        "bottom20_mean": 0.027873176685939867,
+        "signal_date": "2026-09-18",
+        "spread": -0.02123367340171505,
+        "top20_mean": 0.006639503284224817
       }
     ],
-    "spread_mean": -0.004267995478043178,
-    "top20_mean": -0.0007957498868798659
+    "spread_mean": -0.005681801971682501,
+    "top20_mean": -0.0001761454559544757
   },
   "H10": {
-    "bottom20_mean": 0.0021377585842372437,
-    "completed_signal_dates": 2,
+    "bottom20_mean": 0.006829511707539839,
+    "completed_signal_dates": 3,
     "horizon": 10,
-    "session_win_rate": 1.0,
+    "session_win_rate": 0.6666666666666666,
     "sessions": [
       {
         "bottom20_mean": -0.0038316780610743333,
@@ -92,10 +98,16 @@
         "signal_date": "2026-09-03",
         "spread": 0.018342785367338403,
         "top20_mean": 0.02644998059688722
+      },
+      {
+        "bottom20_mean": 0.01621301795414503,
+        "signal_date": "2026-09-04",
+        "spread": -0.0026119987531515627,
+        "top20_mean": 0.013601019200993467
       }
     ],
-    "spread_mean": 0.033463468023623294,
-    "top20_mean": 0.03560122660786054
+    "spread_mean": 0.02143831243136501,
+    "top20_mean": 0.028267824138904846
   },
   "H15": {
     "bottom20_mean": null,
@@ -116,10 +128,10 @@
     "top20_mean": null
   },
   "H3": {
-    "bottom20_mean": 0.006019140751139467,
-    "completed_signal_dates": 9,
+    "bottom20_mean": 0.006265957110719977,
+    "completed_signal_dates": 10,
     "horizon": 3,
-    "session_win_rate": 0.3333333333333333,
+    "session_win_rate": 0.4,
     "sessions": [
       {
         "bottom20_mean": 0.038439025431595705,
@@ -174,16 +186,22 @@
         "signal_date": "2026-09-15",
         "spread": 0.03360287037767022,
         "top20_mean": 0.05097970140967153
+      },
+      {
+        "bottom20_mean": 0.008487304346944573,
+        "signal_date": "2026-09-16",
+        "spread": 0.03974113046688125,
+        "top20_mean": 0.04822843481382582
       }
     ],
-    "spread_mean": -0.006466949602863138,
-    "top20_mean": -0.0004478088517236711
+    "spread_mean": -0.0018461415958886999,
+    "top20_mean": 0.004419815514831278
   },
   "H5": {
-    "bottom20_mean": -0.004471688910301141,
-    "completed_signal_dates": 7,
+    "bottom20_mean": 0.008738885721366867,
+    "completed_signal_dates": 8,
     "horizon": 5,
-    "session_win_rate": 0.2857142857142857,
+    "session_win_rate": 0.25,
     "sessions": [
       {
         "bottom20_mean": 0.006051997370908351,
@@ -226,14 +244,20 @@
         "signal_date": "2026-09-11",
         "spread": 0.027915582782832418,
         "top20_mean": 0.06763113507613969
+      },
+      {
+        "bottom20_mean": 0.10121290814304292,
+        "signal_date": "2026-09-14",
+        "spread": -0.004678652536363792,
+        "top20_mean": 0.09653425560667912
       }
     ],
-    "spread_mean": -0.0105158886375035,
-    "top20_mean": -0.01498757754780464
+    "spread_mean": -0.009786234124861038,
+    "top20_mean": -0.0010473484034941708
   },
   "formula_version": "THREE_FACTOR_V1_FROZEN",
-  "generated_at": "2026-09-21T09:00:05.796000-05:00",
+  "generated_at": "2026-09-22T09:00:05.912536-05:00",
   "label": "Research / Forward Validation \u2014 Not Production",
-  "latest_signal_date": "2026-09-21",
-  "signal_date_count": 13
+  "latest_signal_date": "2026-09-22",
+  "signal_date_count": 14
 }
