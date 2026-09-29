@@ -3,21 +3,21 @@
     {
       "bucket": "TOP_20",
       "call_delta_favorable_rank": 0.9411764705882353,
-      "call_delta_median": 0.22948240378944446,
-      "call_oi_total": 349724.0,
-      "call_volume_total": 5211.0,
+      "call_delta_median": 0.22654984316226645,
+      "call_oi_total": 354036.0,
+      "call_volume_total": 6232.0,
       "group_name": "URANIUM",
       "latest_price_context": {
-        "close": 11.35,
-        "fetched_at": "2026-09-28T09:00:05.524781-05:00",
-        "high": 11.5964,
-        "low": 11.22,
-        "open": 11.35,
-        "session_date": "2026-09-25",
+        "close": 11.03,
+        "fetched_at": "2026-09-29T09:00:05.747821-05:00",
+        "high": 11.215,
+        "low": 10.965,
+        "open": 11.19,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "UUUU"
       },
-      "options_activity_rank": 0.5588235294117647,
+      "options_activity_rank": 0.5882352941176471,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -38,32 +38,32 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 79.41176470588235,
-      "put_iv_range_favorable_rank": 0.8823529411764706,
-      "put_iv_range_median": 0.9136014946316869,
-      "put_oi_total": 136747.0,
+      "percentile_score": 81.37254901960786,
+      "put_iv_range_favorable_rank": 0.9117647058823529,
+      "put_iv_range_median": 1.1085339691103626,
+      "put_oi_total": 139876.0,
       "rank": 1,
-      "signal_date": "2026-09-28",
+      "signal_date": "2026-09-29",
       "ticker": "UUUU"
     },
     {
       "bucket": "TOP_20",
-      "call_delta_favorable_rank": 1.0,
-      "call_delta_median": 0.16948409778114848,
-      "call_oi_total": 311297.0,
-      "call_volume_total": 3999.0,
+      "call_delta_favorable_rank": 0.9117647058823529,
+      "call_delta_median": 0.2655105647813234,
+      "call_oi_total": 323009.0,
+      "call_volume_total": 17575.0,
       "group_name": "QUANTUM",
       "latest_price_context": {
-        "close": 8.96,
-        "fetched_at": "2026-09-28T09:00:05.524642-05:00",
-        "high": 9.28,
-        "low": 8.93,
-        "open": 9.065,
-        "session_date": "2026-09-25",
+        "close": 8.57,
+        "fetched_at": "2026-09-29T09:00:05.747698-05:00",
+        "high": 9.01,
+        "low": 8.515,
+        "open": 8.82,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "QUBT"
       },
-      "options_activity_rank": 0.5294117647058824,
+      "options_activity_rank": 0.6666666666666666,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -84,120 +84,28 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 78.43137254901961,
-      "put_iv_range_favorable_rank": 0.8235294117647058,
-      "put_iv_range_median": 0.8095821983025566,
-      "put_oi_total": 174833.0,
+      "percentile_score": 78.10457516339868,
+      "put_iv_range_favorable_rank": 0.7647058823529411,
+      "put_iv_range_median": 0.709996042633907,
+      "put_oi_total": 178172.0,
       "rank": 2,
-      "signal_date": "2026-09-28",
+      "signal_date": "2026-09-29",
       "ticker": "QUBT"
     },
     {
       "bucket": "TOP_20",
-      "call_delta_favorable_rank": 0.7058823529411764,
-      "call_delta_median": 0.3257445975782116,
-      "call_oi_total": 354414.0,
-      "call_volume_total": 13428.0,
-      "group_name": "QUANTUM",
-      "latest_price_context": {
-        "close": 16.66,
-        "fetched_at": "2026-09-28T09:00:05.524622-05:00",
-        "high": 17.2951,
-        "low": 16.36,
-        "open": 16.485,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "RGTI"
-      },
-      "options_activity_rank": 0.7450980392156863,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 73.8562091503268,
-      "put_iv_range_favorable_rank": 0.7647058823529411,
-      "put_iv_range_median": 0.7371367033881718,
-      "put_oi_total": 276216.0,
-      "rank": 3,
-      "signal_date": "2026-09-28",
-      "ticker": "RGTI"
-    },
-    {
-      "bucket": "TOP_20",
-      "call_delta_favorable_rank": 0.8529411764705882,
-      "call_delta_median": 0.27360073505841476,
-      "call_oi_total": 325890.0,
-      "call_volume_total": 6941.0,
-      "group_name": "QUANTUM",
-      "latest_price_context": {
-        "close": 17.41,
-        "fetched_at": "2026-09-28T09:00:05.524632-05:00",
-        "high": 17.9999,
-        "low": 17.23,
-        "open": 17.45,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "QBTS"
-      },
-      "options_activity_rank": 0.6372549019607844,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 73.20261437908498,
-      "put_iv_range_favorable_rank": 0.7058823529411765,
-      "put_iv_range_median": 0.7041562111273045,
-      "put_oi_total": 248382.0,
-      "rank": 4,
-      "signal_date": "2026-09-28",
-      "ticker": "QBTS"
-    },
-    {
-      "bucket": "TOP_20",
-      "call_delta_favorable_rank": 0.23529411764705888,
-      "call_delta_median": 0.6910222407707405,
-      "call_oi_total": 1526474.0,
-      "call_volume_total": 94820.0,
+      "call_delta_favorable_rank": 0.2647058823529411,
+      "call_delta_median": 0.6493271594975,
+      "call_oi_total": 1525977.0,
+      "call_volume_total": 71398.0,
       "group_name": "SEMIS",
       "latest_price_context": {
-        "close": 1082.28,
-        "fetched_at": "2026-09-28T09:00:05.524869-05:00",
-        "high": 1108.72,
-        "low": 1073.0,
-        "open": 1095.83,
-        "session_date": "2026-09-25",
+        "close": 1053.98,
+        "fetched_at": "2026-09-29T09:00:05.747955-05:00",
+        "high": 1084.81,
+        "low": 1032.0,
+        "open": 1075.98,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "MU"
       },
@@ -222,32 +130,32 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 72.87581699346406,
+      "percentile_score": 73.8562091503268,
       "put_iv_range_favorable_rank": 1.0,
-      "put_iv_range_median": 2.003236518441386,
-      "put_oi_total": 1572914.0,
-      "rank": 5,
-      "signal_date": "2026-09-28",
+      "put_iv_range_median": 2.0267935661379735,
+      "put_oi_total": 1578864.0,
+      "rank": 3,
+      "signal_date": "2026-09-29",
       "ticker": "MU"
     },
     {
       "bucket": "TOP_20",
-      "call_delta_favorable_rank": 0.5,
-      "call_delta_median": 0.4853479499870492,
-      "call_oi_total": 367544.0,
-      "call_volume_total": 12105.0,
+      "call_delta_favorable_rank": 0.5588235294117647,
+      "call_delta_median": 0.4334321553555724,
+      "call_oi_total": 364737.0,
+      "call_volume_total": 8347.0,
       "group_name": "QUANTUM",
       "latest_price_context": {
-        "close": 45.48,
-        "fetched_at": "2026-09-28T09:00:05.524612-05:00",
-        "high": 46.5499,
-        "low": 44.12,
-        "open": 44.7,
-        "session_date": "2026-09-25",
+        "close": 15.95,
+        "fetched_at": "2026-09-29T09:00:05.747674-05:00",
+        "high": 16.7,
+        "low": 15.89,
+        "open": 16.45,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "IONQ"
+        "ticker": "RGTI"
       },
-      "options_activity_rank": 0.7549019607843137,
+      "options_activity_rank": 0.6862745098039217,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -268,212 +176,28 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 72.22222222222221,
-      "put_iv_range_favorable_rank": 0.9117647058823529,
-      "put_iv_range_median": 1.0782864417318048,
-      "put_oi_total": 299291.0,
-      "rank": 6,
-      "signal_date": "2026-09-28",
-      "ticker": "IONQ"
+      "percentile_score": 69.93464052287582,
+      "put_iv_range_favorable_rank": 0.8529411764705882,
+      "put_iv_range_median": 0.939371826441106,
+      "put_oi_total": 275092.0,
+      "rank": 4,
+      "signal_date": "2026-09-29",
+      "ticker": "RGTI"
     },
     {
       "bucket": "TOP_20",
-      "call_delta_favorable_rank": 0.05882352941176472,
-      "call_delta_median": 0.7651263287367253,
-      "call_oi_total": 7535509.0,
-      "call_volume_total": 562538.0,
+      "call_delta_favorable_rank": 0.32352941176470584,
+      "call_delta_median": 0.6370440661346537,
+      "call_oi_total": 3108888.0,
+      "call_volume_total": 63260.0,
       "group_name": "SEMIS",
       "latest_price_context": {
-        "close": 225.07,
-        "fetched_at": "2026-09-28T09:00:05.524859-05:00",
-        "high": 226.94,
-        "low": 223.1329,
-        "open": 225.13,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "NVDA"
-      },
-      "options_activity_rank": 1.0,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 67.6470588235294,
-      "put_iv_range_favorable_rank": 0.9705882352941176,
-      "put_iv_range_median": 1.3411639560245652,
-      "put_oi_total": 6589779.0,
-      "rank": 7,
-      "signal_date": "2026-09-28",
-      "ticker": "NVDA"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.6764705882352942,
-      "call_delta_median": 0.32709911523221197,
-      "call_oi_total": 163253.0,
-      "call_volume_total": 6618.0,
-      "group_name": "SPACE",
-      "latest_price_context": {
-        "close": 15.61,
-        "fetched_at": "2026-09-28T09:00:05.524687-05:00",
-        "high": 16.19,
-        "low": 15.5937,
-        "open": 15.8,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "LUNR"
-      },
-      "options_activity_rank": 0.4901960784313726,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 65.359477124183,
-      "put_iv_range_favorable_rank": 0.7941176470588235,
-      "put_iv_range_median": 0.7770904455907259,
-      "put_oi_total": 100425.0,
-      "rank": 8,
-      "signal_date": "2026-09-28",
-      "ticker": "LUNR"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.1470588235294118,
-      "call_delta_median": 0.7409290361149818,
-      "call_oi_total": 1033444.0,
-      "call_volume_total": 37155.0,
-      "group_name": "AI_DC",
-      "latest_price_context": {
-        "close": 43.26,
-        "fetched_at": "2026-09-28T09:00:05.524591-05:00",
-        "high": 43.7599,
-        "low": 41.9,
-        "open": 42.0,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "SMCI"
-      },
-      "options_activity_rank": 0.9117647058823529,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 63.725490196078425,
-      "put_iv_range_favorable_rank": 0.8529411764705882,
-      "put_iv_range_median": 0.9020410991205361,
-      "put_oi_total": 1027115.0,
-      "rank": 9,
-      "signal_date": "2026-09-28",
-      "ticker": "SMCI"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.7647058823529411,
-      "call_delta_median": 0.3069842187487443,
-      "call_oi_total": 255384.0,
-      "call_volume_total": 9838.0,
-      "group_name": "SPACE",
-      "latest_price_context": {
-        "close": 17.43,
-        "fetched_at": "2026-09-28T09:00:05.524697-05:00",
-        "high": 18.18,
-        "low": 17.37,
-        "open": 17.91,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "PL"
-      },
-      "options_activity_rank": 0.5392156862745098,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 63.0718954248366,
-      "put_iv_range_favorable_rank": 0.5882352941176471,
-      "put_iv_range_median": 0.48684625304865786,
-      "put_oi_total": 86151.0,
-      "rank": 10,
-      "signal_date": "2026-09-28",
-      "ticker": "PL"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.20588235294117652,
-      "call_delta_median": 0.7058204149583165,
-      "call_oi_total": 3014833.0,
-      "call_volume_total": 83064.0,
-      "group_name": "SEMIS",
-      "latest_price_context": {
-        "close": 123.0,
-        "fetched_at": "2026-09-28T09:00:05.524898-05:00",
-        "high": 126.93,
-        "low": 122.84,
-        "open": 126.83,
-        "session_date": "2026-09-25",
+        "close": 116.03,
+        "fetched_at": "2026-09-29T09:00:05.747987-05:00",
+        "high": 121.71,
+        "low": 114.705,
+        "open": 120.675,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "INTC"
       },
@@ -498,32 +222,32 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 60.45751633986929,
-      "put_iv_range_favorable_rank": 0.6470588235294118,
-      "put_iv_range_median": 0.6655428322100667,
-      "put_oi_total": 2849919.0,
-      "rank": 11,
-      "signal_date": "2026-09-28",
+      "percentile_score": 66.33986928104575,
+      "put_iv_range_favorable_rank": 0.7058823529411765,
+      "put_iv_range_median": 0.6544143293327087,
+      "put_oi_total": 2908185.0,
+      "rank": 5,
+      "signal_date": "2026-09-29",
       "ticker": "INTC"
     },
     {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.9705882352941176,
-      "call_delta_median": 0.18246558064087973,
-      "call_oi_total": 21758.0,
-      "call_volume_total": 1768.0,
-      "group_name": "AERO_DEFENSE",
+      "bucket": "TOP_20",
+      "call_delta_favorable_rank": 0.7941176470588236,
+      "call_delta_median": 0.3109947064010429,
+      "call_oi_total": 332283.0,
+      "call_volume_total": 7495.0,
+      "group_name": "QUANTUM",
       "latest_price_context": {
-        "close": 237.69,
-        "fetched_at": "2026-09-28T09:00:05.524918-05:00",
-        "high": 240.98,
-        "low": 236.79,
-        "open": 238.11,
-        "session_date": "2026-09-25",
+        "close": 16.78,
+        "fetched_at": "2026-09-29T09:00:05.747688-05:00",
+        "high": 17.545,
+        "low": 16.75,
+        "open": 17.01,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "LHX"
+        "ticker": "QBTS"
       },
-      "options_activity_rank": 0.16666666666666666,
+      "options_activity_rank": 0.6372549019607844,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -544,214 +268,306 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 58.496732026143796,
+      "percentile_score": 66.33986928104575,
+      "put_iv_range_favorable_rank": 0.5588235294117647,
+      "put_iv_range_median": 0.5240086152549264,
+      "put_oi_total": 249079.0,
+      "rank": 6,
+      "signal_date": "2026-09-29",
+      "ticker": "QBTS"
+    },
+    {
+      "bucket": "TOP_20",
+      "call_delta_favorable_rank": 0.3529411764705882,
+      "call_delta_median": 0.6344022822821977,
+      "call_oi_total": 379076.0,
+      "call_volume_total": 13642.0,
+      "group_name": "QUANTUM",
+      "latest_price_context": {
+        "close": 44.58,
+        "fetched_at": "2026-09-29T09:00:05.747652-05:00",
+        "high": 47.91,
+        "low": 44.54,
+        "open": 45.64,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "IONQ"
+      },
+      "options_activity_rank": 0.7352941176470589,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 65.68627450980392,
+      "put_iv_range_favorable_rank": 0.8823529411764706,
+      "put_iv_range_median": 1.103077496148014,
+      "put_oi_total": 305169.0,
+      "rank": 7,
+      "signal_date": "2026-09-29",
+      "ticker": "IONQ"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.0,
+      "call_delta_median": 0.8349184785503749,
+      "call_oi_total": 7650989.0,
+      "call_volume_total": 260825.0,
+      "group_name": "SEMIS",
+      "latest_price_context": {
+        "close": 228.86,
+        "fetched_at": "2026-09-29T09:00:05.747945-05:00",
+        "high": 233.21,
+        "low": 228.04,
+        "open": 229.75,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "NVDA"
+      },
+      "options_activity_rank": 1.0,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 65.68627450980392,
+      "put_iv_range_favorable_rank": 0.9705882352941176,
+      "put_iv_range_median": 1.4390794025944245,
+      "put_oi_total": 6631620.0,
+      "rank": 8,
+      "signal_date": "2026-09-29",
+      "ticker": "NVDA"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.1470588235294118,
+      "call_delta_median": 0.7336611694469031,
+      "call_oi_total": 1056055.0,
+      "call_volume_total": 21163.0,
+      "group_name": "AI_DC",
+      "latest_price_context": {
+        "close": 41.78,
+        "fetched_at": "2026-09-29T09:00:05.747630-05:00",
+        "high": 43.06,
+        "low": 40.96,
+        "open": 42.75,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "SMCI"
+      },
+      "options_activity_rank": 0.892156862745098,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 62.091503267973856,
+      "put_iv_range_favorable_rank": 0.8235294117647058,
+      "put_iv_range_median": 0.9045516765386182,
+      "put_oi_total": 1042891.0,
+      "rank": 9,
+      "signal_date": "2026-09-29",
+      "ticker": "SMCI"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.6764705882352942,
+      "call_delta_median": 0.34672058764740865,
+      "call_oi_total": 258591.0,
+      "call_volume_total": 4211.0,
+      "group_name": "SPACE",
+      "latest_price_context": {
+        "close": 16.77,
+        "fetched_at": "2026-09-29T09:00:05.747780-05:00",
+        "high": 17.495,
+        "low": 16.74,
+        "open": 17.17,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "PL"
+      },
+      "options_activity_rank": 0.4215686274509804,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 61.111111111111114,
+      "put_iv_range_favorable_rank": 0.7352941176470589,
+      "put_iv_range_median": 0.6880436682483762,
+      "put_oi_total": 87089.0,
+      "rank": 10,
+      "signal_date": "2026-09-29",
+      "ticker": "PL"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 1.0,
+      "call_delta_median": 0.14550026950365985,
+      "call_oi_total": 22367.0,
+      "call_volume_total": 2115.0,
+      "group_name": "AERO_DEFENSE",
+      "latest_price_context": {
+        "close": 237.7,
+        "fetched_at": "2026-09-29T09:00:05.748007-05:00",
+        "high": 240.095,
+        "low": 234.59,
+        "open": 237.0,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "LHX"
+      },
+      "options_activity_rank": 0.18627450980392157,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 60.130718954248366,
       "put_iv_range_favorable_rank": 0.6176470588235294,
-      "put_iv_range_median": 0.5278375544998284,
-      "put_oi_total": 8753.0,
-      "rank": 12,
-      "signal_date": "2026-09-28",
+      "put_iv_range_median": 0.5542261574207836,
+      "put_oi_total": 8997.0,
+      "rank": 11,
+      "signal_date": "2026-09-29",
       "ticker": "LHX"
     },
     {
       "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.5882352941176471,
-      "call_delta_median": 0.400683240010091,
-      "call_oi_total": 117900.0,
-      "call_volume_total": 3210.0,
+      "call_delta_favorable_rank": 0.8529411764705882,
+      "call_delta_median": 0.3021114197075422,
+      "call_oi_total": 179155.0,
+      "call_volume_total": 5330.0,
       "group_name": "URANIUM",
       "latest_price_context": {
-        "close": 9.19,
-        "fetched_at": "2026-09-28T09:00:05.524790-05:00",
-        "high": 9.355,
-        "low": 9.17,
-        "open": 9.35,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "NXE"
-      },
-      "options_activity_rank": 0.34313725490196073,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 53.59477124183007,
-      "put_iv_range_favorable_rank": 0.6764705882352942,
-      "put_iv_range_median": 0.6801192036293746,
-      "put_oi_total": 75573.0,
-      "rank": 13,
-      "signal_date": "2026-09-28",
-      "ticker": "NXE"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.8235294117647058,
-      "call_delta_median": 0.2927969032476361,
-      "call_oi_total": 120572.0,
-      "call_volume_total": 8168.0,
-      "group_name": "URANIUM",
-      "latest_price_context": {
-        "close": 9.41,
-        "fetched_at": "2026-09-28T09:00:05.524771-05:00",
-        "high": 9.68,
-        "low": 9.39,
-        "open": 9.51,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "UEC"
-      },
-      "options_activity_rank": 0.45098039215686275,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 53.26797385620915,
-      "put_iv_range_favorable_rank": 0.3235294117647059,
-      "put_iv_range_median": 0.3487767543115238,
-      "put_oi_total": 65328.0,
-      "rank": 14,
-      "signal_date": "2026-09-28",
-      "ticker": "UEC"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.2647058823529411,
-      "call_delta_median": 0.6833555075878855,
-      "call_oi_total": 453830.0,
-      "call_volume_total": 15376.0,
-      "group_name": "SEMIS",
-      "latest_price_context": {
-        "close": 201.97,
-        "fetched_at": "2026-09-28T09:00:05.524888-05:00",
-        "high": 205.8532,
-        "low": 194.53,
-        "open": 195.03,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "QCOM"
-      },
-      "options_activity_rank": 0.8137254901960783,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 50.65359477124183,
-      "put_iv_range_favorable_rank": 0.4411764705882353,
-      "put_iv_range_median": 0.3729090100455184,
-      "put_oi_total": 429431.0,
-      "rank": 15,
-      "signal_date": "2026-09-28",
-      "ticker": "QCOM"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.17647058823529416,
-      "call_delta_median": 0.7174409836043562,
-      "call_oi_total": 279178.0,
-      "call_volume_total": 20446.0,
-      "group_name": "AI_DC",
-      "latest_price_context": {
-        "close": 562.89,
-        "fetched_at": "2026-09-28T09:00:05.524579-05:00",
-        "high": 573.8,
-        "low": 541.2351,
-        "open": 546.29,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "DELL"
-      },
-      "options_activity_rank": 0.7549019607843137,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 49.673202614379086,
-      "put_iv_range_favorable_rank": 0.5588235294117647,
-      "put_iv_range_median": 0.4702084528788556,
-      "put_oi_total": 411322.0,
-      "rank": 16,
-      "signal_date": "2026-09-28",
-      "ticker": "DELL"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.8823529411764706,
-      "call_delta_median": 0.27117958912998,
-      "call_oi_total": 177338.0,
-      "call_volume_total": 5832.0,
-      "group_name": "URANIUM",
-      "latest_price_context": {
-        "close": 88.07,
-        "fetched_at": "2026-09-28T09:00:05.524748-05:00",
-        "high": 89.3199,
-        "low": 87.79,
-        "open": 88.7,
-        "session_date": "2026-09-25",
+        "close": 87.04,
+        "fetched_at": "2026-09-29T09:00:05.747801-05:00",
+        "high": 87.78,
+        "low": 85.68,
+        "open": 86.8,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "CCJ"
+      },
+      "options_activity_rank": 0.5098039215686275,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 59.150326797385624,
+      "put_iv_range_favorable_rank": 0.4117647058823529,
+      "put_iv_range_median": 0.43932492915779253,
+      "put_oi_total": 250104.0,
+      "rank": 12,
+      "signal_date": "2026-09-29",
+      "ticker": "CCJ"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.5882352941176471,
+      "call_delta_median": 0.38932662589859873,
+      "call_oi_total": 169935.0,
+      "call_volume_total": 8949.0,
+      "group_name": "SPACE",
+      "latest_price_context": {
+        "close": 15.2,
+        "fetched_at": "2026-09-29T09:00:05.747768-05:00",
+        "high": 15.98,
+        "low": 15.125,
+        "open": 15.31,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "LUNR"
       },
       "options_activity_rank": 0.5294117647058824,
       "outcomes": {
@@ -774,28 +590,304 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 48.03921568627451,
-      "put_iv_range_favorable_rank": 0.029411764705882353,
-      "put_iv_range_median": 0.14294781912429555,
-      "put_oi_total": 246971.0,
-      "rank": 17,
-      "signal_date": "2026-09-28",
-      "ticker": "CCJ"
+      "percentile_score": 58.82352941176471,
+      "put_iv_range_favorable_rank": 0.6470588235294118,
+      "put_iv_range_median": 0.5633588656285898,
+      "put_oi_total": 106040.0,
+      "rank": 13,
+      "signal_date": "2026-09-29",
+      "ticker": "LUNR"
     },
     {
       "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.4117647058823529,
-      "call_delta_median": 0.5583049635525134,
-      "call_oi_total": 107841.0,
-      "call_volume_total": 10239.0,
+      "call_delta_favorable_rank": 0.7647058823529411,
+      "call_delta_median": 0.31320324189148446,
+      "call_oi_total": 127234.0,
+      "call_volume_total": 6045.0,
+      "group_name": "URANIUM",
+      "latest_price_context": {
+        "close": 9.21,
+        "fetched_at": "2026-09-29T09:00:05.747811-05:00",
+        "high": 9.32,
+        "low": 9.01,
+        "open": 9.3,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "UEC"
+      },
+      "options_activity_rank": 0.40196078431372545,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 50.65359477124183,
+      "put_iv_range_favorable_rank": 0.35294117647058826,
+      "put_iv_range_median": 0.3811922012020691,
+      "put_oi_total": 67125.0,
+      "rank": 14,
+      "signal_date": "2026-09-29",
+      "ticker": "UEC"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.5294117647058824,
+      "call_delta_median": 0.43706322946391635,
+      "call_oi_total": 97249.0,
+      "call_volume_total": 5862.0,
+      "group_name": "AERO_DEFENSE",
+      "latest_price_context": {
+        "close": 318.24,
+        "fetched_at": "2026-09-29T09:00:05.748027-05:00",
+        "high": 323.0004,
+        "low": 315.24,
+        "open": 321.46,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "GE"
+      },
+      "options_activity_rank": 0.39215686274509803,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 50.326797385620914,
+      "put_iv_range_favorable_rank": 0.5882352941176471,
+      "put_iv_range_median": 0.545639383421712,
+      "put_oi_total": 95593.0,
+      "rank": 15,
+      "signal_date": "2026-09-29",
+      "ticker": "GE"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.8823529411764706,
+      "call_delta_median": 0.28029785433804905,
+      "call_oi_total": 5624.0,
+      "call_volume_total": 806.0,
       "group_name": "IEC",
       "latest_price_context": {
-        "close": 821.58,
-        "fetched_at": "2026-09-28T09:00:05.524830-05:00",
-        "high": 823.0,
-        "low": 809.05,
-        "open": 816.34,
-        "session_date": "2026-09-25",
+        "close": 498.36,
+        "fetched_at": "2026-09-29T09:00:05.747862-05:00",
+        "high": 511.75,
+        "low": 488.5852,
+        "open": 504.05,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "STRL"
+      },
+      "options_activity_rank": 0.08823529411764706,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 50.0,
+      "put_iv_range_favorable_rank": 0.5294117647058824,
+      "put_iv_range_median": 0.5141950240309857,
+      "put_oi_total": 6102.0,
+      "rank": 16,
+      "signal_date": "2026-09-29",
+      "ticker": "STRL"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.6470588235294117,
+      "call_delta_median": 0.3833067462721606,
+      "call_oi_total": 45066.0,
+      "call_volume_total": 6598.0,
+      "group_name": "AERO_DEFENSE",
+      "latest_price_context": {
+        "close": 518.1,
+        "fetched_at": "2026-09-29T09:00:05.747997-05:00",
+        "high": 524.27,
+        "low": 516.1,
+        "open": 519.0,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "LMT"
+      },
+      "options_activity_rank": 0.35294117647058826,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 49.01960784313725,
+      "put_iv_range_favorable_rank": 0.47058823529411764,
+      "put_iv_range_median": 0.4571382068605516,
+      "put_oi_total": 37047.0,
+      "rank": 17,
+      "signal_date": "2026-09-29",
+      "ticker": "LMT"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.9705882352941176,
+      "call_delta_median": 0.2241347682905933,
+      "call_oi_total": 6225.0,
+      "call_volume_total": 988.0,
+      "group_name": "IEC",
+      "latest_price_context": {
+        "close": 59.42,
+        "fetched_at": "2026-09-29T09:00:05.747926-05:00",
+        "high": 61.5,
+        "low": 58.0823,
+        "open": 61.5,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "ACM"
+      },
+      "options_activity_rank": 0.09803921568627451,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 48.36601307189542,
+      "put_iv_range_favorable_rank": 0.38235294117647056,
+      "put_iv_range_median": 0.4384887776002669,
+      "put_oi_total": 5344.0,
+      "rank": 18,
+      "signal_date": "2026-09-29",
+      "ticker": "ACM"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.38235294117647056,
+      "call_delta_median": 0.6282630929065923,
+      "call_oi_total": 285923.0,
+      "call_volume_total": 2541.0,
+      "group_name": "URANIUM",
+      "latest_price_context": {
+        "close": 2.58,
+        "fetched_at": "2026-09-29T09:00:05.747842-05:00",
+        "high": 2.625,
+        "low": 2.55,
+        "open": 2.6,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "DNN"
+      },
+      "options_activity_rank": 0.38235294117647056,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 48.03921568627451,
+      "put_iv_range_favorable_rank": 0.6764705882352942,
+      "put_iv_range_median": 0.6527485214014721,
+      "put_oi_total": 55095.0,
+      "rank": 19,
+      "signal_date": "2026-09-29",
+      "ticker": "DNN"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.47058823529411764,
+      "call_delta_median": 0.5770536139731268,
+      "call_oi_total": 111050.0,
+      "call_volume_total": 11303.0,
+      "group_name": "IEC",
+      "latest_price_context": {
+        "close": 819.95,
+        "fetched_at": "2026-09-29T09:00:05.747902-05:00",
+        "high": 827.57,
+        "low": 808.2,
+        "open": 821.05,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "CAT"
       },
@@ -821,31 +913,31 @@
         }
       },
       "percentile_score": 47.38562091503268,
-      "put_iv_range_favorable_rank": 0.5,
-      "put_iv_range_median": 0.4524747520617651,
-      "put_oi_total": 110208.0,
-      "rank": 18,
-      "signal_date": "2026-09-28",
+      "put_iv_range_favorable_rank": 0.4411764705882353,
+      "put_iv_range_median": 0.4544509878060159,
+      "put_oi_total": 113891.0,
+      "rank": 20,
+      "signal_date": "2026-09-29",
       "ticker": "CAT"
     },
     {
       "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.5294117647058824,
-      "call_delta_median": 0.4681852301540407,
-      "call_oi_total": 663790.0,
-      "call_volume_total": 11226.0,
-      "group_name": "SPACE",
+      "call_delta_favorable_rank": 0.17647058823529416,
+      "call_delta_median": 0.7122376955006857,
+      "call_oi_total": 287308.0,
+      "call_volume_total": 20156.0,
+      "group_name": "AI_DC",
       "latest_price_context": {
-        "close": 61.81,
-        "fetched_at": "2026-09-28T09:00:05.524666-05:00",
-        "high": 63.215,
-        "low": 61.02,
-        "open": 61.98,
-        "session_date": "2026-09-25",
+        "close": 543.43,
+        "fetched_at": "2026-09-29T09:00:05.747618-05:00",
+        "high": 557.0,
+        "low": 535.5,
+        "open": 551.74,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "ASTS"
+        "ticker": "DELL"
       },
-      "options_activity_rank": 0.7745098039215685,
+      "options_activity_rank": 0.7450980392156863,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -866,32 +958,32 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 47.385620915032675,
-      "put_iv_range_favorable_rank": 0.11764705882352941,
-      "put_iv_range_median": 0.2233294103779192,
-      "put_oi_total": 346685.0,
-      "rank": 19,
-      "signal_date": "2026-09-28",
-      "ticker": "ASTS"
+      "percentile_score": 47.38562091503268,
+      "put_iv_range_favorable_rank": 0.5,
+      "put_iv_range_median": 0.46433334314330876,
+      "put_oi_total": 421140.0,
+      "rank": 21,
+      "signal_date": "2026-09-29",
+      "ticker": "DELL"
     },
     {
       "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.47058823529411764,
-      "call_delta_median": 0.5331007500149849,
-      "call_oi_total": 95037.0,
-      "call_volume_total": 4519.0,
+      "call_delta_favorable_rank": 0.8235294117647058,
+      "call_delta_median": 0.30754103407148486,
+      "call_oi_total": 90564.0,
+      "call_volume_total": 4877.0,
       "group_name": "AERO_DEFENSE",
       "latest_price_context": {
-        "close": 327.09,
-        "fetched_at": "2026-09-28T09:00:05.524941-05:00",
-        "high": 329.17,
-        "low": 319.64,
-        "open": 321.9,
-        "session_date": "2026-09-25",
+        "close": 44.07,
+        "fetched_at": "2026-09-29T09:00:05.748017-05:00",
+        "high": 45.22,
+        "low": 43.91,
+        "open": 44.97,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "GE"
+        "ticker": "KTOS"
       },
-      "options_activity_rank": 0.38235294117647056,
+      "options_activity_rank": 0.29411764705882354,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -913,31 +1005,31 @@
         }
       },
       "percentile_score": 46.07843137254902,
-      "put_iv_range_favorable_rank": 0.5294117647058824,
-      "put_iv_range_median": 0.4648252836498181,
-      "put_oi_total": 93462.0,
-      "rank": 20,
-      "signal_date": "2026-09-28",
-      "ticker": "GE"
+      "put_iv_range_favorable_rank": 0.2647058823529412,
+      "put_iv_range_median": 0.34479491306183196,
+      "put_oi_total": 42127.0,
+      "rank": 22,
+      "signal_date": "2026-09-29",
+      "ticker": "KTOS"
     },
     {
       "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.5588235294117647,
-      "call_delta_median": 0.4540780549048852,
-      "call_oi_total": 44099.0,
-      "call_volume_total": 6218.0,
-      "group_name": "AERO_DEFENSE",
+      "call_delta_favorable_rank": 0.5,
+      "call_delta_median": 0.534759043079122,
+      "call_oi_total": 675501.0,
+      "call_volume_total": 21268.0,
+      "group_name": "SPACE",
       "latest_price_context": {
-        "close": 519.56,
-        "fetched_at": "2026-09-28T09:00:05.524908-05:00",
-        "high": 528.0,
-        "low": 516.49,
-        "open": 524.12,
-        "session_date": "2026-09-25",
+        "close": 61.0,
+        "fetched_at": "2026-09-29T09:00:05.747726-05:00",
+        "high": 62.28,
+        "low": 60.27,
+        "open": 61.125,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "LMT"
+        "ticker": "ASTS"
       },
-      "options_activity_rank": 0.3333333333333333,
+      "options_activity_rank": 0.823529411764706,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -958,30 +1050,168 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 45.42483660130719,
-      "put_iv_range_favorable_rank": 0.47058823529411764,
-      "put_iv_range_median": 0.4107019224788988,
-      "put_oi_total": 36550.0,
-      "rank": 21,
-      "signal_date": "2026-09-28",
-      "ticker": "LMT"
+      "percentile_score": 45.09803921568628,
+      "put_iv_range_favorable_rank": 0.029411764705882353,
+      "put_iv_range_median": 0.2090145037825124,
+      "put_oi_total": 354664.0,
+      "rank": 23,
+      "signal_date": "2026-09-29",
+      "ticker": "ASTS"
     },
     {
       "bucket": "MIDDLE_60",
       "call_delta_favorable_rank": 0.4411764705882353,
-      "call_delta_median": 0.5546102984210269,
-      "call_oi_total": 676519.0,
-      "call_volume_total": 11213.0,
+      "call_delta_median": 0.584190088703652,
+      "call_oi_total": 693957.0,
+      "call_volume_total": 14017.0,
       "group_name": "SPACE",
       "latest_price_context": {
-        "close": 73.95,
-        "fetched_at": "2026-09-28T09:00:05.524677-05:00",
-        "high": 75.32,
-        "low": 72.7801,
-        "open": 74.15,
-        "session_date": "2026-09-25",
+        "close": 72.19,
+        "fetched_at": "2026-09-29T09:00:05.747743-05:00",
+        "high": 73.78,
+        "low": 71.68,
+        "open": 73.2,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "RKLB"
+      },
+      "options_activity_rank": 0.8137254901960785,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 44.771241830065364,
+      "put_iv_range_favorable_rank": 0.08823529411764706,
+      "put_iv_range_median": 0.24306932403859366,
+      "put_oi_total": 487906.0,
+      "rank": 24,
+      "signal_date": "2026-09-29",
+      "ticker": "RKLB"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.6176470588235294,
+      "call_delta_median": 0.3854893358382872,
+      "call_oi_total": 121717.0,
+      "call_volume_total": 6048.0,
+      "group_name": "URANIUM",
+      "latest_price_context": {
+        "close": 8.99,
+        "fetched_at": "2026-09-29T09:00:05.747831-05:00",
+        "high": 9.125,
+        "low": 8.93,
+        "open": 9.0,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "NXE"
+      },
+      "options_activity_rank": 0.411764705882353,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 44.117647058823536,
+      "put_iv_range_favorable_rank": 0.29411764705882354,
+      "put_iv_range_median": 0.35084533822090147,
+      "put_oi_total": 76799.0,
+      "rank": 25,
+      "signal_date": "2026-09-29",
+      "ticker": "NXE"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.05882352941176472,
+      "call_delta_median": 0.7758113995733801,
+      "call_oi_total": 155236.0,
+      "call_volume_total": 5831.0,
+      "group_name": "AI_DC",
+      "latest_price_context": {
+        "close": 204.92,
+        "fetched_at": "2026-09-29T09:00:05.747598-05:00",
+        "high": 208.35,
+        "low": 203.52,
+        "open": 205.59,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "ANET"
+      },
+      "options_activity_rank": 0.45098039215686275,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 43.4640522875817,
+      "put_iv_range_favorable_rank": 0.7941176470588235,
+      "put_iv_range_median": 0.7407697760228785,
+      "put_oi_total": 132604.0,
+      "rank": 26,
+      "signal_date": "2026-09-29",
+      "ticker": "ANET"
+    },
+    {
+      "bucket": "MIDDLE_60",
+      "call_delta_favorable_rank": 0.20588235294117652,
+      "call_delta_median": 0.6770495248988679,
+      "call_oi_total": 466820.0,
+      "call_volume_total": 19656.0,
+      "group_name": "SEMIS",
+      "latest_price_context": {
+        "close": 187.48,
+        "fetched_at": "2026-09-29T09:00:05.747976-05:00",
+        "high": 199.16,
+        "low": 186.71,
+        "open": 199.16,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "QCOM"
       },
       "options_activity_rank": 0.8039215686274509,
       "outcomes": {
@@ -1004,262 +1234,32 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 44.44444444444444,
-      "put_iv_range_favorable_rank": 0.08823529411764706,
-      "put_iv_range_median": 0.2107310206638015,
-      "put_oi_total": 475710.0,
-      "rank": 22,
-      "signal_date": "2026-09-28",
-      "ticker": "RKLB"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.7352941176470589,
-      "call_delta_median": 0.32312429572692275,
-      "call_oi_total": 88384.0,
-      "call_volume_total": 3587.0,
-      "group_name": "AERO_DEFENSE",
-      "latest_price_context": {
-        "close": 45.62,
-        "fetched_at": "2026-09-28T09:00:05.524931-05:00",
-        "high": 47.45,
-        "low": 45.31,
-        "open": 46.97,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "KTOS"
-      },
-      "options_activity_rank": 0.2843137254901961,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 42.81045751633987,
-      "put_iv_range_favorable_rank": 0.2647058823529412,
-      "put_iv_range_median": 0.2967166239364906,
-      "put_oi_total": 42189.0,
-      "rank": 23,
-      "signal_date": "2026-09-28",
-      "ticker": "KTOS"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.7941176470588236,
-      "call_delta_median": 0.3027257997292082,
-      "call_oi_total": 5598.0,
-      "call_volume_total": 827.0,
-      "group_name": "IEC",
-      "latest_price_context": {
-        "close": 512.29,
-        "fetched_at": "2026-09-28T09:00:05.524820-05:00",
-        "high": 520.5,
-        "low": 504.58,
-        "open": 520.5,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "STRL"
-      },
-      "options_activity_rank": 0.08823529411764706,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 41.1764705882353,
-      "put_iv_range_favorable_rank": 0.35294117647058826,
-      "put_iv_range_median": 0.35141550002077604,
-      "put_oi_total": 5882.0,
-      "rank": 24,
-      "signal_date": "2026-09-28",
-      "ticker": "STRL"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.0,
-      "call_delta_median": 0.7772314485433456,
-      "call_oi_total": 153144.0,
-      "call_volume_total": 6194.0,
-      "group_name": "AI_DC",
-      "latest_price_context": {
-        "close": 206.55,
-        "fetched_at": "2026-09-28T09:00:05.524559-05:00",
-        "high": 212.0,
-        "low": 205.525,
-        "open": 208.855,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "ANET"
-      },
-      "options_activity_rank": 0.4803921568627451,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 40.52287581699347,
-      "put_iv_range_favorable_rank": 0.7352941176470589,
-      "put_iv_range_median": 0.7343500916449958,
-      "put_oi_total": 129901.0,
-      "rank": 25,
-      "signal_date": "2026-09-28",
-      "ticker": "ANET"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.9117647058823529,
-      "call_delta_median": 0.24833701996590093,
-      "call_oi_total": 6076.0,
-      "call_volume_total": 740.0,
-      "group_name": "IEC",
-      "latest_price_context": {
-        "close": 60.89,
-        "fetched_at": "2026-09-28T09:00:05.524840-05:00",
-        "high": 61.89,
-        "low": 58.44,
-        "open": 58.44,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "ACM"
-      },
-      "options_activity_rank": 0.06862745098039215,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
       "percentile_score": 39.54248366013072,
-      "put_iv_range_favorable_rank": 0.20588235294117646,
-      "put_iv_range_median": 0.27245052384905366,
-      "put_oi_total": 5327.0,
-      "rank": 26,
-      "signal_date": "2026-09-28",
-      "ticker": "ACM"
-    },
-    {
-      "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.6176470588235294,
-      "call_delta_median": 0.3736813475631014,
-      "call_oi_total": 6805.0,
-      "call_volume_total": 2292.0,
-      "group_name": "IEC",
-      "latest_price_context": {
-        "close": 89.1,
-        "fetched_at": "2026-09-28T09:00:05.524850-05:00",
-        "high": 90.0,
-        "low": 84.45,
-        "open": 84.75,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "AAON"
-      },
-      "options_activity_rank": 0.10784313725490197,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 37.908496732026144,
-      "put_iv_range_favorable_rank": 0.4117647058823529,
-      "put_iv_range_median": 0.3647634597389323,
-      "put_oi_total": 2439.0,
+      "put_iv_range_favorable_rank": 0.17647058823529413,
+      "put_iv_range_median": 0.3062750323066377,
+      "put_oi_total": 446965.0,
       "rank": 27,
-      "signal_date": "2026-09-28",
-      "ticker": "AAON"
+      "signal_date": "2026-09-29",
+      "ticker": "QCOM"
     },
     {
       "bucket": "MIDDLE_60",
-      "call_delta_favorable_rank": 0.02941176470588236,
-      "call_delta_median": 0.7683140995877507,
-      "call_oi_total": 831167.0,
-      "call_volume_total": 20250.0,
+      "call_delta_favorable_rank": 0.11764705882352944,
+      "call_delta_median": 0.7542703864701533,
+      "call_oi_total": 855967.0,
+      "call_volume_total": 23211.0,
       "group_name": "SEMIS",
       "latest_price_context": {
-        "close": 450.61,
-        "fetched_at": "2026-09-28T09:00:05.524879-05:00",
-        "high": 455.03,
-        "low": 449.01,
-        "open": 452.395,
-        "session_date": "2026-09-25",
+        "close": 452.88,
+        "fetched_at": "2026-09-29T09:00:05.747966-05:00",
+        "high": 455.2718,
+        "low": 443.11,
+        "open": 448.39,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "TSM"
       },
-      "options_activity_rank": 0.8725490196078431,
+      "options_activity_rank": 0.892156862745098,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -1280,28 +1280,74 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 37.908496732026144,
-      "put_iv_range_favorable_rank": 0.23529411764705882,
-      "put_iv_range_median": 0.2873186741219907,
-      "put_oi_total": 881432.0,
+      "percentile_score": 38.56209150326797,
+      "put_iv_range_favorable_rank": 0.14705882352941177,
+      "put_iv_range_median": 0.27526595885632965,
+      "put_oi_total": 904410.0,
       "rank": 28,
-      "signal_date": "2026-09-28",
+      "signal_date": "2026-09-29",
       "ticker": "TSM"
     },
     {
       "bucket": "BOTTOM_20",
-      "call_delta_favorable_rank": 0.08823529411764708,
-      "call_delta_median": 0.7607556602484717,
-      "call_oi_total": 7261.0,
-      "call_volume_total": 446.0,
+      "call_delta_favorable_rank": 0.7352941176470589,
+      "call_delta_median": 0.33717098267307827,
+      "call_oi_total": 6792.0,
+      "call_volume_total": 746.0,
+      "group_name": "IEC",
+      "latest_price_context": {
+        "close": 85.34,
+        "fetched_at": "2026-09-29T09:00:05.747936-05:00",
+        "high": 91.515,
+        "low": 82.71,
+        "open": 88.6,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "AAON"
+      },
+      "options_activity_rank": 0.06862745098039216,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 37.58169934640523,
+      "put_iv_range_favorable_rank": 0.3235294117647059,
+      "put_iv_range_median": 0.3735507234614911,
+      "put_oi_total": 2502.0,
+      "rank": 29,
+      "signal_date": "2026-09-29",
+      "ticker": "AAON"
+    },
+    {
+      "bucket": "BOTTOM_20",
+      "call_delta_favorable_rank": 0.02941176470588236,
+      "call_delta_median": 0.7836560333936174,
+      "call_oi_total": 7283.0,
+      "call_volume_total": 514.0,
       "group_name": "QUANTUM",
       "latest_price_context": {
-        "close": 24.6,
-        "fetched_at": "2026-09-28T09:00:05.524651-05:00",
-        "high": 24.99,
-        "low": 22.4901,
-        "open": 23.16,
-        "session_date": "2026-09-25",
+        "close": 24.64,
+        "fetched_at": "2026-09-29T09:00:05.747709-05:00",
+        "high": 24.86,
+        "low": 23.5597,
+        "open": 24.3,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "ARQQ"
       },
@@ -1326,32 +1372,32 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 36.60130718954249,
+      "percentile_score": 34.640522875817,
       "put_iv_range_favorable_rank": 0.9411764705882353,
-      "put_iv_range_median": 1.1068748070666563,
-      "put_oi_total": 4305.0,
-      "rank": 29,
-      "signal_date": "2026-09-28",
+      "put_iv_range_median": 1.317410326107508,
+      "put_oi_total": 4349.0,
+      "rank": 30,
+      "signal_date": "2026-09-29",
       "ticker": "ARQQ"
     },
     {
       "bucket": "BOTTOM_20",
-      "call_delta_favorable_rank": 0.32352941176470584,
-      "call_delta_median": 0.6272693837563488,
-      "call_oi_total": 216977.0,
-      "call_volume_total": 8525.0,
+      "call_delta_favorable_rank": 0.2941176470588235,
+      "call_delta_median": 0.6409516454701318,
+      "call_oi_total": 220215.0,
+      "call_volume_total": 6261.0,
       "group_name": "AI_DC",
       "latest_price_context": {
-        "close": 253.28,
-        "fetched_at": "2026-09-28T09:00:05.524427-05:00",
-        "high": 254.5,
-        "low": 248.0,
-        "open": 249.18,
-        "session_date": "2026-09-25",
+        "close": 244.04,
+        "fetched_at": "2026-09-29T09:00:05.747456-05:00",
+        "high": 254.2,
+        "low": 242.52,
+        "open": 253.23,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "VRT"
       },
-      "options_activity_rank": 0.5882352941176471,
+      "options_activity_rank": 0.5588235294117647,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -1373,119 +1419,27 @@
         }
       },
       "percentile_score": 32.35294117647059,
-      "put_iv_range_favorable_rank": 0.058823529411764705,
-      "put_iv_range_median": 0.2002998021621456,
-      "put_oi_total": 227463.0,
-      "rank": 30,
-      "signal_date": "2026-09-28",
+      "put_iv_range_favorable_rank": 0.11764705882352941,
+      "put_iv_range_median": 0.2516458438174018,
+      "put_oi_total": 238940.0,
+      "rank": 31,
+      "signal_date": "2026-09-29",
       "ticker": "VRT"
     },
     {
       "bucket": "BOTTOM_20",
-      "call_delta_favorable_rank": 0.38235294117647056,
-      "call_delta_median": 0.6045801442162363,
-      "call_oi_total": 30586.0,
-      "call_volume_total": 759.0,
-      "group_name": "SPACE",
-      "latest_price_context": {
-        "close": 23.25,
-        "fetched_at": "2026-09-28T09:00:05.524735-05:00",
-        "high": 23.72,
-        "low": 22.91,
-        "open": 23.37,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "BKSY"
-      },
-      "options_activity_rank": 0.1568627450980392,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 30.71895424836601,
-      "put_iv_range_favorable_rank": 0.38235294117647056,
-      "put_iv_range_median": 0.3621892622201044,
-      "put_oi_total": 8766.0,
-      "rank": 31,
-      "signal_date": "2026-09-28",
-      "ticker": "BKSY"
-    },
-    {
-      "bucket": "BOTTOM_20",
-      "call_delta_favorable_rank": 0.3529411764705882,
-      "call_delta_median": 0.6067164808900485,
-      "call_oi_total": 281427.0,
-      "call_volume_total": 2335.0,
-      "group_name": "URANIUM",
-      "latest_price_context": {
-        "close": 2.65,
-        "fetched_at": "2026-09-28T09:00:05.524800-05:00",
-        "high": 2.66,
-        "low": 2.5901,
-        "open": 2.63,
-        "session_date": "2026-09-25",
-        "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "DNN"
-      },
-      "options_activity_rank": 0.39215686274509803,
-      "outcomes": {
-        "H1": {
-          "status": "PENDING"
-        },
-        "H10": {
-          "status": "PENDING"
-        },
-        "H15": {
-          "status": "PENDING"
-        },
-        "H20": {
-          "status": "PENDING"
-        },
-        "H3": {
-          "status": "PENDING"
-        },
-        "H5": {
-          "status": "PENDING"
-        }
-      },
-      "percentile_score": 30.71895424836601,
-      "put_iv_range_favorable_rank": 0.17647058823529413,
-      "put_iv_range_median": 0.24904807983043287,
-      "put_oi_total": 55398.0,
-      "rank": 32,
-      "signal_date": "2026-09-28",
-      "ticker": "DNN"
-    },
-    {
-      "bucket": "BOTTOM_20",
-      "call_delta_favorable_rank": 0.6470588235294117,
-      "call_delta_median": 0.34716538233174216,
-      "call_oi_total": 3845.0,
-      "call_volume_total": 295.0,
+      "call_delta_favorable_rank": 0.7058823529411764,
+      "call_delta_median": 0.34076156583040274,
+      "call_oi_total": 3855.0,
+      "call_volume_total": 306.0,
       "group_name": "AERO_DEFENSE",
       "latest_price_context": {
-        "close": 37.16,
-        "fetched_at": "2026-09-28T09:00:05.524951-05:00",
-        "high": 37.62,
-        "low": 36.8929,
-        "open": 37.51,
-        "session_date": "2026-09-25",
+        "close": 36.67,
+        "fetched_at": "2026-09-29T09:00:05.748036-05:00",
+        "high": 37.2,
+        "low": 36.5,
+        "open": 37.01,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "DRS"
       },
@@ -1510,32 +1464,32 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 26.47058823529412,
-      "put_iv_range_favorable_rank": 0.14705882352941177,
-      "put_iv_range_median": 0.24329773511623784,
-      "put_oi_total": 1462.0,
-      "rank": 33,
-      "signal_date": "2026-09-28",
+      "percentile_score": 25.49019607843137,
+      "put_iv_range_favorable_rank": 0.058823529411764705,
+      "put_iv_range_median": 0.2376465434433524,
+      "put_oi_total": 1466.0,
+      "rank": 32,
+      "signal_date": "2026-09-29",
       "ticker": "DRS"
     },
     {
       "bucket": "BOTTOM_20",
-      "call_delta_favorable_rank": 0.11764705882352944,
-      "call_delta_median": 0.7584987268656628,
-      "call_oi_total": 36015.0,
-      "call_volume_total": 3675.0,
-      "group_name": "AI_DC",
+      "call_delta_favorable_rank": 0.4117647058823529,
+      "call_delta_median": 0.6191120527758323,
+      "call_oi_total": 30793.0,
+      "call_volume_total": 739.0,
+      "group_name": "SPACE",
       "latest_price_context": {
-        "close": 439.98,
-        "fetched_at": "2026-09-28T09:00:05.524602-05:00",
-        "high": 447.33,
-        "low": 436.1751,
-        "open": 444.4,
-        "session_date": "2026-09-25",
+        "close": 22.95,
+        "fetched_at": "2026-09-29T09:00:05.747791-05:00",
+        "high": 23.69,
+        "low": 22.7,
+        "open": 22.76,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
-        "ticker": "ETN"
+        "ticker": "BKSY"
       },
-      "options_activity_rank": 0.2843137254901961,
+      "options_activity_rank": 0.1372549019607843,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -1556,32 +1510,78 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 23.20261437908497,
-      "put_iv_range_favorable_rank": 0.29411764705882354,
-      "put_iv_range_median": 0.3326520345554763,
-      "put_oi_total": 44789.0,
+      "percentile_score": 25.163398692810457,
+      "put_iv_range_favorable_rank": 0.20588235294117646,
+      "put_iv_range_median": 0.3066113704360477,
+      "put_oi_total": 8781.0,
+      "rank": 33,
+      "signal_date": "2026-09-29",
+      "ticker": "BKSY"
+    },
+    {
+      "bucket": "BOTTOM_20",
+      "call_delta_favorable_rank": 0.08823529411764708,
+      "call_delta_median": 0.7693681181552976,
+      "call_oi_total": 36225.0,
+      "call_volume_total": 2573.0,
+      "group_name": "AI_DC",
+      "latest_price_context": {
+        "close": 431.41,
+        "fetched_at": "2026-09-29T09:00:05.747640-05:00",
+        "high": 441.94,
+        "low": 423.83,
+        "open": 437.71,
+        "session_date": "2026-09-28",
+        "source": "MASSIVE_GROUPED_DAILY",
+        "ticker": "ETN"
+      },
+      "options_activity_rank": 0.2647058823529412,
+      "outcomes": {
+        "H1": {
+          "status": "PENDING"
+        },
+        "H10": {
+          "status": "PENDING"
+        },
+        "H15": {
+          "status": "PENDING"
+        },
+        "H20": {
+          "status": "PENDING"
+        },
+        "H3": {
+          "status": "PENDING"
+        },
+        "H5": {
+          "status": "PENDING"
+        }
+      },
+      "percentile_score": 19.607843137254903,
+      "put_iv_range_favorable_rank": 0.23529411764705882,
+      "put_iv_range_median": 0.3203418167775894,
+      "put_oi_total": 45881.0,
       "rank": 34,
-      "signal_date": "2026-09-28",
+      "signal_date": "2026-09-29",
       "ticker": "ETN"
     },
     {
       "bucket": "BOTTOM_20",
-      "call_delta_favorable_rank": 0.2941176470588235,
-      "call_delta_median": 0.6668360103460875,
-      "call_oi_total": 8075.0,
-      "call_volume_total": 1655.0,
+      "call_delta_favorable_rank": 0.23529411764705888,
+      "call_delta_median": 0.6763508877189582,
+      "call_oi_total": 8265.0,
+      "call_volume_total": 1676.0,
       "group_name": "IEC",
       "latest_price_context": {
-        "close": 1658.91,
-        "fetched_at": "2026-09-28T09:00:05.524810-05:00",
-        "high": 1671.635,
-        "low": 1625.01,
-        "open": 1656.27,
-        "session_date": "2026-09-25",
+        "close": 1658.3,
+        "fetched_at": "2026-09-29T09:00:05.747852-05:00",
+        "high": 1689.275,
+        "low": 1628.0,
+        "open": 1655.82,
+        "session_date": "2026-09-28",
         "source": "MASSIVE_GROUPED_DAILY",
         "ticker": "FIX"
       },
-      "options_activity_rank": 0.16666666666666666,
+      "options_activity_rank": 0.17647058823529413,
       "outcomes": {
         "H1": {
           "status": "PENDING"
@@ -1602,23 +1602,23 @@
           "status": "PENDING"
         }
       },
-      "percentile_score": 15.359477124183005,
+      "percentile_score": 13.725490196078436,
       "put_iv_range_favorable_rank": 0.0,
-      "put_iv_range_median": 0.12917221408291701,
-      "put_oi_total": 10367.0,
+      "put_iv_range_median": 0.13637208942355072,
+      "put_oi_total": 10743.0,
       "rank": 35,
-      "signal_date": "2026-09-28",
+      "signal_date": "2026-09-29",
       "ticker": "FIX"
     }
   ],
   "run": {
-    "artifact_csv_path": "/Users/simmons/Desktop/Atra Optio Collection/Atra Optio/data/research_exports/stock_signal_forward_validation/stock_signal_three_factor_v1_2026-09-28.csv",
-    "artifact_csv_sha256": "6c736c9f4f1e068e8463a22bd4c2bd064bd70b7afd96febcfdcb783ba12a2596",
-    "artifact_json_path": "/Users/simmons/Desktop/Atra Optio Collection/Atra Optio/data/research_exports/stock_signal_forward_validation/stock_signal_three_factor_v1_2026-09-28.json",
-    "artifact_json_sha256": "2f9d083bb4f51cbd1eb268e9f97bf4a69de52cb7f555eb53ea0c00c7d190749b",
+    "artifact_csv_path": "/Users/simmons/Desktop/Atra Optio Collection/Atra Optio/data/research_exports/stock_signal_forward_validation/stock_signal_three_factor_v1_2026-09-29.csv",
+    "artifact_csv_sha256": "1da8d0c61aa978b52c14ed381b05db8107833edc0ec98d97df2347f0d3e5ef5f",
+    "artifact_json_path": "/Users/simmons/Desktop/Atra Optio Collection/Atra Optio/data/research_exports/stock_signal_forward_validation/stock_signal_three_factor_v1_2026-09-29.json",
+    "artifact_json_sha256": "a684b7f00f3e85ff65e10ac88f222b411ed47c4f1f5c27ee0c22b07f88f7323c",
     "formula_version": "THREE_FACTOR_V1_FROZEN",
-    "locked_at": "2026-09-28T09:00:04.176862-05:00",
-    "signal_date": "2026-09-28",
+    "locked_at": "2026-09-29T09:00:03.772716-05:00",
+    "signal_date": "2026-09-29",
     "status": "ACTIVE",
     "ticker_count": 35
   }
