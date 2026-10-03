@@ -19,7 +19,7 @@ function validate(p:any){
   if(p?.product!=="Atra Structura") e.push("product");
   if(p?.mode!=="PARALLEL") e.push("mode");
   if(p?.delivery_type!=="quarterly_review") e.push("delivery_type");
-  if(typeof p?.snapshot_id!=="string"||!p.snapshot_id.startsWith("AV3-PARALLEL-MONTHLY-")) e.push("snapshot_id");
+  if(typeof p?.snapshot_id!=="string"||!p.snapshot_id.startsWith("AV3-PARALLEL-QUARTERLY-")) e.push("snapshot_id");
   if(typeof p?.subject!=="string"||!p.subject) e.push("subject");
   if(typeof p?.quarter!=="string"||!/^\d{4}-Q[1-4]$/.test(p.quarter)) e.push("quarter");
   if(typeof p?.period_start!=="string"||!/^\d{4}-\d{2}-\d{2}$/.test(p.period_start)) e.push("period_start");
@@ -60,7 +60,7 @@ export async function POST(req:NextRequest){
 
   const apiKey=process.env.RESEND_API_KEY;
   const from=process.env.STRUCTURA_EMAIL_FROM;
-  const configuredTo=process.env.STRUCTURA_MONTHLY_EMAIL_TO ?? "";
+  const configuredTo=process.env.STRUCTURA_QUARTERLY_EMAIL_TO ?? "";
   const replyTo=process.env.STRUCTURA_EMAIL_REPLY_TO;
 
   const configuredRecipients=parseRecipientList(configuredTo);
@@ -75,7 +75,7 @@ export async function POST(req:NextRequest){
 
   const text=[
     "Atra Structura Quarterly Review",
-    `Month: ${p.quarter}`,
+    `Quarter: ${p.quarter}`,
     `Period: ${p.period_start} through ${p.period_end}`,
     "",
     "The completed quarterly review is attached as a PDF.",
@@ -85,7 +85,7 @@ export async function POST(req:NextRequest){
 
   const html=`<div style="font-family:Arial,Helvetica,sans-serif;color:#222;max-width:720px;margin:auto">
     <h1 style="font-size:22px;margin-bottom:8px">Atra Structura Quarterly Review</h1>
-    <p style="font-size:14px;line-height:1.6"><strong>Month:</strong> ${esc(p.quarter)}<br>
+    <p style="font-size:14px;line-height:1.6"><strong>Quarter:</strong> ${esc(p.quarter)}<br>
     <strong>Period:</strong> ${esc(p.period_start)} through ${esc(p.period_end)}</p>
     <p style="font-size:14px;line-height:1.6">The completed quarterly review is attached as a PDF.</p>
     <div style="font-size:11px;color:#666;border-top:1px solid #ddd;padding-top:14px;margin-top:22px">${esc(p.disclosure)}</div>
@@ -114,7 +114,7 @@ export async function POST(req:NextRequest){
   }
 }
 
-export function GET(){return json({ok:false,error:"method_not_allowed",monthly_route_version:"2026-09-05-monthly-v1"},405);}
+export function GET(){return json({ok:false,error:"method_not_allowed",quarterly_route_version:"2026-10-03-quarterly-v1"},405);}
 export function PUT(){return json({ok:false,error:"method_not_allowed"},405);}
 export function PATCH(){return json({ok:false,error:"method_not_allowed"},405);}
 export function DELETE(){return json({ok:false,error:"method_not_allowed"},405);}
