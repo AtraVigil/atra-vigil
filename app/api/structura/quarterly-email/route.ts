@@ -18,7 +18,7 @@ function validate(p:any){
   if(p?.source!=="AtraVigilV3") e.push("source");
   if(p?.product!=="Atra Structura") e.push("product");
   if(p?.mode!=="PARALLEL") e.push("mode");
-  if(p?.delivery_type!=="quarterly_review") e.push("delivery_type");
+  if(p?.delivery_type!=="quarterly_review_v1") e.push("delivery_type");
   if(typeof p?.snapshot_id!=="string"||!p.snapshot_id.startsWith("AV3-PARALLEL-QUARTERLY-")) e.push("snapshot_id");
   if(typeof p?.subject!=="string"||!p.subject) e.push("subject");
   if(typeof p?.quarter!=="string"||!/^\d{4}-Q[1-4]$/.test(p.quarter)) e.push("quarter");
